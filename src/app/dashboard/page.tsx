@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
+import { getPendingRequestsCount } from '@/app/actions/admin'
 
 export default function DashboardPage() {
   const [licenses, setLicenses] = useState<any[]>([])
@@ -14,6 +15,8 @@ export default function DashboardPage() {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
+  const [adminPendingCount, setAdminPendingCount] = useState(0)
+  const [hasClientPending, setHasClientPending] = useState(false)
   const isAdmin = userEmail === 'vincentlayonuser@gmail.com' || userEmail === 'admin@vince.dev'
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
 
@@ -31,6 +34,10 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         setUserEmail(user.email || null)
+        const checkIsAdmin = user.email === 'vincentlayonuser@gmail.com' || user.email === 'admin@vince.dev'
+        if (checkIsAdmin) {
+          getPendingRequestsCount().then(count => setAdminPendingCount(count))
+        }
       }
     } catch (e) {
       console.error("Auth error", e)
@@ -44,6 +51,7 @@ export default function DashboardPage() {
       const data = await res.json()
       if (Array.isArray(data)) {
         setLicenses(data)
+        setHasClientPending(data.some(l => l.status === 'pending'))
       }
     } catch (error) {
       console.error('Failed to fetch', error)
@@ -111,10 +119,15 @@ export default function DashboardPage() {
           {isAdmin && (
             <Link 
               href="/admin/requests"
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-bold text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 transition-all mt-4"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-bold text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 transition-all mt-4"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-              Admin Dashboard
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                Admin Dashboard
+              </div>
+              {adminPendingCount > 0 && (
+                <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{adminPendingCount}</span>
+              )}
             </Link>
           )}
         </div>
@@ -153,6 +166,16 @@ export default function DashboardPage() {
         <div className="flex-1 overflow-y-auto p-6 lg:p-10">
           <div className="max-w-5xl mx-auto">
             
+            {hasClientPending && (
+              <div className="mb-6 bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 flex items-start gap-3 text-blue-400 animate-in fade-in slide-in-from-top-4">
+                <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div className="text-sm">
+                  <p className="font-bold mb-1">You have a pending license request!</p>
+                  <p className="text-blue-400/80">Please prepare your payment and wait for the provider to contact you, or message <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="underline font-medium hover:text-blue-300">Vincent Layon</a> on Facebook.</p>
+                </div>
+              </div>
+            )}
+
             {activeTab === 'licenses' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-2">My Licenses</h1>
@@ -179,10 +202,13 @@ export default function DashboardPage() {
                           licenses.map(l => (
                             <tr key={l.id} className="hover:bg-zinc-900/30 transition-colors group">
                               <td className="py-4 px-6 font-mono font-medium text-white">
-                                <div className="flex items-center gap-2">
-                                  <span>{l.licenseKey}</span>
-                                  <button 
-                                    onClick={() => {
+                                {l.status === 'pending' ? (
+                                  <span className="text-zinc-500 italic text-xs">{l.licenseKey}</span>
+                                ) : (
+                                  <div className="flex items-center gap-2">
+                                    <span>{l.licenseKey}</span>
+                                    <button 
+                                      onClick={() => {
                                       navigator.clipboard.writeText(l.licenseKey)
                                       setCopiedKey(l.licenseKey)
                                       setTimeout(() => setCopiedKey(null), 2000)
@@ -196,7 +222,8 @@ export default function DashboardPage() {
                                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                                     )}
                                   </button>
-                                </div>
+                                  </div>
+                                )}
                               </td>
                               <td className="py-4 px-6">
                                 <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
@@ -214,11 +241,13 @@ export default function DashboardPage() {
                                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
                                   l.status === 'active' ? 'text-emerald-400' :
                                   l.status === 'unused' ? 'text-amber-400' :
+                                  l.status === 'pending' ? 'text-blue-400' :
                                   l.status === 'expired' ? 'text-rose-400' : 'text-zinc-400'
                                 }`}>
                                   <span className={`w-1.5 h-1.5 rounded-full ${
                                     l.status === 'active' ? 'bg-emerald-400' :
                                     l.status === 'unused' ? 'bg-amber-400' :
+                                    l.status === 'pending' ? 'bg-blue-400' :
                                     l.status === 'expired' ? 'bg-rose-400' : 'bg-zinc-400'
                                   }`}></span>
                                   <span className="capitalize">{l.status}</span>

@@ -7,11 +7,8 @@ export default function ApproveButton({ requestId }: { requestId: string }) {
   const [isApproving, setIsApproving] = useState(false)
 
   const handleApprove = async () => {
-    const key = prompt("Enter a license key to generate for this user (e.g. PRO-ABCD-1234):")
-    if (!key) return
-
     setIsApproving(true)
-    const res = await approveLicenseRequest(requestId, key)
+    const res = await approveLicenseRequest(requestId)
     if (!res.success) {
       alert(res.error)
     }

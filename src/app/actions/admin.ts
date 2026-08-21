@@ -4,7 +4,25 @@ import { createClient } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
-export async function approveLicenseRequest(requestId: string, licenseKey: string) {
+export async function getPendingRequestsCount() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return 0
+    }
+
+    const count = await prisma.licenseRequest.count({
+      where: { status: 'pending' }
+    })
+    return count
+  } catch (error) {
+    return 0
+  }
+}
+
+export async function approveLicenseRequest(requestId: string) {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
@@ -28,10 +46,14 @@ export async function approveLicenseRequest(requestId: string, licenseKey: strin
     }
     const durationDays = durationMap[request.tier] || 30
 
+    // Fallback generate if old request doesn't have it
+    const randomPart = () => Math.random().toString(36).substring(2, 6).toUpperCase();
+    const finalKey = request.licenseKey || `${request.tier.toUpperCase()}-${randomPart()}-${randomPart()}-${randomPart()}`;
+
     // Create the actual license
     await prisma.license.create({
       data: {
-        licenseKey,
+        licenseKey: finalKey,
         userId: request.userId,
         tier: request.tier.toLowerCase(),
         status: 'active',

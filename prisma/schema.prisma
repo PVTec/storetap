@@ -32,6 +32,7 @@ model LicenseRequest {
   contactNumber  String
   tier           String    // free, standard, pro
   status         String    @default("pending") // pending, approved, rejected
+  licenseKey     String?   // Auto-generated key hidden until approved
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }

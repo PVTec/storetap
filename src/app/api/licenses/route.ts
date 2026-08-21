@@ -43,7 +43,23 @@ export async function GET() {
       where: { userId: user.id },
       orderBy: { createdAt: 'desc' }
     });
-    return NextResponse.json(licenses);
+
+    const pendingRequests = await prisma.licenseRequest.findMany({
+      where: { userId: user.id, status: 'pending' },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    const formattedPending = pendingRequests.map(req => ({
+      id: req.id,
+      licenseKey: 'Pending Approval',
+      tier: req.tier.toLowerCase(),
+      status: 'pending',
+      websiteUrl: null,
+      expiresAt: null,
+      durationDays: req.tier.toLowerCase() === 'pro' ? 150 : (req.tier.toLowerCase() === 'standard' ? 90 : 30)
+    }));
+
+    return NextResponse.json([...formattedPending, ...licenses]);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch licenses' }, { status: 500 });
   }
