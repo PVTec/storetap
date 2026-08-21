@@ -5,7 +5,12 @@ import Footer from '@/components/Footer'
 import prisma from '@/lib/prisma'
 
 export default async function LandingPage() {
-  const userCount = await prisma.user.count()
+
+  const uniqueUsers = await prisma.license.findMany({
+    select: { userId: true },
+    distinct: ['userId']
+  })
+  const userCount = uniqueUsers.length
   const licenseCount = await prisma.license.count()
   
   const activeSystems = 45 + licenseCount
