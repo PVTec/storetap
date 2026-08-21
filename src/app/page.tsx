@@ -41,6 +41,21 @@ export default async function LandingPage() {
               View Pricing
             </Link>
           </div>
+          
+          <div className="flex items-center gap-10 pt-10">
+            <div className="flex flex-col">
+              <h3 className="text-3xl font-bold text-white">{activeSystems}+</h3>
+              <p className="text-zinc-500 font-bold text-[10px] tracking-widest uppercase mt-1">Active Systems</p>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-3xl font-bold text-white">{licenseCount}</h3>
+              <p className="text-zinc-500 font-bold text-[10px] tracking-widest uppercase mt-1">Licensed Stores</p>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-3xl font-bold text-white">{activeUsers}+</h3>
+              <p className="text-zinc-500 font-bold text-[10px] tracking-widest uppercase mt-1">Active Users</p>
+            </div>
+          </div>
         </div>
         
         {/* Mockup matching the StoreTap V2.1.0 app style */}
@@ -135,27 +150,6 @@ export default async function LandingPage() {
           </div>
         </div>
       </main>
-
-      {/* Trust & Stats Section */}
-      <section className="relative mt-12 md:mt-24 mb-16">
-        <div className="absolute inset-0 bg-blue-500/5 blur-3xl -z-10"></div>
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-10 border-y border-zinc-800/50">
-            <div className="flex flex-col items-center justify-center space-y-1">
-              <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent">{activeSystems}+</h3>
-              <p className="text-zinc-400 font-bold text-xs tracking-widest uppercase">Active StoreTap Systems</p>
-            </div>
-            <div className="flex flex-col items-center justify-center space-y-1 pt-8 md:pt-0 md:border-l md:border-zinc-800/50">
-              <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent">{licenseCount}</h3>
-              <p className="text-zinc-400 font-bold text-xs tracking-widest uppercase">Licensed Websites</p>
-            </div>
-            <div className="flex flex-col items-center justify-center space-y-1 pt-8 md:pt-0 md:border-l md:border-zinc-800/50">
-              <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent">{activeUsers}+</h3>
-              <p className="text-zinc-400 font-bold text-xs tracking-widest uppercase">Daily Active Users</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Core Features Overview */}
       <section className="max-w-6xl mx-auto px-6 py-24 text-center">
