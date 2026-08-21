@@ -88,7 +88,7 @@ export default function DashboardPage() {
       )}
       
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col z-50 transform transition-transform duration-200 ease-in-out md:transform-none ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed md:sticky top-0 inset-y-0 left-0 h-screen w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col z-50 transition-transform duration-200 ease-in-out md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-zinc-800/80">
           <Link href="/" className="flex items-center gap-3">
             <Image src="/icon.svg" alt="StoreTap Logo" width={28} height={28} />
@@ -227,18 +227,20 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {activeTab === 'store' && (
+            {activeTab === 'store' && (() => {
+              const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free');
+              return (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-2">License Store</h1>
                 <p className="text-zinc-400 text-sm mb-8">Purchase new licenses for your business.</p>
                 
                 <div className="grid md:grid-cols-3 gap-6">
-                  {/* Free */}
+                  {/* Basic */}
                   <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-6 flex flex-col">
-                    <h3 className="text-lg font-bold text-white mb-2">Free / Basic</h3>
+                    <h3 className="text-lg font-bold text-white mb-2">Basic</h3>
                     <div className="flex flex-col mb-6">
-                      <p className="text-3xl font-black text-white mb-1">₱0</p>
-                      <p className="text-sm font-medium text-zinc-500">then ₱150 after</p>
+                      <p className="text-3xl font-black text-white mb-1">₱150</p>
+                      <p className="text-sm font-medium text-zinc-500">First license is FREE</p>
                     </div>
                     <p className="text-sm text-zinc-500 mb-6">Valid for 30 Days (1 Month)</p>
                     <div className="flex-1">
@@ -249,10 +251,10 @@ export default function DashboardPage() {
                     </div>
                     <button 
                       disabled={isBuying}
-                      onClick={() => handleBuy('free', 30)}
+                      onClick={() => handleBuy('basic', 30)}
                       className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
                     >
-                      {isBuying ? 'Processing...' : 'Get Free License'}
+                      {isBuying ? 'Processing...' : (hasBasic ? 'Buy Basic' : 'Get Free License')}
                     </button>
                   </div>
 
@@ -327,7 +329,8 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-            )}
+              );
+            })}
 
           </div>
         </div>

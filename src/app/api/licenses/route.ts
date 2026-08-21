@@ -58,17 +58,6 @@ export async function POST(request: Request) {
 
     const { tier, count, durationDays } = await request.json();
     
-    // Rule: One Free License per user
-    if (tier === 'free') {
-      const existingFree = await prisma.license.findFirst({
-        where: { userId: user.id, tier: 'free' }
-      });
-      
-      if (existingFree) {
-        return NextResponse.json({ error: 'You can only claim one Free License.' }, { status: 400 });
-      }
-    }
-
     const qty = parseInt(count) || 1;
     const days = parseInt(durationDays) || 30;
     

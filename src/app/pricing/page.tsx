@@ -5,9 +5,9 @@ import Navigation from '@/components/Navigation'
 export default function PricingPage() {
   const plans = [
     {
-      name: "Free / Basic",
-      price: "₱0",
-      subtext: "then ₱150 after",
+      name: "Basic",
+      price: "₱150",
+      subtext: "First license is FREE",
       duration: "1 Month License",
       features: [
         "Sales Module (Quick actions)",
