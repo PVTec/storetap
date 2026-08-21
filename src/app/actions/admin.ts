@@ -377,3 +377,24 @@ export async function generateCustomLicense(tier: string, durationDays: number) 
     return { success: false, error: "Failed to generate license." }
   }
 }
+
+export async function getAdminGeneratedLicenses() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return []
+    }
+
+    const licenses = await prisma.license.findMany({
+      where: { userId: null },
+      orderBy: { id: 'desc' }
+    })
+
+    return licenses
+  } catch (error) {
+    console.error("Error fetching generated licenses:", error)
+    return []
+  }
+}
