@@ -13,10 +13,9 @@ export async function getPendingRequestsCount() {
       return 0
     }
 
-    const count = await prisma.licenseRequest.count({
-      where: { status: 'pending' }
-    })
-    return count
+    const lCount = await prisma.licenseRequest.count({ where: { status: 'pending' } })
+    const sCount = await prisma.systemRequest.count({ where: { status: 'pending' } })
+    return lCount + sCount
   } catch (error) {
     return 0
   }
@@ -31,15 +30,21 @@ export async function getLicenseRequests() {
       return []
     }
 
-    const requests = await prisma.licenseRequest.findMany({
-      orderBy: { createdAt: 'desc' }
-    })
-    return requests
+    const lReqs = await prisma.licenseRequest.findMany({ orderBy: { createdAt: 'desc' } })
+    const sReqs = await prisma.systemRequest.findMany({ orderBy: { createdAt: 'desc' } })
+
+    const combined = [
+      ...lReqs.map(r => ({ ...r, requestType: 'license' })),
+      ...sReqs.map(r => ({ ...r, tier: r.type === 'web' ? 'Web System' : 'App System', requestType: 'system' }))
+    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    
+    return combined
   } catch (error) {
     console.error("Error fetching requests:", error)
     return []
   }
 }
+
 export async function getApprovedRequests() {
   try {
     const supabase = await createClient()
@@ -49,11 +54,21 @@ export async function getApprovedRequests() {
       return []
     }
 
-    const requests = await prisma.licenseRequest.findMany({
+    const lReqs = await prisma.licenseRequest.findMany({
       where: { status: 'approved' },
       orderBy: { createdAt: 'desc' }
     })
-    return requests
+    const sReqs = await prisma.systemRequest.findMany({
+      where: { status: 'approved' },
+      orderBy: { createdAt: 'desc' }
+    })
+
+    const combined = [
+      ...lReqs.map(r => ({ ...r, requestType: 'license' })),
+      ...sReqs.map(r => ({ ...r, tier: r.type === 'web' ? 'Web System' : 'App System', requestType: 'system' }))
+    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    
+    return combined
   } catch (error) {
     return []
   }
@@ -225,5 +240,100 @@ export async function rejectLicenseRequest(requestId: string) {
   } catch (error: any) {
     console.error("Error rejecting license request:", error)
     return { success: false, error: "Failed to reject request." }
+  }
+}
+
+export async function approveSystemRequest(requestId: string) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return { success: false, error: 'Unauthorized. Only the admin can approve requests.' }
+    }
+
+    const request = await prisma.systemRequest.findUnique({
+      where: { id: requestId }
+    })
+
+    if (!request) return { success: false, error: 'Request not found' }
+
+    // Map system type to license tier
+    const tier = request.type === 'web' ? 'basic' : 'pro'
+    const durationDays = 30 // Bundled license duration
+
+    const randomPart = () => Math.random().toString(36).substring(2, 6).toUpperCase();
+    const licenseKey = `${tier.toUpperCase()}-SYS-${randomPart()}-${randomPart()}`;
+
+    // Create the bundled license
+    await prisma.license.create({
+      data: {
+        licenseKey: licenseKey,
+        userId: request.userId,
+        tier: tier,
+        status: 'active',
+        durationDays
+      }
+    })
+
+    // Update system request status
+    await prisma.systemRequest.update({
+      where: { id: requestId },
+      data: { status: 'approved' }
+    })
+
+    if (request.userId) {
+      await prisma.notification.create({
+        data: {
+          userId: request.userId,
+          title: 'System Request Approved',
+          message: `Your ${request.type.toUpperCase()} System has been approved! We've bundled a 30-day ${tier.toUpperCase()} license for you. Your license key is ready in My Licenses.`
+        }
+      })
+    }
+
+    revalidatePath('/dashboard')
+    return { success: true }
+  } catch (error: any) {
+    console.error("Error approving system request:", error)
+    return { success: false, error: "Failed to approve system request." }
+  }
+}
+
+export async function rejectSystemRequest(requestId: string) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return { success: false, error: 'Unauthorized. Only the admin can reject requests.' }
+    }
+
+    const request = await prisma.systemRequest.findUnique({
+      where: { id: requestId }
+    })
+
+    if (!request) return { success: false, error: 'Request not found' }
+
+    await prisma.systemRequest.update({
+      where: { id: requestId },
+      data: { status: 'rejected' }
+    })
+
+    if (request.userId) {
+      await prisma.notification.create({
+        data: {
+          userId: request.userId,
+          title: 'System Request Rejected',
+          message: `Your request for a ${request.type.toUpperCase()} System has been rejected. Please contact support.`
+        }
+      })
+    }
+
+    revalidatePath('/dashboard')
+    return { success: true }
+  } catch (error: any) {
+    console.error("Error rejecting system request:", error)
+    return { success: false, error: "Failed to reject system request." }
   }
 }

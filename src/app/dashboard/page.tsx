@@ -6,13 +6,16 @@ import { createBrowserClient } from '@supabase/ssr'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
 import { getPendingRequestsCount, getLicenseRequests, getApprovedRequests, getUsersList, getNotifications, markNotificationsRead } from '@/app/actions/admin'
 import RequestActions from '@/app/admin/requests/RequestActions'
+import SystemRequestModal from '@/components/SystemRequestModal'
 
 export default function DashboardPage() {
   const [licenses, setLicenses] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('licenses')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSystemModalOpen, setIsSystemModalOpen] = useState(false)
   const [selectedTier, setSelectedTier] = useState('Basic')
+  const [selectedSystem, setSelectedSystem] = useState<'web'|'app'>('web')
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -133,6 +136,11 @@ export default function DashboardPage() {
     setIsModalOpen(true)
   }
 
+  const handleOpenSystemModal = (type: 'web' | 'app') => {
+    setSelectedSystem(type)
+    setIsSystemModalOpen(true)
+  }
+
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30 flex">
       
@@ -165,6 +173,13 @@ export default function DashboardPage() {
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
                 License Store
+              </button>
+              <button 
+                onClick={() => handleTabChange('system-store')}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'system-store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                System Store
               </button>
             </>
           ) : (
@@ -367,7 +382,7 @@ export default function DashboardPage() {
                     <h3 className="text-lg font-bold text-white mb-2">Basic</h3>
                     <div className="flex flex-col mb-6">
                       <p className="text-3xl font-black text-white mb-1">₱150</p>
-                      <p className="text-sm font-medium text-zinc-500">First license is FREE</p>
+                      <p className="text-sm font-medium text-zinc-500">&nbsp;</p>
                     </div>
                     <p className="text-sm text-zinc-500 mb-6">Valid for 30 Days (1 Month)</p>
                     <div className="flex-1">
@@ -380,7 +395,7 @@ export default function DashboardPage() {
                       onClick={() => handleOpenModal('Basic')}
                       className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
                     >
-                      {hasBasic ? 'Get Basic License' : 'Get Free License'}
+                      Get Basic License
                     </button>
                   </div>
 
@@ -424,6 +439,86 @@ export default function DashboardPage() {
                       className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
                     >
                       Get Pro License
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'system-store' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">System Store</h1>
+                <p className="text-zinc-400 text-sm mb-8">Purchase StoreTap Systems with bundled free licenses.</p>
+                
+                <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
+                  {/* Web System */}
+                  <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-8 flex flex-col hover:border-zinc-700 transition-colors">
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <h3 className="text-xl font-bold text-white">Web Version</h3>
+                        <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
+                      </div>
+                      <div className="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                      </div>
+                    </div>
+                    <div className="mb-8">
+                      <p className="text-4xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                    </div>
+                    <div className="flex-1">
+                      <ul className="space-y-3 mb-8">
+                        <li className="text-sm text-zinc-300 flex items-center gap-3">
+                          <span className="text-emerald-400">✓</span> Free Hosting (Website)
+                        </li>
+                        <li className="text-sm text-zinc-300 flex items-center gap-3">
+                          <span className="text-emerald-400">✓</span> Free Database Storage
+                        </li>
+                        <li className="text-sm text-zinc-300 flex items-center gap-3">
+                          <span className="text-emerald-400">✓</span> Free <span className="font-bold ml-1">Basic Tier License</span> (30 Days)
+                        </li>
+                      </ul>
+                    </div>
+                    <button 
+                      onClick={() => handleOpenSystemModal('web')}
+                      className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors border border-zinc-700"
+                    >
+                      Purchase Web System
+                    </button>
+                  </div>
+
+                  {/* App System */}
+                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.1)] hover:border-blue-500/70 transition-colors">
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <h3 className="text-xl font-bold text-white">App Version</h3>
+                        <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
+                      </div>
+                      <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20">
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                      </div>
+                    </div>
+                    <div className="mb-8">
+                      <p className="text-4xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                    </div>
+                    <div className="flex-1">
+                      <ul className="space-y-3 mb-8">
+                        <li className="text-sm text-zinc-300 flex items-center gap-3">
+                          <span className="text-blue-400">✓</span> Free Mobile App
+                        </li>
+                        <li className="text-sm text-zinc-300 flex items-center gap-3">
+                          <span className="text-blue-400">✓</span> Free Hosting & Database Storage
+                        </li>
+                        <li className="text-sm text-zinc-300 flex items-center gap-3">
+                          <span className="text-blue-400">✓</span> Free <span className="font-bold ml-1">Pro Tier License</span> (30 Days)
+                        </li>
+                      </ul>
+                    </div>
+                    <button 
+                      onClick={() => handleOpenSystemModal('app')}
+                      className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg shadow-blue-500/20"
+                    >
+                      Purchase App System
                     </button>
                   </div>
                 </div>
@@ -513,7 +608,7 @@ export default function DashboardPage() {
                           <td className="px-6 py-4 text-right">
                             {req.status === 'pending' && (
                               <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                                <RequestActions requestId={req.id} onSuccess={() => {
+                                <RequestActions requestId={req.id} requestType={req.requestType} onSuccess={() => {
                                   fetchAdminRequests();
                                   getPendingRequestsCount().then(count => setAdminPendingCount(count));
                                 }} />
@@ -576,7 +671,7 @@ export default function DashboardPage() {
 
                       {req.status === 'pending' && (
                         <div className="pt-4 border-t border-zinc-800/80">
-                          <RequestActions requestId={req.id} onSuccess={() => {
+                          <RequestActions requestId={req.id} requestType={req.requestType} onSuccess={() => {
                             fetchAdminRequests();
                             getPendingRequestsCount().then(count => setAdminPendingCount(count));
                           }} />
@@ -715,6 +810,12 @@ export default function DashboardPage() {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         tier={selectedTier} 
+      />
+
+      <SystemRequestModal 
+        isOpen={isSystemModalOpen}
+        onClose={() => setIsSystemModalOpen(false)}
+        systemType={selectedSystem}
       />
     </div>
   )

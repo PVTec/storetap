@@ -1,15 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { approveLicenseRequest, rejectLicenseRequest } from '@/app/actions/admin'
+import { approveLicenseRequest, rejectLicenseRequest, approveSystemRequest, rejectSystemRequest } from '@/app/actions/admin'
 
-export default function RequestActions({ requestId, onSuccess }: { requestId: string, onSuccess?: () => void }) {
+export default function RequestActions({ requestId, requestType, onSuccess }: { requestId: string, requestType: 'license' | 'system', onSuccess?: () => void }) {
   const [isApproving, setIsApproving] = useState(false)
   const [isRejecting, setIsRejecting] = useState(false)
 
   const handleApprove = async () => {
     setIsApproving(true)
-    const res = await approveLicenseRequest(requestId)
+    const res = requestType === 'license' 
+      ? await approveLicenseRequest(requestId)
+      : await approveSystemRequest(requestId)
+    
     if (!res.success) {
       alert(res.error)
     } else if (onSuccess) {
@@ -22,7 +25,10 @@ export default function RequestActions({ requestId, onSuccess }: { requestId: st
     if (!confirm("Are you sure you want to reject and delete this request?")) return;
     
     setIsRejecting(true)
-    const res = await rejectLicenseRequest(requestId)
+    const res = requestType === 'license'
+      ? await rejectLicenseRequest(requestId)
+      : await rejectSystemRequest(requestId)
+      
     if (!res.success) {
       alert(res.error)
     } else if (onSuccess) {
