@@ -26,6 +26,7 @@ model License {
 
 model LicenseRequest {
   id             String    @id @default(cuid())
+  referenceNumber String?
   userId         String?   // User ID if logged in via Supabase
   name           String
   email          String
@@ -48,6 +49,7 @@ model Notification {
 
 model SystemRequest {
   id             String    @id @default(cuid())
+  referenceNumber String?
   userId         String?   // User ID if logged in via Supabase
   name           String
   email          String

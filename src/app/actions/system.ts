@@ -1,10 +1,19 @@
 'use server'
+import { createClient } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma'
 
 export async function createSystemRequest(data: { name: string; email: string; contactNumber: string; backupContact: string; storeName?: string; type: 'web' | 'app' }) {
   try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    const randomPart = () => Math.random().toString(36).substring(2, 6).toUpperCase();
+    const referenceNumber = `REF-${randomPart()}-${randomPart()}`;
+
     const request = await prisma.systemRequest.create({
       data: {
+        userId: session?.user?.id || null,
+        referenceNumber,
         name: data.name,
         email: data.email,
         contactNumber: data.contactNumber,

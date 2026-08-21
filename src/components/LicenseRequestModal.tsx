@@ -17,6 +17,7 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
   const [agreed, setAgreed] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [refNum, setRefNum] = useState<string | null>(null)
   const [userLogged, setUserLogged] = useState(false)
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
     if (isOpen) {
       getUser()
       setIsSuccess(false)
+      setRefNum(null)
     }
   }, [isOpen])
 
@@ -55,6 +57,7 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
         tier
       })
       if (res.success) {
+        setRefNum(res.request?.referenceNumber || null)
         setIsSuccess(true)
       } else {
         alert(res.error || "Failed to submit request")
@@ -82,6 +85,12 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
             </div>
             <h2 className="text-xl font-bold text-white mb-2">Request Submitted!</h2>
+            {refNum && (
+              <div className="mb-4 p-3 bg-zinc-900 border border-zinc-800 rounded-lg">
+                <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Reference Number</p>
+                <p className="text-lg font-mono font-bold text-white">{refNum}</p>
+              </div>
+            )}
             <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
               Your request is already submitted. Please wait for the provider to contact you or you can message him through this link: <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="text-blue-400 hover:underline">Vincent Layon</a>.
               <br /><br />

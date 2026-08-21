@@ -10,10 +10,12 @@ export async function createLicenseRequest(data: { name: string, email: string, 
 
     const randomPart = () => Math.random().toString(36).substring(2, 6).toUpperCase();
     const licenseKey = `${data.tier.toUpperCase()}-${randomPart()}-${randomPart()}-${randomPart()}`;
+    const referenceNumber = `REF-${randomPart()}-${randomPart()}`;
 
     const request = await prisma.licenseRequest.create({
       data: {
         userId: session?.user?.id || null,
+        referenceNumber,
         name: data.name,
         email: data.email,
         contactNumber: data.contactNumber,

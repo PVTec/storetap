@@ -4,9 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
-import { getPendingRequestsCount, getLicenseRequests, getApprovedRequests, getUsersList, getNotifications, markNotificationsRead } from '@/app/actions/admin'
+import { getPendingRequestsCount, getPendingRequests, getApprovedLicenseRequests, getApprovedSystemRequests, getUsersList, getNotifications, markNotificationsRead } from '@/app/actions/admin'
+import { getClientPendingRequests, undoRequest } from '@/app/actions/client'
 import RequestActions from '@/app/admin/requests/RequestActions'
 import SystemRequestModal from '@/components/SystemRequestModal'
+import RequestDetailsModal from '@/components/RequestDetailsModal'
 
 export default function DashboardPage() {
   const [licenses, setLicenses] = useState<any[]>([])
@@ -19,17 +21,26 @@ export default function DashboardPage() {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
+  
   const [adminPendingCount, setAdminPendingCount] = useState(0)
   const [hasClientPending, setHasClientPending] = useState(false)
+  const [clientPendingRequests, setClientPendingRequests] = useState<any[]>([])
+  const [loadingClientPending, setLoadingClientPending] = useState(true)
+  
   const [adminRequests, setAdminRequests] = useState<any[]>([])
   const [loadingAdmin, setLoadingAdmin] = useState(true)
-  const [approvedRequests, setApprovedRequests] = useState<any[]>([])
+  
+  const [approvedLicenseRequests, setApprovedLicenseRequests] = useState<any[]>([])
+  const [approvedSystemRequests, setApprovedSystemRequests] = useState<any[]>([])
   const [loadingApproved, setLoadingApproved] = useState(true)
+  
   const [usersList, setUsersList] = useState<any[]>([])
   const [loadingUsers, setLoadingUsers] = useState(true)
   const [notifications, setNotifications] = useState<any[]>([])
   const [loadingNotifications, setLoadingNotifications] = useState(true)
   const [unreadCount, setUnreadCount] = useState(0)
+  
+  const [selectedRequestDetails, setSelectedRequestDetails] = useState<any>(null)
 
   const isAdmin = userEmail === 'vincentlayonuser@gmail.com' || userEmail === 'admin@vince.dev'
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
@@ -55,6 +66,8 @@ export default function DashboardPage() {
           fetchAdminRequests()
           fetchApprovedRequests()
           fetchUsersList()
+        } else {
+          fetchClientPendingRequests()
         }
         fetchNotifications(checkIsAdmin)
       }
@@ -63,17 +76,27 @@ export default function DashboardPage() {
     }
   }
 
+  const fetchClientPendingRequests = async () => {
+    setLoadingClientPending(true)
+    const reqs = await getClientPendingRequests()
+    setClientPendingRequests(reqs)
+    setHasClientPending(reqs.length > 0)
+    setLoadingClientPending(false)
+  }
+
   const fetchAdminRequests = async () => {
     setLoadingAdmin(true)
-    const reqs = await getLicenseRequests()
+    const reqs = await getPendingRequests()
     setAdminRequests(reqs)
     setLoadingAdmin(false)
   }
 
   const fetchApprovedRequests = async () => {
     setLoadingApproved(true)
-    const reqs = await getApprovedRequests()
-    setApprovedRequests(reqs)
+    const lReqs = await getApprovedLicenseRequests()
+    const sReqs = await getApprovedSystemRequests()
+    setApprovedLicenseRequests(lReqs)
+    setApprovedSystemRequests(sReqs)
     setLoadingApproved(false)
   }
 
@@ -168,6 +191,13 @@ export default function DashboardPage() {
                 My Licenses
               </button>
               <button 
+                onClick={() => handleTabChange('client-pending')}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'client-pending' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                My Pending Requests
+              </button>
+              <button 
                 onClick={() => handleTabChange('store')}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
               >
@@ -197,11 +227,18 @@ export default function DashboardPage() {
                 )}
               </button>
               <button 
-                onClick={() => handleTabChange('approved')}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'approved' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+                onClick={() => handleTabChange('approved-licenses')}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'approved-licenses' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 Approved Licenses
+              </button>
+              <button 
+                onClick={() => handleTabChange('approved-systems')}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'approved-systems' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                Approved Systems
               </button>
               <button 
                 onClick={() => handleTabChange('users')}
@@ -452,7 +489,7 @@ export default function DashboardPage() {
                 
                 <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
                   {/* Web System */}
-                  <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)] hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:border-emerald-500/50 transition-all">
+                  <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)] hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:border-emerald-500/50 transition-all">
                     <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
@@ -464,7 +501,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="mb-8">
-                      <p className="text-4xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                      <p className="text-3xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
                       <ul className="space-y-4 mb-8">
@@ -488,7 +525,7 @@ export default function DashboardPage() {
                   </div>
 
                   {/* App System */}
-                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] hover:border-blue-500/70 transition-all">
+                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] hover:border-blue-500/70 transition-all">
                     <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
@@ -500,7 +537,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="mb-8">
-                      <p className="text-4xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                      <p className="text-3xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
                       <ul className="space-y-4 mb-8">
@@ -522,6 +559,80 @@ export default function DashboardPage() {
                     >
                       Purchase App System
                     </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'client-pending' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">My Pending Requests</h1>
+                <p className="text-zinc-400 text-sm mb-8">View and manage your pending license and system requests.</p>
+
+                <div className="bg-[#09090b] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse min-w-[600px]">
+                      <thead>
+                        <tr className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
+                          <th className="py-4 px-6">Reference No.</th>
+                          <th className="py-4 px-6">Type</th>
+                          <th className="py-4 px-6">Tier</th>
+                          <th className="py-4 px-6">Date</th>
+                          <th className="py-4 px-6 text-right">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm divide-y divide-zinc-800/60">
+                        {loadingClientPending ? (
+                          <tr><td colSpan={5} className="py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
+                        ) : clientPendingRequests.length === 0 ? (
+                          <tr><td colSpan={5} className="py-12 text-center text-zinc-500 font-medium">You have no pending requests.</td></tr>
+                        ) : (
+                          clientPendingRequests.map(req => (
+                            <tr key={req.id} className="hover:bg-zinc-900/30 transition-colors group">
+                              <td className="py-4 px-6 font-mono font-medium text-white">
+                                {req.referenceNumber || 'N/A'}
+                              </td>
+                              <td className="py-4 px-6 capitalize">
+                                {req.requestType}
+                              </td>
+                              <td className="py-4 px-6">
+                                <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
+                                  req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                  req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                                  'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                                }`}>
+                                  {req.tier}
+                                </span>
+                              </td>
+                              <td className="py-4 px-6 text-zinc-400">
+                                {new Date(req.createdAt).toLocaleDateString()}
+                              </td>
+                              <td className="py-4 px-6 text-right">
+                                <div className="flex justify-end gap-2">
+                                  <button
+                                    onClick={() => setSelectedRequestDetails(req)}
+                                    className="px-3 py-1.5 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
+                                  >
+                                    View
+                                  </button>
+                                  <button
+                                    onClick={async () => {
+                                      if (confirm('Are you sure you want to undo this request?')) {
+                                        await undoRequest(req.id, req.requestType);
+                                        fetchClientPendingRequests();
+                                      }
+                                    }}
+                                    className="px-3 py-1.5 text-xs font-semibold bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 rounded transition-colors border border-rose-500/20"
+                                  >
+                                    Undo
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -562,7 +673,8 @@ export default function DashboardPage() {
                   <table className="w-full text-left text-sm">
                     <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
                       <tr>
-                        <th className="px-6 py-4">Date</th>
+                        <th className="px-6 py-4">Ref No.</th>
+                        <th className="px-6 py-4">Type</th>
                         <th className="px-6 py-4">Name</th>
                         <th className="px-6 py-4">Contact</th>
                         <th className="px-6 py-4">Tier</th>
@@ -572,14 +684,15 @@ export default function DashboardPage() {
                     </thead>
                     <tbody className="divide-y divide-zinc-800/60">
                       {loadingAdmin ? (
-                        <tr><td colSpan={6} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
+                        <tr><td colSpan={7} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
                       ) : adminRequests.length === 0 ? (
                         <tr>
-                          <td colSpan={6} className="px-6 py-12 text-center text-zinc-500 font-medium">No requests found.</td>
+                          <td colSpan={7} className="px-6 py-12 text-center text-zinc-500 font-medium">No requests found.</td>
                         </tr>
                       ) : adminRequests.map(req => (
                         <tr key={req.id} className="hover:bg-zinc-900/30 transition-colors group">
-                          <td className="px-6 py-4 text-zinc-400 font-medium">{new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                          <td className="px-6 py-4 text-white font-mono">{req.referenceNumber || 'N/A'}</td>
+                          <td className="px-6 py-4 capitalize text-zinc-300">{req.requestType}</td>
                           <td className="px-6 py-4">
                             <div className="text-white font-bold">{req.name}</div>
                             <div className="text-zinc-500 text-xs">{req.email}</div>
@@ -609,7 +722,15 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-6 py-4 text-right">
                             {req.status === 'pending' && (
-                              <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity gap-2 items-center">
+                                {req.requestType === 'system' && (
+                                  <button
+                                    onClick={() => setSelectedRequestDetails(req)}
+                                    className="px-2 py-1 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
+                                  >
+                                    View
+                                  </button>
+                                )}
                                 <RequestActions requestId={req.id} requestType={req.requestType} onSuccess={() => {
                                   fetchAdminRequests();
                                   getPendingRequestsCount().then(count => setAdminPendingCount(count));
@@ -648,6 +769,10 @@ export default function DashboardPage() {
                       </div>
                       
                       <div className="grid grid-cols-2 gap-y-3 mb-5 text-sm">
+                        <div className="col-span-2">
+                          <p className="text-[10px] uppercase font-bold text-zinc-600 mb-1 tracking-wider">Ref No. / Type</p>
+                          <p className="text-white font-medium font-mono">{req.referenceNumber || 'N/A'} <span className="text-zinc-500 font-sans capitalize ml-2">({req.requestType})</span></p>
+                        </div>
                         <div>
                           <p className="text-[10px] uppercase font-bold text-zinc-600 mb-1 tracking-wider">Contact</p>
                           <p className="text-zinc-300 font-medium">{req.contactNumber}</p>
@@ -672,7 +797,15 @@ export default function DashboardPage() {
                       </div>
 
                       {req.status === 'pending' && (
-                        <div className="pt-4 border-t border-zinc-800/80">
+                        <div className="pt-4 border-t border-zinc-800/80 flex flex-col gap-2">
+                          {req.requestType === 'system' && (
+                            <button
+                              onClick={() => setSelectedRequestDetails(req)}
+                              className="w-full px-3 py-2 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
+                            >
+                              View Details
+                            </button>
+                          )}
                           <RequestActions requestId={req.id} requestType={req.requestType} onSuccess={() => {
                             fetchAdminRequests();
                             getPendingRequestsCount().then(count => setAdminPendingCount(count));
@@ -685,7 +818,7 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {activeTab === 'approved' && isAdmin && (
+            {activeTab === 'approved-licenses' && isAdmin && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-2">Approved Licenses</h1>
                 <p className="text-zinc-400 text-sm mb-8">View all approved license requests.</p>
@@ -704,9 +837,9 @@ export default function DashboardPage() {
                       <tbody className="divide-y divide-zinc-800/60">
                         {loadingApproved ? (
                           <tr><td colSpan={4} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
-                        ) : approvedRequests.length === 0 ? (
-                          <tr><td colSpan={4} className="px-6 py-12 text-center text-zinc-500 font-medium">No approved requests found.</td></tr>
-                        ) : approvedRequests.map(req => (
+                        ) : approvedLicenseRequests.length === 0 ? (
+                          <tr><td colSpan={4} className="px-6 py-12 text-center text-zinc-500 font-medium">No approved license requests found.</td></tr>
+                        ) : approvedLicenseRequests.map(req => (
                           <tr key={req.id} className="hover:bg-zinc-900/30 transition-colors group">
                             <td className="px-6 py-4 text-zinc-400 font-medium">{new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
                             <td className="px-6 py-4">
@@ -727,6 +860,67 @@ export default function DashboardPage() {
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                                 Approved
                               </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'approved-systems' && isAdmin && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">Approved Systems</h1>
+                <p className="text-zinc-400 text-sm mb-8">View all approved system requests.</p>
+                
+                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm min-w-[600px]">
+                      <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
+                        <tr>
+                          <th className="px-6 py-4">Date</th>
+                          <th className="px-6 py-4">Name</th>
+                          <th className="px-6 py-4">Tier</th>
+                          <th className="px-6 py-4">Status</th>
+                          <th className="px-6 py-4 text-right">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800/60">
+                        {loadingApproved ? (
+                          <tr><td colSpan={5} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
+                        ) : approvedSystemRequests.length === 0 ? (
+                          <tr><td colSpan={5} className="px-6 py-12 text-center text-zinc-500 font-medium">No approved system requests found.</td></tr>
+                        ) : approvedSystemRequests.map(req => (
+                          <tr key={req.id} className="hover:bg-zinc-900/30 transition-colors group">
+                            <td className="px-6 py-4 text-zinc-400 font-medium">{new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td className="px-6 py-4">
+                              <div className="text-white font-bold">{req.name}</div>
+                              <div className="text-zinc-500 text-xs">{req.email}</div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
+                                req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                                'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                              }`}>
+                                {req.tier}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                Approved
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 text-right">
+                              <button
+                                onClick={() => setSelectedRequestDetails(req)}
+                                className="px-3 py-1.5 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
+                              >
+                                View
+                              </button>
                             </td>
                           </tr>
                         ))}
@@ -818,6 +1012,12 @@ export default function DashboardPage() {
         isOpen={isSystemModalOpen}
         onClose={() => setIsSystemModalOpen(false)}
         systemType={selectedSystem}
+      />
+
+      <RequestDetailsModal
+        isOpen={!!selectedRequestDetails}
+        onClose={() => setSelectedRequestDetails(null)}
+        request={selectedRequestDetails}
       />
     </div>
   )

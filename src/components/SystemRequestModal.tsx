@@ -12,6 +12,7 @@ interface SystemRequestModalProps {
 export default function SystemRequestModal({ isOpen, onClose, systemType }: SystemRequestModalProps) {
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [refNum, setRefNum] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [agreed, setAgreed] = useState(false)
   
@@ -39,6 +40,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
         }
       }
       fetchUser()
+      setRefNum(null)
     } else {
       setSubmitted(false)
       setError('')
@@ -57,7 +59,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
     setLoading(true)
     setError('')
     try {
-      await createSystemRequest({
+      const res = await createSystemRequest({
         name: formData.name,
         email: formData.email,
         contactNumber: formData.contactNumber,
@@ -65,7 +67,10 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
         storeName: formData.storeName,
         type: systemType
       })
-      setSubmitted(true)
+      if (res.success) {
+        setRefNum(res.data?.referenceNumber || null)
+        setSubmitted(true)
+      }
     } catch (err: any) {
       setError(err.message || 'Something went wrong')
     } finally {
@@ -101,6 +106,12 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Request Submitted!</h3>
+              {refNum && (
+                <div className="mb-4 p-3 bg-zinc-900 border border-zinc-800 rounded-lg">
+                  <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Reference Number</p>
+                  <p className="text-lg font-mono font-bold text-white">{refNum}</p>
+                </div>
+              )}
               <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
                 Your system request has been submitted successfully. Please prepare your payment of {price} and wait for the provider to contact you.
               </p>

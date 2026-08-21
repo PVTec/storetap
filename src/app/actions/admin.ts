@@ -21,7 +21,7 @@ export async function getPendingRequestsCount() {
   }
 }
 
-export async function getLicenseRequests() {
+export async function getPendingRequests() {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
@@ -30,8 +30,8 @@ export async function getLicenseRequests() {
       return []
     }
 
-    const lReqs = await prisma.licenseRequest.findMany({ orderBy: { createdAt: 'desc' } })
-    const sReqs = await prisma.systemRequest.findMany({ orderBy: { createdAt: 'desc' } })
+    const lReqs = await prisma.licenseRequest.findMany({ where: { status: 'pending' }, orderBy: { createdAt: 'desc' } })
+    const sReqs = await prisma.systemRequest.findMany({ where: { status: 'pending' }, orderBy: { createdAt: 'desc' } })
 
     const combined = [
       ...lReqs.map(r => ({ ...r, requestType: 'license' })),
@@ -45,7 +45,7 @@ export async function getLicenseRequests() {
   }
 }
 
-export async function getApprovedRequests() {
+export async function getApprovedLicenseRequests() {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
@@ -58,17 +58,28 @@ export async function getApprovedRequests() {
       where: { status: 'approved' },
       orderBy: { createdAt: 'desc' }
     })
+    
+    return lReqs.map(r => ({ ...r, requestType: 'license' }))
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getApprovedSystemRequests() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return []
+    }
+
     const sReqs = await prisma.systemRequest.findMany({
       where: { status: 'approved' },
       orderBy: { createdAt: 'desc' }
     })
-
-    const combined = [
-      ...lReqs.map(r => ({ ...r, requestType: 'license' })),
-      ...sReqs.map(r => ({ ...r, tier: r.type === 'web' ? 'Web System' : 'App System', requestType: 'system' }))
-    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     
-    return combined
+    return sReqs.map(r => ({ ...r, tier: r.type === 'web' ? 'Web System' : 'App System', requestType: 'system' }))
   } catch (error) {
     return []
   }
