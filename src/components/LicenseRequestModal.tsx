@@ -19,8 +19,6 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
   const [isSuccess, setIsSuccess] = useState(false)
   const [userLogged, setUserLogged] = useState(false)
 
-  const supabase = createClient()
-
   useEffect(() => {
     async function getUser() {
       const supabase = createClient()
@@ -37,7 +35,7 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
       getUser()
       setIsSuccess(false)
     }
-  }, [isOpen, supabase.auth])
+  }, [isOpen])
 
   if (!isOpen) return null
 
