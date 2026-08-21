@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
+import LicenseRequestModal from '@/components/LicenseRequestModal'
 
 export default function DashboardPage() {
   const [licenses, setLicenses] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('licenses')
-  const [isBuying, setIsBuying] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedTier, setSelectedTier] = useState('Basic')
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -62,23 +64,9 @@ export default function DashboardPage() {
     }
   }
 
-  const handleBuy = async (tier: string, days: number) => {
-    try {
-      setIsBuying(true)
-      const res = await fetch('/api/licenses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier, count: 1, durationDays: days })
-      })
-      if (res.ok) {
-        await fetchLicenses()
-        setActiveTab('licenses')
-      }
-    } catch (error) {
-      console.error('Failed to buy', error)
-    } finally {
-      setIsBuying(false)
-    }
+  const handleOpenModal = (tierName: string) => {
+    setSelectedTier(tierName)
+    setIsModalOpen(true)
   }
 
   return (
@@ -262,11 +250,10 @@ export default function DashboardPage() {
                       </ul>
                     </div>
                     <button 
-                      disabled={isBuying}
-                      onClick={() => handleBuy('basic', 30)}
+                      onClick={() => handleOpenModal('Basic')}
                       className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
                     >
-                      {isBuying ? 'Processing...' : (hasBasic ? 'Buy Basic' : 'Get Free License')}
+                      {hasBasic ? 'Get Basic License' : 'Get Free License'}
                     </button>
                   </div>
 
@@ -283,11 +270,10 @@ export default function DashboardPage() {
                       </ul>
                     </div>
                     <button 
-                      disabled={isBuying}
-                      onClick={() => handleBuy('standard', 90)}
+                      onClick={() => handleOpenModal('Standard')}
                       className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors"
                     >
-                      {isBuying ? 'Processing...' : 'Buy Standard'}
+                      Get Standard License
                     </button>
                   </div>
 
@@ -307,11 +293,10 @@ export default function DashboardPage() {
                       </ul>
                     </div>
                     <button 
-                      disabled={isBuying}
-                      onClick={() => handleBuy('pro', 150)}
+                      onClick={() => handleOpenModal('Pro')}
                       className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
                     >
-                      {isBuying ? 'Processing...' : 'Buy Pro'}
+                      Get Pro License
                     </button>
                   </div>
                 </div>
@@ -346,6 +331,12 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
+
+      <LicenseRequestModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        tier={selectedTier} 
+      />
     </div>
   )
 }

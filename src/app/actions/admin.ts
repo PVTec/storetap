@@ -10,7 +10,7 @@ export async function approveLicenseRequest(requestId: string, licenseKey: strin
     const { data: { session } } = await supabase.auth.getSession()
 
     // Check if the user is the admin
-    if (!session || session.user.email !== 'vincentlayonuser@gmail.com') {
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
       return { success: false, error: 'Unauthorized. Only the admin can approve requests.' }
     }
 
