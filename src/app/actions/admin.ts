@@ -40,6 +40,90 @@ export async function getLicenseRequests() {
     return []
   }
 }
+export async function getApprovedRequests() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return []
+    }
+
+    const requests = await prisma.licenseRequest.findMany({
+      where: { status: 'approved' },
+      orderBy: { createdAt: 'desc' }
+    })
+    return requests
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getUsersList() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return []
+    }
+
+    // Fetch distinct users based on their license requests
+    const users = await prisma.licenseRequest.findMany({
+      distinct: ['email'],
+      select: {
+        userId: true,
+        name: true,
+        email: true,
+        contactNumber: true,
+        createdAt: true
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+    return users
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getNotifications(isAdmin: boolean) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) return []
+
+    const targetUserId = isAdmin ? 'admin' : session.user.id
+
+    const notifications = await prisma.notification.findMany({
+      where: { userId: targetUserId },
+      orderBy: { createdAt: 'desc' },
+      take: 50 // limit to latest 50
+    })
+    return notifications
+  } catch (error) {
+    return []
+  }
+}
+
+export async function markNotificationsRead(isAdmin: boolean) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) return { success: false }
+
+    const targetUserId = isAdmin ? 'admin' : session.user.id
+
+    await prisma.notification.updateMany({
+      where: { userId: targetUserId, read: false },
+      data: { read: true }
+    })
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
 
 export async function approveLicenseRequest(requestId: string) {
   try {
@@ -86,6 +170,16 @@ export async function approveLicenseRequest(requestId: string) {
       data: { status: 'approved' }
     })
 
+    if (request.userId) {
+      await prisma.notification.create({
+        data: {
+          userId: request.userId,
+          title: 'License Approved',
+          message: `Your request for a ${request.tier} license has been approved! Your license key is ready.`
+        }
+      })
+    }
+
     revalidatePath('/admin/requests')
     return { success: true }
   } catch (error: any) {
@@ -104,10 +198,27 @@ export async function rejectLicenseRequest(requestId: string) {
       return { success: false, error: 'Unauthorized. Only the admin can reject requests.' }
     }
 
-    // Delete the request entirely
-    await prisma.licenseRequest.delete({
+    // Update the request status instead of deleting it, or delete it and notify
+    const request = await prisma.licenseRequest.findUnique({
       where: { id: requestId }
     })
+
+    if (!request) return { success: false, error: 'Request not found' }
+
+    await prisma.licenseRequest.update({
+      where: { id: requestId },
+      data: { status: 'rejected' }
+    })
+
+    if (request.userId) {
+      await prisma.notification.create({
+        data: {
+          userId: request.userId,
+          title: 'License Request Rejected',
+          message: `Your request for a ${request.tier} license has been rejected. Please contact support for more details.`
+        }
+      })
+    }
 
     revalidatePath('/admin/requests')
     return { success: true }

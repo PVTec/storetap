@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
-import { getPendingRequestsCount, getLicenseRequests } from '@/app/actions/admin'
+import { getPendingRequestsCount, getLicenseRequests, getApprovedRequests, getUsersList, getNotifications, markNotificationsRead } from '@/app/actions/admin'
 import RequestActions from '@/app/admin/requests/RequestActions'
 
 export default function DashboardPage() {
@@ -20,6 +20,13 @@ export default function DashboardPage() {
   const [hasClientPending, setHasClientPending] = useState(false)
   const [adminRequests, setAdminRequests] = useState<any[]>([])
   const [loadingAdmin, setLoadingAdmin] = useState(true)
+  const [approvedRequests, setApprovedRequests] = useState<any[]>([])
+  const [loadingApproved, setLoadingApproved] = useState(true)
+  const [usersList, setUsersList] = useState<any[]>([])
+  const [loadingUsers, setLoadingUsers] = useState(true)
+  const [notifications, setNotifications] = useState<any[]>([])
+  const [loadingNotifications, setLoadingNotifications] = useState(true)
+  const [unreadCount, setUnreadCount] = useState(0)
 
   const isAdmin = userEmail === 'vincentlayonuser@gmail.com' || userEmail === 'admin@vince.dev'
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
@@ -43,7 +50,10 @@ export default function DashboardPage() {
           setActiveTab('admin')
           getPendingRequestsCount().then(count => setAdminPendingCount(count))
           fetchAdminRequests()
+          fetchApprovedRequests()
+          fetchUsersList()
         }
+        fetchNotifications(checkIsAdmin)
       }
     } catch (e) {
       console.error("Auth error", e)
@@ -55,6 +65,38 @@ export default function DashboardPage() {
     const reqs = await getLicenseRequests()
     setAdminRequests(reqs)
     setLoadingAdmin(false)
+  }
+
+  const fetchApprovedRequests = async () => {
+    setLoadingApproved(true)
+    const reqs = await getApprovedRequests()
+    setApprovedRequests(reqs)
+    setLoadingApproved(false)
+  }
+
+  const fetchUsersList = async () => {
+    setLoadingUsers(true)
+    const users = await getUsersList()
+    setUsersList(users)
+    setLoadingUsers(false)
+  }
+
+  const fetchNotifications = async (isAdminStatus: boolean) => {
+    setLoadingNotifications(true)
+    const notifs = await getNotifications(isAdminStatus)
+    setNotifications(notifs)
+    setUnreadCount(notifs.filter((n: any) => !n.read).length)
+    setLoadingNotifications(false)
+  }
+
+  const handleTabChange = async (tab: string) => {
+    setActiveTab(tab)
+    setIsSidebarOpen(false)
+    if (tab === 'notifications' && unreadCount > 0) {
+      await markNotificationsRead(isAdmin)
+      setUnreadCount(0)
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+    }
   }
 
   const fetchLicenses = async () => {
@@ -111,14 +153,14 @@ export default function DashboardPage() {
           {!isAdmin ? (
             <>
               <button 
-                onClick={() => { setActiveTab('licenses'); setIsSidebarOpen(false); }}
+                onClick={() => handleTabChange('licenses')}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'licenses' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
                 My Licenses
               </button>
               <button 
-                onClick={() => { setActiveTab('store'); setIsSidebarOpen(false); }}
+                onClick={() => handleTabChange('store')}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
@@ -126,22 +168,51 @@ export default function DashboardPage() {
               </button>
             </>
           ) : (
-            <button 
-              onClick={() => { setActiveTab('admin'); setIsSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'admin' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
-            >
-              <div className="flex items-center gap-3">
+            <>
+              <button 
+                onClick={() => handleTabChange('admin')}
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'admin' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <div className="flex items-center gap-3">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                  Pending Requests
+                </div>
+                {adminPendingCount > 0 && (
+                  <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{adminPendingCount}</span>
+                )}
+              </button>
+              <button 
+                onClick={() => handleTabChange('approved')}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'approved' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Approved Licenses
+              </button>
+              <button 
+                onClick={() => handleTabChange('users')}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'users' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                Manage Requests
-              </div>
-              {adminPendingCount > 0 && (
-                <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{adminPendingCount}</span>
-              )}
-            </button>
+                Manage Users
+              </button>
+            </>
           )}
 
           <button 
-            onClick={() => { setActiveTab('about'); setIsSidebarOpen(false); }}
+            onClick={() => handleTabChange('notifications')}
+            className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'notifications' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+          >
+            <div className="flex items-center gap-3">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+              Notifications
+            </div>
+            {unreadCount > 0 && (
+              <span className="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full">{unreadCount}</span>
+            )}
+          </button>
+
+          <button 
+            onClick={() => handleTabChange('about')}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'about' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -386,7 +457,7 @@ export default function DashboardPage() {
 
             {activeTab === 'admin' && isAdmin && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <h1 className="text-2xl font-bold text-white mb-2">License Requests</h1>
+                <h1 className="text-2xl font-bold text-white mb-2">Pending License Requests</h1>
                 <p className="text-zinc-400 text-sm mb-8">Manage incoming license requests from clients.</p>
                 
                 {/* Desktop Table View */}
@@ -511,6 +582,125 @@ export default function DashboardPage() {
                           }} />
                         </div>
                       )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'approved' && isAdmin && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">Approved Licenses</h1>
+                <p className="text-zinc-400 text-sm mb-8">View all approved license requests.</p>
+                
+                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm min-w-[600px]">
+                      <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
+                        <tr>
+                          <th className="px-6 py-4">Date</th>
+                          <th className="px-6 py-4">Name</th>
+                          <th className="px-6 py-4">Tier</th>
+                          <th className="px-6 py-4">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800/60">
+                        {loadingApproved ? (
+                          <tr><td colSpan={4} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
+                        ) : approvedRequests.length === 0 ? (
+                          <tr><td colSpan={4} className="px-6 py-12 text-center text-zinc-500 font-medium">No approved requests found.</td></tr>
+                        ) : approvedRequests.map(req => (
+                          <tr key={req.id} className="hover:bg-zinc-900/30 transition-colors group">
+                            <td className="px-6 py-4 text-zinc-400 font-medium">{new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td className="px-6 py-4">
+                              <div className="text-white font-bold">{req.name}</div>
+                              <div className="text-zinc-500 text-xs">{req.email}</div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
+                                req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                                'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                              }`}>
+                                {req.tier}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                Approved
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'users' && isAdmin && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">Manage Users</h1>
+                <p className="text-zinc-400 text-sm mb-8">View clients who have interacted with StoreTap.</p>
+                
+                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm min-w-[600px]">
+                      <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
+                        <tr>
+                          <th className="px-6 py-4">User</th>
+                          <th className="px-6 py-4">Contact Number</th>
+                          <th className="px-6 py-4">First Active</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800/60">
+                        {loadingUsers ? (
+                          <tr><td colSpan={3} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading users...</td></tr>
+                        ) : usersList.length === 0 ? (
+                          <tr><td colSpan={3} className="px-6 py-12 text-center text-zinc-500 font-medium">No users found.</td></tr>
+                        ) : usersList.map((u, i) => (
+                          <tr key={i} className="hover:bg-zinc-900/30 transition-colors group">
+                            <td className="px-6 py-4">
+                              <div className="text-white font-bold">{u.name}</div>
+                              <div className="text-zinc-500 text-xs">{u.email}</div>
+                            </td>
+                            <td className="px-6 py-4 text-zinc-300 font-medium">{u.contactNumber}</td>
+                            <td className="px-6 py-4 text-zinc-400 font-medium">{new Date(u.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'notifications' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">Notifications</h1>
+                <p className="text-zinc-400 text-sm mb-8">Stay updated with your latest alerts.</p>
+                
+                <div className="space-y-4">
+                  {loadingNotifications ? (
+                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">Loading notifications...</div>
+                  ) : notifications.length === 0 ? (
+                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
+                      You have no notifications.
+                    </div>
+                  ) : notifications.map(notif => (
+                    <div key={notif.id} className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-5 shadow-lg relative overflow-hidden flex gap-4 items-start">
+                      <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      </div>
+                      <div>
+                        <div className="flex justify-between items-start gap-4">
+                          <h3 className="text-base font-bold text-white leading-tight mb-1">{notif.title}</h3>
+                          <span className="text-[10px] text-zinc-500 font-medium whitespace-nowrap">{new Date(notif.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <p className="text-zinc-400 text-sm leading-relaxed">{notif.message}</p>
+                      </div>
                     </div>
                   ))}
                 </div>

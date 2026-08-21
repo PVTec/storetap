@@ -23,6 +23,14 @@ export async function createLicenseRequest(data: { name: string, email: string, 
       }
     })
 
+    await prisma.notification.create({
+      data: {
+        userId: 'admin',
+        title: 'New License Request',
+        message: `${data.name} has requested a ${data.tier} license.`
+      }
+    })
+
     return { success: true, request }
   } catch (error: any) {
     console.error("Error creating license request:", error)
