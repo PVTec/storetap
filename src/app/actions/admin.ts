@@ -1,12 +1,12 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
 export async function approveLicenseRequest(requestId: string, licenseKey: string) {
   try {
-    const supabase = await createServerClient()
+    const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
     // Check if the user is the admin

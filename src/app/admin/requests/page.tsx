@@ -1,11 +1,11 @@
 import prisma from '@/lib/prisma'
 import Navigation from '@/components/Navigation'
 import ApproveButton from './ApproveButton'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
 export default async function AdminRequestsPage() {
-  const supabase = await createServerClient()
+  const supabase = await createClient()
   const { data: { session } } = await supabase.auth.getSession()
 
   if (!session || session.user.email !== 'vincentlayonuser@gmail.com') {

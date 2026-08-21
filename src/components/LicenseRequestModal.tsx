@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { createLicenseRequest } from '@/app/actions/license'
 
 interface LicenseRequestModalProps {
@@ -19,10 +19,11 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
   const [isSuccess, setIsSuccess] = useState(false)
   const [userLogged, setUserLogged] = useState(false)
 
-  const supabase = createBrowserClient()
+  const supabase = createClient()
 
   useEffect(() => {
     async function getUser() {
+      const supabase = createClient()
       const { data: { session } } = await supabase.auth.getSession()
       if (session?.user?.email) {
         setEmail(session.user.email)

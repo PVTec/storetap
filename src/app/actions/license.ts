@@ -1,11 +1,11 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma'
 
 export async function createLicenseRequest(data: { name: string, email: string, contactNumber: string, tier: string }) {
   try {
-    const supabase = await createServerClient()
+    const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
     const request = await prisma.licenseRequest.create({
