@@ -8,7 +8,7 @@ export default async function AdminRequestsPage() {
   const supabase = await createClient()
   const { data: { session } } = await supabase.auth.getSession()
 
-  if (!session || session.user.email !== 'vincentlayonuser@gmail.com') {
+  if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
     redirect('/')
   }
 

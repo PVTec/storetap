@@ -14,6 +14,7 @@ export default function DashboardPage() {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
+  const isAdmin = userEmail === 'vincentlayonuser@gmail.com' || userEmail === 'admin@vince.dev'
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
 
   useEffect(() => {
@@ -107,6 +108,15 @@ export default function DashboardPage() {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             About StoreTap
           </button>
+          {isAdmin && (
+            <Link 
+              href="/admin/requests"
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-bold text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 transition-all mt-4"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+              Admin Dashboard
+            </Link>
+          )}
         </div>
         <div className="p-4 border-t border-zinc-800/80">
           <div className="flex items-center gap-3 mb-4 px-2">
