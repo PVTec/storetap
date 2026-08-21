@@ -452,7 +452,8 @@ export default function DashboardPage() {
                 
                 <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
                   {/* Web System */}
-                  <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-8 flex flex-col hover:border-zinc-700 transition-colors">
+                  <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)] hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:border-emerald-500/50 transition-all">
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h3 className="text-xl font-bold text-white">Web Version</h3>
@@ -466,35 +467,35 @@ export default function DashboardPage() {
                       <p className="text-4xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
-                      <ul className="space-y-3 mb-8">
+                      <ul className="space-y-4 mb-8">
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-emerald-400">✓</span> Free Hosting (Website)
+                          <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Hosting (Website)
                         </li>
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-emerald-400">✓</span> Free Database Storage
+                          <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Database Storage
                         </li>
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-emerald-400">✓</span> Free <span className="font-bold ml-1">Basic Tier License</span> (30 Days)
+                          <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-emerald-400">Basic Tier License</span> (30 Days)
                         </li>
                       </ul>
                     </div>
                     <button 
                       onClick={() => handleOpenSystemModal('web')}
-                      className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors border border-zinc-700"
+                      className="w-full py-3 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 font-bold rounded-lg transition-colors border border-emerald-500/20"
                     >
                       Purchase Web System
                     </button>
                   </div>
 
                   {/* App System */}
-                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.1)] hover:border-blue-500/70 transition-colors">
+                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] hover:border-blue-500/70 transition-all">
                     <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h3 className="text-xl font-bold text-white">App Version</h3>
                         <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
                       </div>
-                      <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20">
+                      <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                       </div>
                     </div>
@@ -502,21 +503,22 @@ export default function DashboardPage() {
                       <p className="text-4xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
-                      <ul className="space-y-3 mb-8">
+                      <ul className="space-y-4 mb-8">
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-blue-400">✓</span> Free Mobile App
+                          <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Mobile App
+                        </li>
+                        <li className="text-sm text-zinc-300 flex items-center gap-3 leading-relaxed">
+                          <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full shrink-0"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> 
+                          <span>Free Hosting <span className="text-blue-400 font-medium">(Web Site)</span> & Database Storage</span>
                         </li>
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-blue-400">✓</span> Free Hosting & Database Storage
-                        </li>
-                        <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-blue-400">✓</span> Free <span className="font-bold ml-1">Pro Tier License</span> (30 Days)
+                          <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-blue-400">Pro Tier License</span> (30 Days)
                         </li>
                       </ul>
                     </div>
                     <button 
                       onClick={() => handleOpenSystemModal('app')}
-                      className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg shadow-blue-500/20"
+                      className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg shadow-blue-500/25"
                     >
                       Purchase App System
                     </button>

@@ -52,6 +52,8 @@ model SystemRequest {
   name           String
   email          String
   contactNumber  String
+  backupContact  String
+  storeName      String?
   type           String    // 'web' or 'app'
   status         String    @default("pending") // pending, approved, rejected
   createdAt      DateTime  @default(now())

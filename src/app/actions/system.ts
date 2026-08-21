@@ -1,13 +1,15 @@
 'use server'
 import prisma from '@/lib/prisma'
 
-export async function createSystemRequest(data: { name: string; email: string; contactNumber: string; type: 'web' | 'app' }) {
+export async function createSystemRequest(data: { name: string; email: string; contactNumber: string; backupContact: string; storeName?: string; type: 'web' | 'app' }) {
   try {
     const request = await prisma.systemRequest.create({
       data: {
         name: data.name,
         email: data.email,
         contactNumber: data.contactNumber,
+        backupContact: data.backupContact,
+        storeName: data.storeName,
         type: data.type,
       }
     })

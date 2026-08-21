@@ -18,7 +18,9 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    contactNumber: ''
+    contactNumber: '',
+    backupContact: '',
+    storeName: ''
   })
 
   const price = systemType === 'web' ? '₱250' : '₱750'
@@ -41,7 +43,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
       setSubmitted(false)
       setError('')
       setAgreed(false)
-      setFormData(prev => ({ ...prev, contactNumber: '', name: '' }))
+      setFormData(prev => ({ ...prev, contactNumber: '', name: '', backupContact: '', storeName: '' }))
     }
   }, [isOpen])
 
@@ -59,6 +61,8 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
         name: formData.name,
         email: formData.email,
         contactNumber: formData.contactNumber,
+        backupContact: formData.backupContact,
+        storeName: formData.storeName,
         type: systemType
       })
       setSubmitted(true)
@@ -142,6 +146,29 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                   onChange={e => setFormData({...formData, contactNumber: e.target.value})}
                   className="w-full bg-black border border-zinc-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="09123456789"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-1.5">Backup Contact Number</label>
+                <input 
+                  type="text" 
+                  required
+                  value={formData.backupContact}
+                  onChange={e => setFormData({...formData, backupContact: e.target.value})}
+                  className="w-full bg-black border border-zinc-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                  placeholder="09987654321"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-1.5">Custom Branding Store Name <span className="text-zinc-600 font-normal">(Optional)</span></label>
+                <input 
+                  type="text" 
+                  value={formData.storeName}
+                  onChange={e => setFormData({...formData, storeName: e.target.value})}
+                  className="w-full bg-black border border-zinc-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                  placeholder="e.g. Juan's Sari-Sari Store"
                 />
               </div>
 
