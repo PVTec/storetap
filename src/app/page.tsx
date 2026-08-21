@@ -60,7 +60,7 @@ export default async function LandingPage() {
         
         {/* Mockup matching the StoreTap V2.1.0 app style */}
         <div className="relative z-10 lg:pl-4 mt-10 lg:mt-0">
-          <div className="absolute inset-0 bg-blue-500/10 blur-[100px] -z-10 rounded-full"></div>
+          <div className="absolute -inset-10 bg-blue-600/30 blur-[80px] md:blur-[100px] md:bg-blue-500/20 -z-10 rounded-full"></div>
           <div className="bg-[#09090b] border border-zinc-800 rounded-3xl p-2 shadow-2xl relative overflow-hidden max-w-[340px] mx-auto lg:mx-0 ring-1 ring-white/5">
             <div className="bg-black rounded-[1.25rem] h-[600px] w-full overflow-hidden border border-zinc-800/50 flex flex-col relative shadow-inner">
               
