@@ -11,6 +11,7 @@ export default function DashboardPage() {
   const [isBuying, setIsBuying] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
 
   useEffect(() => {
@@ -173,17 +174,29 @@ export default function DashboardPage() {
                       </thead>
                       <tbody className="text-sm divide-y divide-zinc-800/60">
                         {loading ? (
-                          <tr><td colSpan={4} className="py-12 text-center text-zinc-500 font-medium">Loading licenses...</td></tr>
+                          <tr><td colSpan={5} className="py-12 text-center text-zinc-500 font-medium">Loading licenses...</td></tr>
                         ) : licenses.length === 0 ? (
-                          <tr><td colSpan={4} className="py-12 text-center text-zinc-500 font-medium">You don't have any licenses yet. Go to the Store to buy one!</td></tr>
+                          <tr><td colSpan={5} className="py-12 text-center text-zinc-500 font-medium">You don't have any licenses yet. Go to the Store to buy one!</td></tr>
                         ) : (
                           licenses.map(l => (
                             <tr key={l.id} className="hover:bg-zinc-900/30 transition-colors group">
-                              <td className="py-4 px-6 font-mono text-sm text-zinc-300">
+                              <td className="py-4 px-6 font-mono font-medium text-white">
                                 <div className="flex items-center gap-2">
                                   <span>{l.licenseKey}</span>
-                                  <button onClick={() => navigator.clipboard.writeText(l.licenseKey)} className="text-zinc-500 hover:text-white transition-colors" title="Copy License Key">
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                  <button 
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(l.licenseKey)
+                                      setCopiedKey(l.licenseKey)
+                                      setTimeout(() => setCopiedKey(null), 2000)
+                                    }} 
+                                    className={`${copiedKey === l.licenseKey ? 'text-emerald-400' : 'text-zinc-500 hover:text-white'} transition-colors`} 
+                                    title="Copy License Key"
+                                  >
+                                    {copiedKey === l.licenseKey ? (
+                                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                    ) : (
+                                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                    )}
                                   </button>
                                 </div>
                               </td>

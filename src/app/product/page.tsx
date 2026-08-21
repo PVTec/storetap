@@ -1,25 +1,11 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import Image from 'next/image'
+import Navigation from '@/components/Navigation'
 
 export default function ProductPage() {
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto border-b border-zinc-800/60 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/icon.svg" alt="StoreTap Logo" width={32} height={32} />
-          <span className="text-xl font-bold tracking-tight text-white">StoreTap</span>
-        </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <Link href="/product" className="text-white transition-colors">Product</Link>
-          <Link href="/features" className="hover:text-white transition-colors">Features</Link>
-          <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold shadow-sm hover:bg-zinc-200 transition-all">
-            Dashboard
-          </Link>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="max-w-4xl mx-auto px-6 pt-20 pb-32 text-center">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white mb-6">
