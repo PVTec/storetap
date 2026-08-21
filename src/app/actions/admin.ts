@@ -348,3 +348,32 @@ export async function rejectSystemRequest(requestId: string) {
     return { success: false, error: "Failed to reject system request." }
   }
 }
+
+export async function generateCustomLicense(tier: string, durationDays: number) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    const randomPart = () => Math.random().toString(36).substring(2, 6).toUpperCase();
+    const licenseKey = `${tier.toUpperCase()}-${randomPart()}-${randomPart()}-${randomPart()}`;
+
+    const license = await prisma.license.create({
+      data: {
+        licenseKey,
+        tier: tier.toLowerCase(),
+        status: 'unused',
+        durationDays
+      }
+    })
+
+    revalidatePath('/dashboard')
+    return { success: true, license }
+  } catch (error) {
+    console.error("Error generating custom license:", error)
+    return { success: false, error: "Failed to generate license." }
+  }
+}
