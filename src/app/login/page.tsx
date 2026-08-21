@@ -32,19 +32,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#000000] flex flex-col items-center justify-center p-4 selection:bg-blue-500/30">
       
-      <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+      <div className="w-full max-w-[400px] bg-[#09090b] border border-zinc-800/80 rounded-2xl p-8 shadow-2xl relative">
+        <div className="absolute inset-0 bg-blue-500/5 blur-xl -z-10 rounded-2xl"></div>
         <div className="text-center mb-8">
           <Link href="/">
-            <Image src="/icon.svg" alt="StoreTap Logo" width={48} height={48} className="mx-auto mb-5" />
+            <Image src="/icon.svg" alt="StoreTap Logo" width={40} height={40} className="mx-auto mb-6" />
           </Link>
-          <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Welcome Back</h1>
-          <p className="text-slate-500 text-sm font-medium">Sign in to your StoreTap account</p>
+          <h1 className="text-2xl font-semibold text-white tracking-tight mb-1.5">Welcome Back</h1>
+          <p className="text-zinc-400 text-sm">Sign in to your StoreTap account</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 text-sm font-medium p-4 rounded-xl mb-6 text-center">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium p-3 rounded-lg mb-6 text-center">
             {error}
           </div>
         )}
@@ -53,7 +54,7 @@ export default function LoginPage() {
           <button 
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-3.5 px-4 rounded-xl transition-all shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 bg-white hover:bg-zinc-200 text-black font-bold py-2.5 px-4 rounded-lg transition-all shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -65,29 +66,29 @@ export default function LoginPage() {
           </button>
 
           <div className="relative py-4 flex items-center">
-            <div className="flex-grow border-t border-slate-200"></div>
-            <span className="flex-shrink-0 mx-4 text-slate-400 text-xs uppercase font-bold tracking-wider">Or</span>
-            <div className="flex-grow border-t border-slate-200"></div>
+            <div className="flex-grow border-t border-zinc-800"></div>
+            <span className="flex-shrink-0 mx-4 text-zinc-500 text-xs uppercase font-medium tracking-wider">Or</span>
+            <div className="flex-grow border-t border-zinc-800"></div>
           </div>
 
           <div className="space-y-4 opacity-40 pointer-events-none">
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">Email address</label>
-              <input type="email" placeholder="name@company.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 outline-none" disabled />
+              <label className="block text-sm font-medium text-zinc-300 mb-1.5">Email address</label>
+              <input type="email" placeholder="name@company.com" className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2.5 text-white outline-none" disabled />
             </div>
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">Password</label>
-              <input type="password" placeholder="••••••••" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 outline-none" disabled />
+              <label className="block text-sm font-medium text-zinc-300 mb-1.5">Password</label>
+              <input type="password" placeholder="••••••••" className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2.5 text-white outline-none" disabled />
             </div>
-            <button disabled className="w-full py-3.5 bg-blue-600 text-white font-bold rounded-xl">
+            <button disabled className="w-full py-2.5 bg-blue-600 text-white font-bold rounded-lg mt-2">
               Sign In
             </button>
           </div>
         </div>
       </div>
       
-      <div className="mt-8 text-center text-sm font-medium text-slate-500">
-        <Link href="/" className="hover:text-slate-800 transition-colors">← Back to home</Link>
+      <div className="mt-8 text-center text-sm text-zinc-500">
+        <Link href="/" className="hover:text-white transition-colors">← Back to home</Link>
       </div>
     </div>
   )
