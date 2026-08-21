@@ -74,3 +74,26 @@ export async function approveLicenseRequest(requestId: string) {
     return { success: false, error: "Failed to approve request." }
   }
 }
+
+export async function rejectLicenseRequest(requestId: string) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    // Check if the user is the admin
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return { success: false, error: 'Unauthorized. Only the admin can reject requests.' }
+    }
+
+    // Delete the request entirely
+    await prisma.licenseRequest.delete({
+      where: { id: requestId }
+    })
+
+    revalidatePath('/admin/requests')
+    return { success: true }
+  } catch (error: any) {
+    console.error("Error rejecting license request:", error)
+    return { success: false, error: "Failed to reject request." }
+  }
+}
