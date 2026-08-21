@@ -25,13 +25,23 @@ export default function Dashboard() {
     durationDays: 30
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const fetchLicenses = async () => {
     try {
       const res = await fetch('/api/licenses');
       const data = await res.json();
-      setLicenses(data);
+      if (Array.isArray(data)) {
+        setLicenses(data);
+        setError(null);
+      } else {
+        setError(data.error || 'Unknown API Error');
+        setLicenses([]);
+      }
     } catch (e) {
       console.error(e);
+      setError(String(e));
+      setLicenses([]);
     } finally {
       setLoading(false);
     }
@@ -78,6 +88,13 @@ export default function Dashboard() {
             Sign Out
           </button>
         </header>
+
+        {error && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+            <p className="text-red-700 font-medium">Database Error:</p>
+            <p className="text-red-600 text-sm mt-1">{error}</p>
+          </div>
+        )}
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
