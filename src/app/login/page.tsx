@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import Image from 'next/image'
@@ -20,7 +20,8 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          // Hardcoded to Vercel production URL to prevent localhost redirects
+          redirectTo: 'https://storetap-central.vercel.app/dashboard'
         }
       })
       

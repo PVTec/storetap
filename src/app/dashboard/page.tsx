@@ -1,250 +1,314 @@
-"use client";
+"use client"
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { createBrowserClient } from '@supabase/ssr'
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createBrowserClient } from '@supabase/ssr';
-type License = {
-  id: string;
-  licenseKey: string;
-  tier: string;
-  status: string;
-  deviceId: string | null;
-  durationDays: number;
-  activatedAt: string | null;
-  expiresAt: string | null;
-  createdAt: string;
-};
+export default function DashboardPage() {
+  const [licenses, setLicenses] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('licenses')
+  const [isBuying, setIsBuying] = useState(false)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
 
-export default function Dashboard() {
-  const [licenses, setLicenses] = useState<License[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const router = useRouter();
-  
-  const [generateForm, setGenerateForm] = useState({
-    tier: 'pro',
-    count: 1,
-    durationDays: 30
-  });
+  useEffect(() => {
+    fetchLicenses()
+    checkUser()
+  }, [])
 
-  const [error, setError] = useState<string | null>(null);
+  const checkUser = async () => {
+    try {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        setUserEmail(user.email || null)
+      }
+    } catch (e) {
+      console.error("Auth error", e)
+    }
+  }
 
   const fetchLicenses = async () => {
     try {
-      const res = await fetch('/api/licenses');
-      const data = await res.json();
+      setLoading(true)
+      const res = await fetch('/api/licenses')
+      const data = await res.json()
       if (Array.isArray(data)) {
-        setLicenses(data);
-        setError(null);
-      } else {
-        setError(data.error || 'Unknown API Error');
-        setLicenses([]);
+        setLicenses(data)
       }
-    } catch (e) {
-      console.error(e);
-      setError(String(e));
-      setLicenses([]);
+    } catch (error) {
+      console.error('Failed to fetch', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-
-  useEffect(() => {
-    fetchLicenses();
-  }, []);
-
-  const handleGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsGenerating(true);
-    try {
-      await fetch('/api/licenses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(generateForm)
-      });
-      await fetchLicenses();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const activeCount = licenses.filter(l => l.status === 'active').length;
-  const expiredCount = licenses.filter(l => l.status === 'expired').length;
-  const unusedCount = licenses.filter(l => l.status === 'unused').length;
+  }
 
   const handleSignOut = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-    await supabase.auth.signOut();
-    router.push('/login');
-    router.refresh();
-  };
+    try {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      await supabase.auth.signOut()
+      window.location.href = '/'
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const handleBuy = async (tier: string, days: number) => {
+    try {
+      setIsBuying(true)
+      const res = await fetch('/api/licenses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier, count: 1, durationDays: days })
+      })
+      if (res.ok) {
+        await fetchLicenses()
+        setActiveTab('licenses')
+      }
+    } catch (error) {
+      console.error('Failed to buy', error)
+    } finally {
+      setIsBuying(false)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-sans selection:bg-blue-100 pb-12">
-      {/* Header Gradient Bar */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
+    <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30 flex">
       
-      <div className="max-w-7xl mx-auto px-6 pt-10 space-y-8">
-        
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">StoreTap Central</h1>
-            <p className="text-slate-500 mt-1 font-medium">Global License Management System</p>
-          </div>
+      {/* Sidebar */}
+      <aside className="w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col hidden md:flex">
+        <div className="h-16 flex items-center px-6 border-b border-zinc-800/80">
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/icon.svg" alt="StoreTap Logo" width={28} height={28} />
+            <span className="text-lg font-bold tracking-tight text-white">StoreTap</span>
+          </Link>
+        </div>
+        <div className="p-4 flex-1 space-y-1">
           <button 
-            onClick={handleSignOut}
-            className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-lg shadow-sm hover:bg-slate-50 hover:text-red-600 transition-all font-medium text-sm">
+            onClick={() => setActiveTab('licenses')}
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'licenses' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
+            My Licenses
+          </button>
+          <button 
+            onClick={() => setActiveTab('store')}
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+            License Store
+          </button>
+          <button 
+            onClick={() => setActiveTab('about')}
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'about' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            About StoreTap
+          </button>
+        </div>
+        <div className="p-4 border-t border-zinc-800/80">
+          <div className="flex items-center gap-3 mb-4 px-2">
+            <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs uppercase">
+              {userEmail ? userEmail.charAt(0) : 'U'}
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-sm font-medium text-white truncate">{userEmail || 'User'}</p>
+              <p className="text-xs text-zinc-500">Client Account</p>
+            </div>
+          </div>
+          <button onClick={handleSignOut} className="w-full py-2 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold rounded-lg transition-colors border border-zinc-800">
             Sign Out
           </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Mobile Header */}
+        <header className="h-16 md:hidden flex items-center justify-between px-6 border-b border-zinc-800/80 bg-[#09090b]">
+           <div className="flex items-center gap-2">
+             <Image src="/icon.svg" alt="StoreTap Logo" width={24} height={24} />
+             <span className="font-bold text-white">StoreTap</span>
+           </div>
+           <button onClick={handleSignOut} className="text-xs font-bold text-zinc-400">Sign Out</button>
         </header>
 
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
-            <p className="text-red-700 font-medium">Database Error:</p>
-            <p className="text-red-600 text-sm mt-1">{error}</p>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-            <p className="text-sm text-slate-500 font-semibold uppercase tracking-wider mb-2">Total Licenses</p>
-            <p className="text-4xl font-black text-slate-800">{licenses.length}</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-            <p className="text-sm text-emerald-500 font-semibold uppercase tracking-wider mb-2">Active Stores</p>
-            <p className="text-4xl font-black text-emerald-600">{activeCount}</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-            <p className="text-sm text-amber-500 font-semibold uppercase tracking-wider mb-2">Unused Keys</p>
-            <p className="text-4xl font-black text-amber-600">{unusedCount}</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-            <p className="text-sm text-rose-500 font-semibold uppercase tracking-wider mb-2">Expired</p>
-            <p className="text-4xl font-black text-rose-600">{expiredCount}</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Generate Form */}
-          <div className="lg:col-span-1">
-            <div className="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 sticky top-8">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <span className="bg-blue-100 text-blue-600 p-2 rounded-lg">✨</span>
-                Generate Keys
-              </h2>
-              <form onSubmit={handleGenerate} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">License Tier</label>
-                  <select 
-                    className="w-full border border-slate-200 rounded-xl p-3 bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                    value={generateForm.tier}
-                    onChange={e => setGenerateForm({...generateForm, tier: e.target.value})}
-                  >
-                    <option value="free">Free Trial (1 Min)</option>
-                    <option value="standard">Standard (₱500)</option>
-                    <option value="pro">Pro (₱1500)</option>
-                  </select>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Quantity</label>
-                    <input 
-                      type="number" min="1" max="100"
-                      className="w-full border border-slate-200 rounded-xl p-3 bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                      value={generateForm.count}
-                      onChange={e => setGenerateForm({...generateForm, count: parseInt(e.target.value)})}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Days Valid</label>
-                    <input 
-                      type="number" min="1"
-                      className="w-full border border-slate-200 rounded-xl p-3 bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                      value={generateForm.durationDays}
-                      onChange={e => setGenerateForm({...generateForm, durationDays: parseInt(e.target.value)})}
-                    />
+        <div className="flex-1 overflow-y-auto p-6 lg:p-10">
+          <div className="max-w-5xl mx-auto">
+            
+            {activeTab === 'licenses' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">My Licenses</h1>
+                <p className="text-zinc-400 text-sm mb-8">View and manage your active StoreTap POS licenses.</p>
+                
+                <div className="bg-[#09090b] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse min-w-[600px]">
+                      <thead>
+                        <tr className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
+                          <th className="py-4 px-6">License Key</th>
+                          <th className="py-4 px-6">Tier</th>
+                          <th className="py-4 px-6">Status</th>
+                          <th className="py-4 px-6">Expiration</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm divide-y divide-zinc-800/60">
+                        {loading ? (
+                          <tr><td colSpan={4} className="py-12 text-center text-zinc-500 font-medium">Loading licenses...</td></tr>
+                        ) : licenses.length === 0 ? (
+                          <tr><td colSpan={4} className="py-12 text-center text-zinc-500 font-medium">You don't have any licenses yet. Go to the Store to buy one!</td></tr>
+                        ) : (
+                          licenses.map(l => (
+                            <tr key={l.id} className="hover:bg-zinc-900/30 transition-colors group">
+                              <td className="py-4 px-6 font-mono text-sm text-zinc-300">
+                                {l.licenseKey}
+                              </td>
+                              <td className="py-4 px-6">
+                                <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
+                                  l.tier === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                  l.tier === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                                  'bg-zinc-800 text-zinc-400'
+                                }`}>
+                                  {l.tier}
+                                </span>
+                              </td>
+                              <td className="py-4 px-6">
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                                  l.status === 'active' ? 'text-emerald-400' :
+                                  l.status === 'unused' ? 'text-amber-400' :
+                                  l.status === 'expired' ? 'text-rose-400' : 'text-zinc-400'
+                                }`}>
+                                  <span className={`w-1.5 h-1.5 rounded-full ${
+                                    l.status === 'active' ? 'bg-emerald-400' :
+                                    l.status === 'unused' ? 'bg-amber-400' :
+                                    l.status === 'expired' ? 'bg-rose-400' : 'bg-zinc-400'
+                                  }`}></span>
+                                  <span className="capitalize">{l.status}</span>
+                                </span>
+                              </td>
+                              <td className="py-4 px-6 text-zinc-400">
+                                {l.expiresAt ? new Date(l.expiresAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : (
+                                  <span className="text-xs">After activation ({l.durationDays} days)</span>
+                                )}
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <button 
-                  type="submit" 
-                  disabled={isGenerating}
-                  className="w-full py-3.5 bg-slate-900 text-white font-bold rounded-xl shadow-md hover:bg-blue-600 hover:shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-70 disabled:hover:translate-y-0 mt-2"
-                >
-                  {isGenerating ? 'Generating...' : 'Generate New Keys'}
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Table */}
-          <div className="lg:col-span-2">
-            <div className="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-              <h2 className="text-xl font-bold mb-6">License Database</h2>
-              <div className="overflow-x-auto rounded-xl border border-slate-100">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-slate-50 border-b border-slate-100 text-xs uppercase tracking-wider text-slate-500 font-semibold">
-                      <th className="py-4 px-5">License Key</th>
-                      <th className="py-4 px-5">Tier</th>
-                      <th className="py-4 px-5">Status</th>
-                      <th className="py-4 px-5">Device ID</th>
-                      <th className="py-4 px-5 text-right">Expires</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-sm divide-y divide-slate-100">
-                    {loading ? (
-                      <tr><td colSpan={5} className="py-8 text-center text-slate-400 font-medium animate-pulse">Loading database...</td></tr>
-                    ) : licenses.map(l => (
-                      <tr key={l.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="py-4 px-5 font-mono text-xs font-medium text-slate-700 bg-slate-50/50">{l.licenseKey}</td>
-                        <td className="py-4 px-5">
-                          <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
-                            l.tier === 'pro' ? 'bg-purple-100 text-purple-700' :
-                            l.tier === 'standard' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
-                          }`}>
-                            {l.tier}
-                          </span>
-                        </td>
-                        <td className="py-4 px-5">
-                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-                            l.status === 'active' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' :
-                            l.status === 'unused' ? 'bg-amber-50 text-amber-600 border border-amber-200' :
-                            l.status === 'expired' ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-slate-50 text-slate-600 border border-slate-200'
-                          }`}>
-                            <span className={`w-1.5 h-1.5 rounded-full ${
-                              l.status === 'active' ? 'bg-emerald-500' :
-                              l.status === 'unused' ? 'bg-amber-500' :
-                              l.status === 'expired' ? 'bg-rose-500' : 'bg-slate-500'
-                            }`}></span>
-                            {l.status}
-                          </span>
-                        </td>
-                        <td className="py-4 px-5 font-mono text-xs text-slate-400 max-w-[120px] truncate" title={l.deviceId || ''}>
-                          {l.deviceId || '—'}
-                        </td>
-                        <td className="py-4 px-5 text-right text-slate-500 whitespace-nowrap">
-                          {l.expiresAt ? new Date(l.expiresAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
-                        </td>
-                      </tr>
-                    ))}
-                    {!loading && licenses.length === 0 && (
-                      <tr><td colSpan={5} className="py-12 text-center text-slate-400 font-medium">No licenses generated yet. Start by generating some keys!</td></tr>
-                    )}
-                  </tbody>
-                </table>
               </div>
-            </div>
-          </div>
+            )}
 
+            {activeTab === 'store' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">License Store</h1>
+                <p className="text-zinc-400 text-sm mb-8">Purchase new licenses for your business.</p>
+                
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Free */}
+                  <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-6 flex flex-col">
+                    <h3 className="text-lg font-bold text-white mb-2">Free Tier</h3>
+                    <p className="text-3xl font-black text-white mb-2">₱0</p>
+                    <p className="text-sm text-zinc-500 mb-6">Valid for 30 Days</p>
+                    <div className="flex-1">
+                      <ul className="space-y-2 mb-6">
+                        <li className="text-sm text-zinc-400 flex items-center gap-2">✓ Basic POS Features</li>
+                        <li className="text-sm text-zinc-400 flex items-center gap-2">✓ Utang Tracking</li>
+                      </ul>
+                    </div>
+                    <button 
+                      disabled={isBuying}
+                      onClick={() => handleBuy('free', 30)}
+                      className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
+                    >
+                      {isBuying ? 'Processing...' : 'Get Free License'}
+                    </button>
+                  </div>
+
+                  {/* Standard */}
+                  <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)]">
+                    <h3 className="text-lg font-bold text-white mb-2">Standard</h3>
+                    <p className="text-3xl font-black text-white mb-2">₱500</p>
+                    <p className="text-sm text-zinc-500 mb-6">Valid for 90 Days (3 Months)</p>
+                    <div className="flex-1">
+                      <ul className="space-y-2 mb-6">
+                        <li className="text-sm text-zinc-400 flex items-center gap-2">✓ All Free Features</li>
+                        <li className="text-sm text-emerald-400 flex items-center gap-2">✓ 10 Premium Themes</li>
+                        <li className="text-sm text-zinc-400 flex items-center gap-2">✓ Priority Support</li>
+                      </ul>
+                    </div>
+                    <button 
+                      disabled={isBuying}
+                      onClick={() => handleBuy('standard', 90)}
+                      className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors"
+                    >
+                      {isBuying ? 'Processing...' : 'Buy Standard'}
+                    </button>
+                  </div>
+
+                  {/* Pro */}
+                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
+                    <span className="absolute top-4 right-4 bg-blue-500/10 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Best Value</span>
+                    
+                    <h3 className="text-lg font-bold text-white mb-2">Pro</h3>
+                    <p className="text-3xl font-black text-white mb-2">₱1500</p>
+                    <p className="text-sm text-zinc-500 mb-6">Valid for 150 Days (5 Months)</p>
+                    <div className="flex-1">
+                      <ul className="space-y-2 mb-6">
+                        <li className="text-sm text-zinc-400 flex items-center gap-2">✓ All Standard Features</li>
+                        <li className="text-sm text-blue-400 flex items-center gap-2">✓ Full Offline Mode</li>
+                        <li className="text-sm text-zinc-400 flex items-center gap-2">✓ VIP Support</li>
+                      </ul>
+                    </div>
+                    <button 
+                      disabled={isBuying}
+                      onClick={() => handleBuy('pro', 150)}
+                      className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
+                    >
+                      {isBuying ? 'Processing...' : 'Buy Pro'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'about' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-6">About StoreTap</h1>
+                <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-8 max-w-2xl">
+                  <Image src="/icon.svg" alt="Logo" width={64} height={64} className="mb-6" />
+                  <h2 className="text-xl font-bold text-white mb-2">StoreTap POS System</h2>
+                  <p className="text-zinc-400 mb-6">Version 2.1.0</p>
+                  
+                  <div className="space-y-4 text-sm text-zinc-300 leading-relaxed">
+                    <p>
+                      StoreTap is the ultimate cloud-connected Point of Sale system built specifically for modern businesses. 
+                      Designed with an offline-first architecture, it ensures your store continues to operate flawlessly even when internet connectivity is completely lost.
+                    </p>
+                    <p>
+                      By purchasing a license from this dashboard, you unlock the ability to activate your StoreTap application on your devices. Each license key can only be bound to a single device for maximum security.
+                    </p>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-zinc-800 text-xs text-zinc-500">
+                    &copy; {new Date().getFullYear()} StoreTap Technologies. All rights reserved.
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
         </div>
-      </div>
+      </main>
     </div>
-  );
+  )
 }

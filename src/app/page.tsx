@@ -32,25 +32,25 @@ export default function LandingPage() {
         <div className="space-y-8 z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-medium">
             <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
-            The Future of Offline POS
+            StoreTap v2.1.0 is Live
           </div>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.1] text-white">
-            Smart, Fast, and <br className="hidden md:block"/><span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Always Online.</span>
+            The Ultimate POS <br className="hidden md:block"/>& Inventory <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">System</span>
           </h1>
           <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-            StoreTap is the ultimate cloud-connected Point of Sale system. Built with an offline-first architecture to ensure your business never stops, even when the internet does.
+            Experience seamless sales, utang tracking, and real-time inventory management for your store.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
             <Link href="/login" className="w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-black font-bold text-base hover:bg-zinc-200 transition-all text-center">
-              Start Free Trial
+              Start for Free
             </Link>
-            <Link href="/product" className="w-full sm:w-auto px-6 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-white font-medium text-base hover:bg-zinc-800 transition-all text-center">
-              Explore Product
+            <Link href="/pricing" className="w-full sm:w-auto px-6 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-white font-medium text-base hover:bg-zinc-800 transition-all text-center">
+              View Pricing
             </Link>
           </div>
         </div>
         
-        {/* Mockup matching the StoreTap V2.1.0 app style, but sleek dark themed */}
+        {/* Mockup matching the StoreTap V2.1.0 app style */}
         <div className="relative z-10 lg:pl-4 mt-10 lg:mt-0">
           <div className="absolute inset-0 bg-blue-500/10 blur-[100px] -z-10 rounded-full"></div>
           <div className="bg-[#09090b] border border-zinc-800 rounded-3xl p-2 shadow-2xl relative overflow-hidden max-w-[340px] mx-auto lg:mx-0 ring-1 ring-white/5">
