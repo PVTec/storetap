@@ -2,9 +2,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <>
@@ -17,6 +19,9 @@ export default function Navigation() {
         
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+          {pathname !== '/' && (
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          )}
           <Link href="/product" className="hover:text-white transition-colors">Product</Link>
           <Link href="/features" className="hover:text-white transition-colors">Features</Link>
           <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
@@ -62,6 +67,9 @@ export default function Navigation() {
         </div>
         
         <div className="flex flex-col p-6 gap-6 text-sm font-medium text-zinc-400">
+          {pathname !== '/' && (
+            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Home</Link>
+          )}
           <Link href="/product" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Product</Link>
           <Link href="/features" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Features</Link>
           <Link href="/pricing" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Pricing</Link>

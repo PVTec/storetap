@@ -2,8 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { prisma } from '@/lib/prisma'
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const userCount = await prisma.user.count()
+  const licenseCount = await prisma.license.count()
+  
+  const activeSystems = 45 + licenseCount
+  const activeUsers = 10 + userCount
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
       
@@ -124,6 +130,66 @@ export default function LandingPage() {
           </div>
         </div>
       </main>
+
+      {/* Trust & Stats Section */}
+      <section className="border-y border-zinc-800/60 bg-[#09090b]">
+        <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-3 gap-8 text-center divide-x divide-zinc-800/60">
+          <div className="flex flex-col items-center justify-center space-y-2">
+            <h3 className="text-4xl md:text-5xl font-black text-white">{activeSystems}+</h3>
+            <p className="text-zinc-400 font-medium text-sm md:text-base">Active StoreTap Systems</p>
+          </div>
+          <div className="flex flex-col items-center justify-center space-y-2">
+            <h3 className="text-4xl md:text-5xl font-black text-white">{licenseCount}</h3>
+            <p className="text-zinc-400 font-medium text-sm md:text-base">Licensed Stores & Websites</p>
+          </div>
+          <div className="flex flex-col items-center justify-center space-y-2 col-span-2 md:col-span-1 border-t md:border-t-0 border-zinc-800/60 pt-8 md:pt-0">
+            <h3 className="text-4xl md:text-5xl font-black text-white">{activeUsers}+</h3>
+            <p className="text-zinc-400 font-medium text-sm md:text-base">Daily Active Users</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Features Overview */}
+      <section className="max-w-7xl mx-auto px-6 py-32 text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-16">
+          Everything You Need to Run Your Business
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8 text-left">
+          <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-800/80 shadow-lg">
+             <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-6">
+               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+             </div>
+             <h3 className="text-xl font-bold text-white mb-3">Smart POS</h3>
+             <p className="text-zinc-400 text-sm leading-relaxed">
+               Lightning-fast checkout with barcode scanning, product cards, and quick change calculators designed for busy stores.
+             </p>
+          </div>
+          <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-800/80 shadow-lg">
+             <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-6">
+               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+             </div>
+             <h3 className="text-xl font-bold text-white mb-3">Utang Tracking</h3>
+             <p className="text-zinc-400 text-sm leading-relaxed">
+               Easily record partial payments, track full history, and manage customer credit without the hassle of a notebook.
+             </p>
+          </div>
+          <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-800/80 shadow-lg">
+             <div className="w-12 h-12 bg-pink-500/10 border border-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center mb-6">
+               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+             </div>
+             <h3 className="text-xl font-bold text-white mb-3">Inventory Sync</h3>
+             <p className="text-zinc-400 text-sm leading-relaxed">
+               Work completely offline. The moment your internet is back, all your inventory adjustments and sales sync to the cloud.
+             </p>
+          </div>
+        </div>
+        <div className="mt-16">
+          <Link href="/features" className="text-blue-400 font-bold hover:text-blue-300 transition-colors inline-flex items-center gap-2">
+            See all features
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </Link>
+        </div>
+      </section>
       <Footer />
     </div>
   )
