@@ -67,3 +67,26 @@ export async function undoRequest(requestId: string, requestType: 'license' | 's
     return { success: false, error: 'Failed to undo request' }
   }
 }
+
+export async function getClientApprovedSystems() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) {
+      return []
+    }
+
+    const userId = session.user.id
+
+    const systems = await prisma.systemRequest.findMany({
+      where: { userId, status: 'approved' },
+      orderBy: { updatedAt: 'desc' }
+    })
+    
+    return systems
+  } catch (error) {
+    console.error("Error fetching client approved systems:", error)
+    return []
+  }
+}
