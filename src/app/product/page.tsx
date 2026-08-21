@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export default function ProductPage() {
   return (
@@ -39,6 +40,7 @@ export default function ProductPage() {
            </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

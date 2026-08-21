@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export default function FeaturesPage() {
   const features = [
@@ -57,6 +58,7 @@ export default function FeaturesPage() {
           ))}
         </div>
       </main>
+      <Footer />
     </div>
   )
 }
