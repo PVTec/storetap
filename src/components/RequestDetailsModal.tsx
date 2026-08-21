@@ -12,9 +12,9 @@ export default function RequestDetailsModal({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-0">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="bg-[#09090b] border border-zinc-800 rounded-2xl w-full max-w-md relative z-10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-[#09090b] border border-zinc-800 rounded-2xl w-full max-w-md sm:max-w-2xl relative z-10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
         
-        <div className="p-6 border-b border-zinc-800/80 flex items-center justify-between">
+        <div className="p-6 border-b border-zinc-800/80 flex items-center justify-between shrink-0">
           <div>
             <h2 className="text-lg font-bold text-white">Request Details</h2>
           </div>
@@ -25,8 +25,8 @@ export default function RequestDetailsModal({
           </button>
         </div>
 
-        <div className="p-6">
-          <div className="space-y-4">
+        <div className="p-6 overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1">Reference Number</label>
               <div className="text-white font-mono font-medium">{request.referenceNumber || 'N/A'}</div>

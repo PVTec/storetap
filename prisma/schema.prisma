@@ -58,6 +58,7 @@ model SystemRequest {
   storeName      String?
   type           String    // 'web' or 'app'
   status         String    @default("pending") // pending, approved, rejected
+  attachmentLink String?   // Link to completed system files/repo
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }

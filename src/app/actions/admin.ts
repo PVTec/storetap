@@ -185,7 +185,7 @@ export async function approveLicenseRequest(requestId: string) {
         licenseKey: finalKey,
         userId: request.userId,
         tier: request.tier.toLowerCase(),
-        status: 'active',
+        status: 'unused',
         durationDays
       }
     })
@@ -254,7 +254,7 @@ export async function rejectLicenseRequest(requestId: string) {
   }
 }
 
-export async function approveSystemRequest(requestId: string) {
+export async function approveSystemRequest(requestId: string, attachmentLink?: string) {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
@@ -282,15 +282,15 @@ export async function approveSystemRequest(requestId: string) {
         licenseKey: licenseKey,
         userId: request.userId,
         tier: tier,
-        status: 'active',
+        status: 'unused',
         durationDays
       }
     })
 
-    // Update system request status
+    // Update system request status and attach link
     await prisma.systemRequest.update({
       where: { id: requestId },
-      data: { status: 'approved' }
+      data: { status: 'approved', attachmentLink }
     })
 
     if (request.userId) {

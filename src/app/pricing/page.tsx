@@ -1,20 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { createBrowserClient } from '@supabase/ssr'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
 
 export default function PricingPage() {
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedTier, setSelectedTier] = useState('Basic')
+  const [userLogged, setUserLogged] = useState(false)
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      const { data: { session } } = await supabase.auth.getSession()
+      setUserLogged(!!session)
+    }
+    checkUser()
+  }, [])
 
   const plans = [
     {
       name: "Basic",
       price: "₱150",
-      subtext: "First license is FREE",
+      subtext: "",
       duration: "1 Month License",
       features: [
         "Sales Module (Quick actions)",
@@ -62,8 +78,12 @@ export default function PricingPage() {
   ]
 
   const handleOpenModal = (tierName: string) => {
-    setSelectedTier(tierName)
-    setIsModalOpen(true)
+    if (userLogged) {
+      setSelectedTier(tierName)
+      setIsModalOpen(true)
+    } else {
+      router.push('/login')
+    }
   }
 
   return (

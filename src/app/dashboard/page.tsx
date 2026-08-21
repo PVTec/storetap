@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
-import LicenseRequestModal from '@/components/LicenseRequestModal'
-import { getPendingRequestsCount, getPendingRequests, getApprovedLicenseRequests, getApprovedSystemRequests, getUsersList, getNotifications, markNotificationsRead } from '@/app/actions/admin'
+import { getPendingRequests, getApprovedLicenseRequests, getApprovedSystemRequests, getUsersList, getNotifications, markNotificationsRead, getPendingRequestsCount, approveSystemRequest } from '@/app/actions/admin'
 import { getClientPendingRequests, undoRequest } from '@/app/actions/client'
 import RequestActions from '@/app/admin/requests/RequestActions'
+import LicenseRequestModal from '@/components/LicenseRequestModal'
 import SystemRequestModal from '@/components/SystemRequestModal'
 import RequestDetailsModal from '@/components/RequestDetailsModal'
+import SystemApprovalModal from '@/components/SystemApprovalModal'
 
 export default function DashboardPage() {
   const [licenses, setLicenses] = useState<any[]>([])
@@ -41,6 +42,7 @@ export default function DashboardPage() {
   const [unreadCount, setUnreadCount] = useState(0)
   
   const [selectedRequestDetails, setSelectedRequestDetails] = useState<any>(null)
+  const [systemApprovalRequest, setSystemApprovalRequest] = useState<any>(null)
 
   const isAdmin = userEmail === 'vincentlayonuser@gmail.com' || userEmail === 'admin@vince.dev'
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
@@ -138,6 +140,22 @@ export default function DashboardPage() {
       console.error('Failed to fetch', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleNotificationClick = (notif: any) => {
+    if (!notif.title) return;
+    const title = notif.title.toLowerCase()
+    
+    if (title.includes('request rejected') || title.includes('request approved')) {
+      if (isAdmin) {
+        if (title.includes('system')) setActiveTab('approved-systems')
+        else setActiveTab('approved-licenses')
+      } else {
+        setActiveTab('licenses')
+      }
+    } else if (title.includes('request')) {
+      setActiveTab('pending')
     }
   }
 
@@ -723,18 +741,21 @@ export default function DashboardPage() {
                           <td className="px-6 py-4 text-right">
                             {req.status === 'pending' && (
                               <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity gap-2 items-center">
-                                {req.requestType === 'system' && (
-                                  <button
-                                    onClick={() => setSelectedRequestDetails(req)}
-                                    className="px-2 py-1 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
-                                  >
-                                    View
-                                  </button>
-                                )}
-                                <RequestActions requestId={req.id} requestType={req.requestType} onSuccess={() => {
-                                  fetchAdminRequests();
-                                  getPendingRequestsCount().then(count => setAdminPendingCount(count));
-                                }} />
+                                <button
+                                  onClick={() => setSelectedRequestDetails(req)}
+                                  className="px-2 py-1 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
+                                >
+                                  View
+                                </button>
+                                <RequestActions 
+                                  requestId={req.id} 
+                                  requestType={req.requestType} 
+                                  onApproveSystemClick={() => setSystemApprovalRequest(req)}
+                                  onSuccess={() => {
+                                    fetchAdminRequests();
+                                    getPendingRequestsCount().then(count => setAdminPendingCount(count));
+                                  }} 
+                                />
                               </div>
                             )}
                           </td>
@@ -798,18 +819,21 @@ export default function DashboardPage() {
 
                       {req.status === 'pending' && (
                         <div className="pt-4 border-t border-zinc-800/80 flex flex-col gap-2">
-                          {req.requestType === 'system' && (
-                            <button
-                              onClick={() => setSelectedRequestDetails(req)}
-                              className="w-full px-3 py-2 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
-                            >
-                              View Details
-                            </button>
-                          )}
-                          <RequestActions requestId={req.id} requestType={req.requestType} onSuccess={() => {
-                            fetchAdminRequests();
-                            getPendingRequestsCount().then(count => setAdminPendingCount(count));
-                          }} />
+                          <button
+                            onClick={() => setSelectedRequestDetails(req)}
+                            className="w-full px-3 py-2 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
+                          >
+                            View Details
+                          </button>
+                          <RequestActions 
+                            requestId={req.id} 
+                            requestType={req.requestType} 
+                            onApproveSystemClick={() => setSystemApprovalRequest(req)}
+                            onSuccess={() => {
+                              fetchAdminRequests();
+                              getPendingRequestsCount().then(count => setAdminPendingCount(count));
+                            }} 
+                          />
                         </div>
                       )}
                     </div>
@@ -981,13 +1005,18 @@ export default function DashboardPage() {
                       You have no notifications.
                     </div>
                   ) : notifications.map(notif => (
-                    <div key={notif.id} className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-5 shadow-lg relative overflow-hidden flex gap-4 items-start">
+                    <div 
+                      key={notif.id} 
+                      onClick={() => handleNotificationClick(notif)}
+                      className={`rounded-xl border p-5 shadow-lg relative overflow-hidden flex gap-4 items-start cursor-pointer hover:border-emerald-500/50 transition-colors ${notif.read ? 'bg-zinc-900/50 border-zinc-800' : 'bg-zinc-800 border-zinc-700'}`}
+                    >
+                      {!notif.read && <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-emerald-500"></div>}
                       <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <div className="flex justify-between items-start gap-4">
-                          <h3 className="text-base font-bold text-white leading-tight mb-1">{notif.title}</h3>
+                          <h3 className="text-base font-bold text-white leading-tight mb-1 group-hover:text-emerald-400 transition-colors">{notif.title}</h3>
                           <span className="text-[10px] text-zinc-500 font-medium whitespace-nowrap">{new Date(notif.createdAt).toLocaleDateString()}</span>
                         </div>
                         <p className="text-zinc-400 text-sm leading-relaxed">{notif.message}</p>
@@ -1018,6 +1047,22 @@ export default function DashboardPage() {
         isOpen={!!selectedRequestDetails}
         onClose={() => setSelectedRequestDetails(null)}
         request={selectedRequestDetails}
+      />
+
+      <SystemApprovalModal 
+        isOpen={!!systemApprovalRequest}
+        onClose={() => setSystemApprovalRequest(null)}
+        request={systemApprovalRequest}
+        onApprove={async (link: string) => {
+          const res = await approveSystemRequest(systemApprovalRequest.id, link)
+          if (!res.success) {
+            alert(res.error)
+          } else {
+            fetchAdminRequests()
+            getPendingRequestsCount().then(count => setAdminPendingCount(count))
+            fetchApprovedRequests()
+          }
+        }}
       />
     </div>
   )

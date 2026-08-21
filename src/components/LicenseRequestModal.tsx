@@ -71,14 +71,21 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#09090b] border border-zinc-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 text-zinc-400 hover:text-white"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
+      <div className="bg-[#09090b] border border-zinc-800 rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+        <div className="p-6 border-b border-zinc-800/80 flex items-center justify-between shrink-0">
+          <div>
+            <h2 className="text-lg font-bold text-white">Get {tier} License</h2>
+            <p className="text-zinc-500 text-xs mt-1">Fill out the form below to request your StoreTap license.</p>
+          </div>
+          <button 
+            onClick={onClose}
+            className="text-zinc-500 hover:text-white p-1 rounded-md hover:bg-zinc-800 transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
 
+        <div className="p-6 overflow-y-auto">
         {isSuccess ? (
           <div className="text-center py-6">
             <div className="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -105,9 +112,6 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
           </div>
         ) : (
           <>
-            <h2 className="text-xl font-bold text-white mb-2">Get {tier} License</h2>
-            <p className="text-zinc-400 text-sm mb-6">Fill out the form below to request your StoreTap license.</p>
-
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-zinc-300 mb-1">Full Name</label>
@@ -172,5 +176,6 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
         )}
       </div>
     </div>
+  </div>
   )
 }

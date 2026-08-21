@@ -3,15 +3,28 @@
 import { useState } from 'react'
 import { approveLicenseRequest, rejectLicenseRequest, approveSystemRequest, rejectSystemRequest } from '@/app/actions/admin'
 
-export default function RequestActions({ requestId, requestType, onSuccess }: { requestId: string, requestType: 'license' | 'system', onSuccess?: () => void }) {
+export default function RequestActions({ 
+  requestId, 
+  requestType, 
+  onSuccess,
+  onApproveSystemClick
+}: { 
+  requestId: string, 
+  requestType: 'license' | 'system', 
+  onSuccess?: () => void,
+  onApproveSystemClick?: () => void
+}) {
   const [isApproving, setIsApproving] = useState(false)
   const [isRejecting, setIsRejecting] = useState(false)
 
   const handleApprove = async () => {
+    if (requestType === 'system' && onApproveSystemClick) {
+      onApproveSystemClick()
+      return
+    }
+
     setIsApproving(true)
-    const res = requestType === 'license' 
-      ? await approveLicenseRequest(requestId)
-      : await approveSystemRequest(requestId)
+    const res = await approveLicenseRequest(requestId)
     
     if (!res.success) {
       alert(res.error)
