@@ -10,6 +10,7 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('licenses')
   const [isBuying, setIsBuying] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     fetchLicenses()
@@ -81,8 +82,13 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30 flex">
       
+      {/* Sidebar Mobile Overlay */}
+      {isSidebarOpen && (
+        <div className="fixed inset-0 bg-black/60 z-40 md:hidden" onClick={() => setIsSidebarOpen(false)} />
+      )}
+      
       {/* Sidebar */}
-      <aside className="w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col hidden md:flex">
+      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col z-50 transform transition-transform duration-200 ease-in-out md:transform-none ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-zinc-800/80">
           <Link href="/" className="flex items-center gap-3">
             <Image src="/icon.svg" alt="StoreTap Logo" width={28} height={28} />
@@ -91,21 +97,21 @@ export default function DashboardPage() {
         </div>
         <div className="p-4 flex-1 space-y-1">
           <button 
-            onClick={() => setActiveTab('licenses')}
+            onClick={() => { setActiveTab('licenses'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'licenses' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
             My Licenses
           </button>
           <button 
-            onClick={() => setActiveTab('store')}
+            onClick={() => { setActiveTab('store'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
             License Store
           </button>
           <button 
-            onClick={() => setActiveTab('about')}
+            onClick={() => { setActiveTab('about'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'about' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -132,9 +138,14 @@ export default function DashboardPage() {
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Mobile Header */}
         <header className="h-16 md:hidden flex items-center justify-between px-6 border-b border-zinc-800/80 bg-[#09090b]">
-           <div className="flex items-center gap-2">
-             <Image src="/icon.svg" alt="StoreTap Logo" width={24} height={24} />
-             <span className="font-bold text-white">StoreTap</span>
+           <div className="flex items-center gap-3">
+             <button onClick={() => setIsSidebarOpen(true)} className="text-zinc-400 p-1">
+               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+             </button>
+             <div className="flex items-center gap-2">
+               <Image src="/icon.svg" alt="StoreTap Logo" width={24} height={24} />
+               <span className="font-bold text-white">StoreTap</span>
+             </div>
            </div>
            <button onClick={handleSignOut} className="text-xs font-bold text-zinc-400">Sign Out</button>
         </header>
@@ -154,6 +165,7 @@ export default function DashboardPage() {
                         <tr className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
                           <th className="py-4 px-6">License Key</th>
                           <th className="py-4 px-6">Tier</th>
+                          <th className="py-4 px-6">Website</th>
                           <th className="py-4 px-6">Status</th>
                           <th className="py-4 px-6">Expiration</th>
                         </tr>
@@ -167,7 +179,12 @@ export default function DashboardPage() {
                           licenses.map(l => (
                             <tr key={l.id} className="hover:bg-zinc-900/30 transition-colors group">
                               <td className="py-4 px-6 font-mono text-sm text-zinc-300">
-                                {l.licenseKey}
+                                <div className="flex items-center gap-2">
+                                  <span>{l.licenseKey}</span>
+                                  <button onClick={() => navigator.clipboard.writeText(l.licenseKey)} className="text-zinc-500 hover:text-white transition-colors" title="Copy License Key">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                  </button>
+                                </div>
                               </td>
                               <td className="py-4 px-6">
                                 <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
@@ -177,6 +194,9 @@ export default function DashboardPage() {
                                 }`}>
                                   {l.tier}
                                 </span>
+                              </td>
+                              <td className="py-4 px-6 text-sm text-zinc-300">
+                                {l.websiteUrl || <span className="text-zinc-600 italic">Not activated</span>}
                               </td>
                               <td className="py-4 px-6">
                                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
@@ -215,9 +235,12 @@ export default function DashboardPage() {
                 <div className="grid md:grid-cols-3 gap-6">
                   {/* Free */}
                   <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-6 flex flex-col">
-                    <h3 className="text-lg font-bold text-white mb-2">Free Tier</h3>
-                    <p className="text-3xl font-black text-white mb-2">₱0</p>
-                    <p className="text-sm text-zinc-500 mb-6">Valid for 30 Days</p>
+                    <h3 className="text-lg font-bold text-white mb-2">Free / Basic</h3>
+                    <div className="flex flex-col mb-6">
+                      <p className="text-3xl font-black text-white mb-1">₱0</p>
+                      <p className="text-sm font-medium text-zinc-500">then ₱150 after</p>
+                    </div>
+                    <p className="text-sm text-zinc-500 mb-6">Valid for 30 Days (1 Month)</p>
                     <div className="flex-1">
                       <ul className="space-y-2 mb-6">
                         <li className="text-sm text-zinc-400 flex items-center gap-2">✓ Basic POS Features</li>

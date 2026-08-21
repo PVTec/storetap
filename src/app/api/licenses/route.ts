@@ -1,9 +1,46 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+
+async function getUser() {
+  const cookieStore = cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            )
+          } catch (error) {
+            // The `setAll` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing
+            // user sessions.
+          }
+        },
+      },
+    }
+  );
+  
+  const { data: { user } } = await supabase.auth.getUser();
+  return user;
+}
 
 export async function GET() {
   try {
+    const user = await getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const licenses = await prisma.license.findMany({
+      where: { userId: user.id },
       orderBy: { createdAt: 'desc' }
     });
     return NextResponse.json(licenses);
@@ -14,8 +51,24 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const user = await getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { tier, count, durationDays } = await request.json();
     
+    // Rule: One Free License per user
+    if (tier === 'free') {
+      const existingFree = await prisma.license.findFirst({
+        where: { userId: user.id, tier: 'free' }
+      });
+      
+      if (existingFree) {
+        return NextResponse.json({ error: 'You can only claim one Free License.' }, { status: 400 });
+      }
+    }
+
     const qty = parseInt(count) || 1;
     const days = parseInt(durationDays) || 30;
     
@@ -28,6 +81,7 @@ export async function POST(request: Request) {
       const license = await prisma.license.create({
         data: {
           licenseKey: key,
+          userId: user.id,
           tier: tier,
           durationDays: days,
           status: 'unused'

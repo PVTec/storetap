@@ -12,9 +12,11 @@ datasource db {
 model License {
   id             String    @id @default(cuid())
   licenseKey     String    @unique
+  userId         String?   // User who bought/claimed the license
   tier           String    // free, standard, pro
   status         String    @default("unused") // unused, active, expired, banned
   deviceId       String?   // Hardware ID of the device it's bound to
+  websiteUrl     String?   // The domain/URL where the license is used
   durationDays   Int       @default(30)
   activatedAt    DateTime?
   expiresAt      DateTime?

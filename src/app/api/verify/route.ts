@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
-    const { key, deviceId } = await request.json();
+    const { key, deviceId, websiteUrl } = await request.json();
 
     if (!key || !deviceId) {
       return NextResponse.json({ status: 'error', message: 'Missing key or deviceId' }, { status: 400 });
@@ -39,6 +39,7 @@ export async function POST(request: Request) {
         data: {
           status: 'active',
           deviceId: deviceId,
+          websiteUrl: websiteUrl || 'unknown',
           activatedAt: new Date(),
           expiresAt: expiresAt
         }
@@ -55,7 +56,7 @@ export async function POST(request: Request) {
     // If active, verify device ID
     if (license.status === 'active') {
       if (license.deviceId !== deviceId) {
-        return NextResponse.json({ status: 'used', message: 'This license is already bound to another device' });
+        return NextResponse.json({ status: 'used', message: 'This license is already bound to another device or website' });
       }
       
       // All good

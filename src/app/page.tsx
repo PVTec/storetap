@@ -1,31 +1,12 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import Image from 'next/image'
+import Navigation from '@/components/Navigation'
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
       
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto border-b border-zinc-800/60 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center gap-3">
-          <Image src="/icon.svg" alt="StoreTap Logo" width={32} height={32} className="text-blue-500" />
-          <span className="text-xl font-bold tracking-tight text-white">StoreTap</span>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono font-bold ml-1">v2.1.0</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <Link href="/product" className="hover:text-white transition-colors">Product</Link>
-          <Link href="/features" className="hover:text-white transition-colors">Features</Link>
-          <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors hidden sm:block">
-            Log in
-          </Link>
-          <Link href="/login" className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold shadow-sm hover:bg-zinc-200 transition-all">
-            Get Started
-          </Link>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-6 pt-24 pb-32 grid lg:grid-cols-2 gap-16 items-center">
