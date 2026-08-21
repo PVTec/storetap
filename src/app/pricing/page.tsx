@@ -1,9 +1,15 @@
-import Link from 'next/link'
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import LicenseRequestModal from '@/components/LicenseRequestModal'
 
 export default function PricingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedTier, setSelectedTier] = useState('Basic')
+
   const plans = [
     {
       name: "Basic",
@@ -21,7 +27,7 @@ export default function PricingPage() {
         "Premium Themes",
         "Offline Mode"
       ],
-      btn: "Start Free",
+      btn: "Get Basic License",
       popular: false
     },
     {
@@ -36,7 +42,7 @@ export default function PricingPage() {
       missing: [
         "Offline Mode"
       ],
-      btn: "Buy License",
+      btn: "Get Standard License",
       popular: false
     },
     {
@@ -50,10 +56,15 @@ export default function PricingPage() {
         "VIP Support"
       ],
       missing: [],
-      btn: "Buy License",
+      btn: "Get Pro License",
       popular: true
     }
   ]
+
+  const handleOpenModal = (tierName: string) => {
+    setSelectedTier(tierName)
+    setIsModalOpen(true)
+  }
 
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
@@ -99,14 +110,24 @@ export default function PricingPage() {
                  </ul>
                </div>
 
-               <Link href="/login" className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all text-center block mt-4 ${p.popular ? 'bg-white text-black hover:bg-zinc-200' : 'bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800'}`}>
+               <button 
+                 onClick={() => handleOpenModal(p.name)}
+                 className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all text-center block mt-4 cursor-pointer ${p.popular ? 'bg-white text-black hover:bg-zinc-200' : 'bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800'}`}
+               >
                  {p.btn}
-               </Link>
+               </button>
              </div>
           ))}
         </div>
       </main>
       <Footer />
+
+      <LicenseRequestModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        tier={selectedTier} 
+      />
     </div>
   )
 }
+
