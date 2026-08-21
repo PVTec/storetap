@@ -10,11 +10,10 @@ export default async function LandingPage() {
     select: { userId: true },
     distinct: ['userId']
   })
-  const userCount = uniqueUsers.length
-  const licenseCount = await prisma.license.count()
   
-  const activeSystems = 45 + licenseCount
-  const activeUsers = 10 + userCount
+  // Real stats
+  const activeUsers = uniqueUsers.length
+  const licenseCount = await prisma.license.count()
   return (
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
       
@@ -44,15 +43,11 @@ export default async function LandingPage() {
           
           <div className="flex items-center gap-10 pt-10">
             <div className="flex flex-col">
-              <h3 className="text-3xl font-bold text-white">{activeSystems}+</h3>
-              <p className="text-zinc-500 font-bold text-[10px] tracking-widest uppercase mt-1">Active Systems</p>
-            </div>
-            <div className="flex flex-col">
               <h3 className="text-3xl font-bold text-white">{licenseCount}</h3>
               <p className="text-zinc-500 font-bold text-[10px] tracking-widest uppercase mt-1">Licensed Stores</p>
             </div>
             <div className="flex flex-col">
-              <h3 className="text-3xl font-bold text-white">{activeUsers}+</h3>
+              <h3 className="text-3xl font-bold text-white">{activeUsers}</h3>
               <p className="text-zinc-500 font-bold text-[10px] tracking-widest uppercase mt-1">Active Users</p>
             </div>
           </div>
