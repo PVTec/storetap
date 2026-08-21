@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { approveLicenseRequest, rejectLicenseRequest } from '@/app/actions/admin'
 
-export default function RequestActions({ requestId }: { requestId: string }) {
+export default function RequestActions({ requestId, onSuccess }: { requestId: string, onSuccess?: () => void }) {
   const [isApproving, setIsApproving] = useState(false)
   const [isRejecting, setIsRejecting] = useState(false)
 
@@ -12,6 +12,8 @@ export default function RequestActions({ requestId }: { requestId: string }) {
     const res = await approveLicenseRequest(requestId)
     if (!res.success) {
       alert(res.error)
+    } else if (onSuccess) {
+      onSuccess()
     }
     setIsApproving(false)
   }
@@ -23,6 +25,8 @@ export default function RequestActions({ requestId }: { requestId: string }) {
     const res = await rejectLicenseRequest(requestId)
     if (!res.success) {
       alert(res.error)
+    } else if (onSuccess) {
+      onSuccess()
     }
     setIsRejecting(false)
   }

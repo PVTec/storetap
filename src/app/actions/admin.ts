@@ -22,6 +22,25 @@ export async function getPendingRequestsCount() {
   }
 }
 
+export async function getLicenseRequests() {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+      return []
+    }
+
+    const requests = await prisma.licenseRequest.findMany({
+      orderBy: { createdAt: 'desc' }
+    })
+    return requests
+  } catch (error) {
+    console.error("Error fetching requests:", error)
+    return []
+  }
+}
+
 export async function approveLicenseRequest(requestId: string) {
   try {
     const supabase = await createClient()

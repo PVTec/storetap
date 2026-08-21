@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
-import { getPendingRequestsCount } from '@/app/actions/admin'
+import { getPendingRequestsCount, getLicenseRequests } from '@/app/actions/admin'
+import RequestActions from '@/app/admin/requests/RequestActions'
 
 export default function DashboardPage() {
   const [licenses, setLicenses] = useState<any[]>([])
@@ -17,6 +18,9 @@ export default function DashboardPage() {
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [adminPendingCount, setAdminPendingCount] = useState(0)
   const [hasClientPending, setHasClientPending] = useState(false)
+  const [adminRequests, setAdminRequests] = useState<any[]>([])
+  const [loadingAdmin, setLoadingAdmin] = useState(true)
+
   const isAdmin = userEmail === 'vincentlayonuser@gmail.com' || userEmail === 'admin@vince.dev'
   const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
 
@@ -36,12 +40,21 @@ export default function DashboardPage() {
         setUserEmail(user.email || null)
         const checkIsAdmin = user.email === 'vincentlayonuser@gmail.com' || user.email === 'admin@vince.dev'
         if (checkIsAdmin) {
+          setActiveTab('admin')
           getPendingRequestsCount().then(count => setAdminPendingCount(count))
+          fetchAdminRequests()
         }
       }
     } catch (e) {
       console.error("Auth error", e)
     }
+  }
+
+  const fetchAdminRequests = async () => {
+    setLoadingAdmin(true)
+    const reqs = await getLicenseRequests()
+    setAdminRequests(reqs)
+    setLoadingAdmin(false)
   }
 
   const fetchLicenses = async () => {
@@ -95,20 +108,38 @@ export default function DashboardPage() {
           </Link>
         </div>
         <div className="p-4 flex-1 space-y-1">
-          <button 
-            onClick={() => { setActiveTab('licenses'); setIsSidebarOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'licenses' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
-            My Licenses
-          </button>
-          <button 
-            onClick={() => { setActiveTab('store'); setIsSidebarOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
-            License Store
-          </button>
+          {!isAdmin ? (
+            <>
+              <button 
+                onClick={() => { setActiveTab('licenses'); setIsSidebarOpen(false); }}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'licenses' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
+                My Licenses
+              </button>
+              <button 
+                onClick={() => { setActiveTab('store'); setIsSidebarOpen(false); }}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'store' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                License Store
+              </button>
+            </>
+          ) : (
+            <button 
+              onClick={() => { setActiveTab('admin'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'admin' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
+            >
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                Manage Requests
+              </div>
+              {adminPendingCount > 0 && (
+                <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{adminPendingCount}</span>
+              )}
+            </button>
+          )}
+
           <button 
             onClick={() => { setActiveTab('about'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'about' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
@@ -116,20 +147,6 @@ export default function DashboardPage() {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             About StoreTap
           </button>
-          {isAdmin && (
-            <Link 
-              href="/admin/requests"
-              className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-bold text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 transition-all mt-4"
-            >
-              <div className="flex items-center gap-3">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                Admin Dashboard
-              </div>
-              {adminPendingCount > 0 && (
-                <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{adminPendingCount}</span>
-              )}
-            </Link>
-          )}
         </div>
         <div className="p-4 border-t border-zinc-800/80">
           <div className="flex items-center gap-3 mb-4 px-2">
@@ -138,7 +155,7 @@ export default function DashboardPage() {
             </div>
             <div className="overflow-hidden">
               <p className="text-sm font-medium text-white truncate">{userEmail || 'User'}</p>
-              <p className="text-xs text-zinc-500">Client Account</p>
+              <p className="text-xs text-zinc-500">{isAdmin ? 'Admin Account' : 'Client Account'}</p>
             </div>
           </div>
           <button onClick={handleSignOut} className="w-full py-2 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold rounded-lg transition-colors border border-zinc-800">
@@ -363,6 +380,139 @@ export default function DashboardPage() {
                   <div className="mt-8 pt-6 border-t border-zinc-800 text-xs text-zinc-500">
                     &copy; {new Date().getFullYear()} StoreTap Technologies. All rights reserved.
                   </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'admin' && isAdmin && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h1 className="text-2xl font-bold text-white mb-2">License Requests</h1>
+                <p className="text-zinc-400 text-sm mb-8">Manage incoming license requests from clients.</p>
+                
+                {/* Desktop Table View */}
+                <div className="hidden md:block bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                  <table className="w-full text-left text-sm">
+                    <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
+                      <tr>
+                        <th className="px-6 py-4">Date</th>
+                        <th className="px-6 py-4">Name</th>
+                        <th className="px-6 py-4">Contact</th>
+                        <th className="px-6 py-4">Tier</th>
+                        <th className="px-6 py-4">Status</th>
+                        <th className="px-6 py-4 text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-800/60">
+                      {loadingAdmin ? (
+                        <tr><td colSpan={6} className="px-6 py-12 text-center text-zinc-500 font-medium">Loading requests...</td></tr>
+                      ) : adminRequests.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="px-6 py-12 text-center text-zinc-500 font-medium">No requests found.</td>
+                        </tr>
+                      ) : adminRequests.map(req => (
+                        <tr key={req.id} className="hover:bg-zinc-900/30 transition-colors group">
+                          <td className="px-6 py-4 text-zinc-400 font-medium">{new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                          <td className="px-6 py-4">
+                            <div className="text-white font-bold">{req.name}</div>
+                            <div className="text-zinc-500 text-xs">{req.email}</div>
+                          </td>
+                          <td className="px-6 py-4 text-zinc-300 font-medium">{req.contactNumber}</td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
+                              req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                              req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                              'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                            }`}>
+                              {req.tier}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                              req.status === 'pending' ? 'text-amber-400 bg-amber-500/10 border border-amber-500/20' : 
+                              req.status === 'approved' ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20' : 
+                              'text-rose-400 bg-rose-500/10 border border-rose-500/20'
+                            }`}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${
+                                req.status === 'pending' ? 'bg-amber-400' :
+                                req.status === 'approved' ? 'bg-emerald-400' : 'bg-rose-400'
+                              }`}></span>
+                              <span className="capitalize">{req.status}</span>
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            {req.status === 'pending' && (
+                              <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                                <RequestActions requestId={req.id} onSuccess={() => {
+                                  fetchAdminRequests();
+                                  getPendingRequestsCount().then(count => setAdminPendingCount(count));
+                                }} />
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="md:hidden space-y-4">
+                  {loadingAdmin ? (
+                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">Loading requests...</div>
+                  ) : adminRequests.length === 0 ? (
+                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
+                      No requests found.
+                    </div>
+                  ) : adminRequests.map(req => (
+                    <div key={req.id} className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-5 shadow-lg relative overflow-hidden">
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h3 className="text-lg font-bold text-white leading-tight">{req.name}</h3>
+                          <p className="text-zinc-500 text-sm mt-0.5">{req.email}</p>
+                        </div>
+                        <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${
+                          req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                          req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                          'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                        }`}>
+                          {req.tier}
+                        </span>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-y-3 mb-5 text-sm">
+                        <div>
+                          <p className="text-[10px] uppercase font-bold text-zinc-600 mb-1 tracking-wider">Contact</p>
+                          <p className="text-zinc-300 font-medium">{req.contactNumber}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] uppercase font-bold text-zinc-600 mb-1 tracking-wider">Date</p>
+                          <p className="text-zinc-300 font-medium">{new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                        </div>
+                        <div className="col-span-2">
+                          <p className="text-[10px] uppercase font-bold text-zinc-600 mb-1 tracking-wider">Status</p>
+                          <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
+                            req.status === 'pending' ? 'text-amber-400' : 
+                            req.status === 'approved' ? 'text-emerald-400' : 'text-rose-400'
+                          }`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${
+                              req.status === 'pending' ? 'bg-amber-400' :
+                              req.status === 'approved' ? 'bg-emerald-400' : 'bg-rose-400'
+                            }`}></span>
+                            <span className="capitalize">{req.status}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      {req.status === 'pending' && (
+                        <div className="pt-4 border-t border-zinc-800/80">
+                          <RequestActions requestId={req.id} onSuccess={() => {
+                            fetchAdminRequests();
+                            getPendingRequestsCount().then(count => setAdminPendingCount(count));
+                          }} />
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
