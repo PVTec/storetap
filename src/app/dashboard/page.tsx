@@ -11,6 +11,7 @@ export default function DashboardPage() {
   const [isBuying, setIsBuying] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free')
 
   useEffect(() => {
     fetchLicenses()
@@ -227,9 +228,7 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {activeTab === 'store' && (() => {
-              const hasBasic = licenses.some(l => l.tier.toLowerCase() === 'basic' || l.tier.toLowerCase() === 'free');
-              return (
+            {activeTab === 'store' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-2">License Store</h1>
                 <p className="text-zinc-400 text-sm mb-8">Purchase new licenses for your business.</p>
@@ -329,8 +328,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              );
-            })}
+            )}
 
           </div>
         </div>
