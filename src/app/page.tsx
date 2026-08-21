@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import { prisma } from '@/lib/prisma'
+import prisma from '@/lib/prisma'
 
 export default async function LandingPage() {
   const userCount = await prisma.user.count()
