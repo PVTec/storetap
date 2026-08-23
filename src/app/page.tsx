@@ -46,7 +46,7 @@ export default async function LandingPage() {
             </Link>
           </div>
           <p className="text-sm text-zinc-500 font-medium">
-            <span className="text-emerald-500 font-bold">✓</span> Works on any device with a browser. No app download required!
+            <span className="text-emerald-500 font-bold">✓</span> Use instantly via browser, or get our dedicated app (included in Premium).
           </p>
 
           <div className="flex items-center gap-10 pt-10">
