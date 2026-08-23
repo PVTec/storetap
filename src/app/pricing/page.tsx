@@ -13,6 +13,7 @@ export default function PricingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedTier, setSelectedTier] = useState('Basic')
   const [userLogged, setUserLogged] = useState(false)
+  const [userRole, setUserRole] = useState('client')
 
   useEffect(() => {
     const checkUser = async () => {
@@ -22,6 +23,15 @@ export default function PricingPage() {
       )
       const { data: { session } } = await supabase.auth.getSession()
       setUserLogged(!!session)
+      
+      if (session) {
+        // Fetch role via an API endpoint or Server Action if possible
+        // But since this is a client component, I will import getClientRole if possible, or just skip it if it's tricky.
+        // Wait, I can import getClientRole directly in a Client component if it's a Server Action.
+        const { getClientRole } = await import('@/app/actions/admin')
+        const role = await getClientRole()
+        setUserRole(role)
+      }
     }
     checkUser()
   }, [])
@@ -78,6 +88,11 @@ export default function PricingPage() {
   ]
 
   const handleOpenModal = (tierName: string) => {
+    if (userRole === 'admin' || userRole === 'provider') {
+      alert("Admins and Providers cannot request licenses.")
+      return
+    }
+    
     if (userLogged) {
       setSelectedTier(tierName)
       setIsModalOpen(true)
@@ -132,9 +147,9 @@ export default function PricingPage() {
 
                <button 
                  onClick={() => handleOpenModal(p.name)}
-                 className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all text-center block mt-4 cursor-pointer ${p.popular ? 'bg-white text-black hover:bg-zinc-200' : 'bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800'}`}
+                 className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all text-center block mt-4 cursor-pointer ${(userRole === 'admin' || userRole === 'provider') ? 'opacity-50 cursor-not-allowed bg-zinc-800 text-zinc-500' : p.popular ? 'bg-white text-black hover:bg-zinc-200' : 'bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800'}`}
                >
-                 {p.btn}
+                 {userRole === 'admin' || userRole === 'provider' ? 'Not Available' : p.btn}
                </button>
              </div>
           ))}

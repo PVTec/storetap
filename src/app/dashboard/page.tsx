@@ -91,7 +91,7 @@ export default function DashboardPage() {
         } else {
           fetchClientPendingRequests()
         }
-        fetchNotifications(role === 'admin' || role === 'provider')
+        fetchNotifications(role)
       }
     } catch (e) {
       console.error("Auth error", e)
@@ -134,9 +134,9 @@ export default function DashboardPage() {
     setLoadingUsers(false)
   }
 
-  const fetchNotifications = async (isAdminStatus: boolean) => {
+  const fetchNotifications = async (roleString: string) => {
     setLoadingNotifications(true)
-    const notifs = await getNotifications(isAdminStatus)
+    const notifs = await getNotifications(roleString)
     setNotifications(notifs)
     setUnreadCount(notifs.filter((n: any) => !n.read).length)
     setLoadingNotifications(false)
@@ -146,7 +146,7 @@ export default function DashboardPage() {
     setActiveTab(tab)
     setIsSidebarOpen(false)
     if (tab === 'notifications' && unreadCount > 0) {
-      await markNotificationsRead(isAdmin)
+      await markNotificationsRead(userRole)
       setUnreadCount(0)
       setNotifications(prev => prev.map(n => ({ ...n, read: true })))
     }
@@ -238,7 +238,7 @@ export default function DashboardPage() {
           </Link>
         </div>
         <div className="p-4 flex-1 space-y-1">
-          {!isAdmin ? (
+          {(!isAdmin && !isProvider) ? (
             <>
               <button 
                 onClick={() => handleTabChange('licenses')}
@@ -797,18 +797,22 @@ export default function DashboardPage() {
                                   className="px-2 py-1 text-xs font-semibold bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors border border-zinc-700"
                                 >
                                   View
-                                </button>
-                                <RequestActions 
-                                  requestId={req.id} 
-                                  requestType={req.requestType} 
-                                  onApproveSystemClick={() => setSystemApprovalRequest(req)}
-                                  onSuccess={() => {
-                                    fetchAdminRequests();
-                                    getPendingRequestsCount().then(count => setAdminPendingCount(count));
-                                  }} 
-                                />
-                              </div>
-                            )}
+                                  </button>
+                                  {(req.requestType === 'system' && isProvider) ? (
+                                    <span className="text-[10px] text-zinc-500 font-bold uppercase block mt-2 text-center">Admin Approval Required</span>
+                                  ) : (
+                                    <RequestActions 
+                                      requestId={req.id} 
+                                      requestType={req.requestType} 
+                                      onApproveSystemClick={() => setSystemApprovalRequest(req)}
+                                      onSuccess={() => {
+                                        fetchAdminRequests();
+                                        getPendingRequestsCount().then(count => setAdminPendingCount(count));
+                                      }} 
+                                    />
+                                  )}
+                                </div>
+                              )}
                           </td>
                         </tr>
                       ))}
@@ -876,15 +880,19 @@ export default function DashboardPage() {
                           >
                             View Details
                           </button>
-                          <RequestActions 
-                            requestId={req.id} 
-                            requestType={req.requestType} 
-                            onApproveSystemClick={() => setSystemApprovalRequest(req)}
-                            onSuccess={() => {
-                              fetchAdminRequests();
-                              getPendingRequestsCount().then(count => setAdminPendingCount(count));
-                            }} 
-                          />
+                          {(req.requestType === 'system' && isProvider) ? (
+                            <span className="text-[10px] text-zinc-500 font-bold uppercase block mt-2 text-center">Admin Approval Required</span>
+                          ) : (
+                            <RequestActions 
+                              requestId={req.id} 
+                              requestType={req.requestType} 
+                              onApproveSystemClick={() => setSystemApprovalRequest(req)}
+                              onSuccess={() => {
+                                fetchAdminRequests();
+                                getPendingRequestsCount().then(count => setAdminPendingCount(count));
+                              }} 
+                            />
+                          )}
                         </div>
                       )}
                     </div>
@@ -939,6 +947,11 @@ export default function DashboardPage() {
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                                 Approved
                               </span>
+                              {req.approvedByName && (
+                                <div className="text-[10px] text-zinc-500 mt-2 font-medium">
+                                  by {req.approvedByRole === 'admin' ? 'Admin' : 'Provider'} <span className="text-zinc-400">{req.approvedByName}</span>
+                                </div>
+                              )}
                             </td>
                           </tr>
                         ))}
@@ -1277,7 +1290,7 @@ export default function DashboardPage() {
                         setIsDeleting(true)
                         await deleteNotifications(selectedNotifications)
                         setSelectedNotifications([])
-                        fetchNotifications(isAdmin || isProvider)
+                        fetchNotifications(userRole)
                         setIsDeleting(false)
                       }}
                       disabled={isDeleting}

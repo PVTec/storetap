@@ -25,12 +25,19 @@ export async function createLicenseRequest(data: { name: string, email: string, 
       }
     })
 
-    await prisma.notification.create({
-      data: {
-        userId: 'admin',
-        title: 'New License Request',
-        message: `${data.name} has requested a ${data.tier} license.`
-      }
+    await prisma.notification.createMany({
+      data: [
+        {
+          userId: 'admin',
+          title: 'New License Request',
+          message: `${data.name} has requested a ${data.tier} license.`
+        },
+        {
+          userId: 'provider',
+          title: 'New License Request',
+          message: `${data.name} has requested a ${data.tier} license.`
+        }
+      ]
     })
 
     return { success: true, request }

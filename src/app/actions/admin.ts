@@ -285,14 +285,14 @@ export async function updateUserRole(email: string, newRole: string) {
   }
 }
 
-export async function getNotifications(isAdmin: boolean) {
+export async function getNotifications(role: string) {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
     if (!session) return []
 
-    const targetUserId = isAdmin ? 'admin' : session.user.id
+    const targetUserId = role === 'admin' ? 'admin' : (role === 'provider' ? 'provider' : session.user.id)
 
     const notifications = await prisma.notification.findMany({
       where: { userId: targetUserId },
@@ -305,14 +305,14 @@ export async function getNotifications(isAdmin: boolean) {
   }
 }
 
-export async function markNotificationsRead(isAdmin: boolean) {
+export async function markNotificationsRead(role: string) {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
     if (!session) return { success: false }
 
-    const targetUserId = isAdmin ? 'admin' : session.user.id
+    const targetUserId = role === 'admin' ? 'admin' : (role === 'provider' ? 'provider' : session.user.id)
 
     await prisma.notification.updateMany({
       where: { userId: targetUserId, read: false },
@@ -365,9 +365,14 @@ export async function approveLicenseRequest(requestId: string) {
     })
 
     // Update request status
+    const currentName = session.user.user_metadata?.full_name || 'Admin'
     await prisma.licenseRequest.update({
       where: { id: requestId },
-      data: { status: 'approved' }
+      data: { 
+        status: 'approved',
+        approvedByRole: role,
+        approvedByName: currentName
+      }
     })
 
     if (request.userId) {
@@ -375,7 +380,7 @@ export async function approveLicenseRequest(requestId: string) {
         data: {
           userId: request.userId,
           title: 'License Approved',
-          message: `Your request for a ${request.tier} license has been approved! Your license key is ready.`
+          message: `Your request for a ${request.tier} license has been approved by ${role === 'admin' ? 'Admin' : 'Provider'} ${currentName}! Your license key is ready.`
         }
       })
     }
@@ -436,8 +441,8 @@ export async function approveSystemRequest(requestId: string, attachmentLink?: s
 
     if (!session) return { success: false, error: 'Unauthorized.' }
     const role = await getUserRole(session.user.email)
-    if (role !== 'admin' && role !== 'provider') {
-      return { success: false, error: 'Unauthorized. Only admins or providers can approve requests.' }
+    if (role !== 'admin') {
+      return { success: false, error: 'Unauthorized. Only SuperAdmins can approve systems.' }
     }
 
     const request = await prisma.systemRequest.findUnique({
@@ -495,8 +500,8 @@ export async function rejectSystemRequest(requestId: string) {
 
     if (!session) return { success: false, error: 'Unauthorized.' }
     const role = await getUserRole(session.user.email)
-    if (role !== 'admin' && role !== 'provider') {
-      return { success: false, error: 'Unauthorized. Only admins or providers can reject requests.' }
+    if (role !== 'admin') {
+      return { success: false, error: 'Unauthorized. Only SuperAdmins can reject systems.' }
     }
 
     const request = await prisma.systemRequest.findUnique({
