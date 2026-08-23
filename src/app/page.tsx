@@ -45,6 +45,9 @@ export default async function LandingPage() {
               View Pricing
             </Link>
           </div>
+          <p className="text-sm text-zinc-500 font-medium">
+            <span className="text-emerald-500 font-bold">✓</span> Works on any device with a browser—no app download required!
+          </p>
 
           <div className="flex items-center gap-10 pt-10">
             <div className="flex flex-col">

@@ -11,6 +11,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center gap-4 font-medium text-zinc-400">
           <Link href="/about" className="hover:text-white transition-colors">About</Link>
+          <a href="https://heyvince.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Contact Us</a>
           <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>
