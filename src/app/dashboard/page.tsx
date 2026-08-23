@@ -579,26 +579,30 @@ export default function DashboardPage() {
                     <span className="absolute top-4 right-4 bg-zinc-800 text-zinc-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Limited</span>
                     <div className="flex justify-between items-start mb-6 mt-2">
                       <div>
-                        <h3 className="text-xl font-bold text-white">Free Version</h3>
+                        <h3 className="text-xl font-bold text-white">Free Demo / Trial</h3>
                         <p className="text-zinc-500 text-sm mt-1">Basic Web Setup</p>
                       </div>
-                      <div className="w-12 h-12 bg-zinc-800/50 text-zinc-400 rounded-xl flex items-center justify-center border border-zinc-700/50">
+                      <div className="w-12 h-12 bg-zinc-800/50 text-zinc-400 rounded-xl flex items-center justify-center border border-zinc-700/50 shrink-0">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                       </div>
                     </div>
                     <div className="mb-8">
-                      <p className="text-3xl font-black text-white mb-2">₱0 <span className="text-sm font-medium text-zinc-500">free</span></p>
+                      <p className="text-xl font-black text-white mb-1">Free while testing</p>
+                      <p className="text-sm font-medium text-zinc-500">or Free for 30 days</p>
                     </div>
                     <div className="flex-1">
                       <ul className="space-y-4 mb-8">
-                        <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-zinc-400 bg-zinc-800 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Hosting (Website)
+                        <li className="text-sm text-zinc-300 flex items-start gap-3">
+                          <span className="text-zinc-400 bg-zinc-800 p-1 rounded-full shrink-0 mt-0.5"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span>
+                          <span className="leading-tight">Try StoreTap before purchasing a full system (includes web access & DB storage).</span>
                         </li>
-                        <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-zinc-400 bg-zinc-800 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Database Storage
+                        <li className="text-sm text-zinc-300 flex items-start gap-3">
+                          <span className="text-zinc-400 bg-zinc-800 p-1 rounded-full shrink-0 mt-0.5"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span>
+                          <span className="leading-tight">No permanent license included; paid license required for continued activation.</span>
                         </li>
                         <li className="text-sm text-zinc-400 flex items-start gap-3 mt-4 text-xs italic">
-                          <span className="text-amber-500 shrink-0">⚠️</span> System will be deactivated/deleted if not used after 1 month. No free license included.
+                          <span className="text-amber-500 shrink-0 mt-0.5">⚠️</span> 
+                          <span className="leading-tight">The demo may be deactivated or deleted after one month of complete inactivity.</span>
                         </li>
                       </ul>
                     </div>
