@@ -15,6 +15,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
   const [refNum, setRefNum] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [agreed, setAgreed] = useState(false)
+  const [ackNoPayment, setAckNoPayment] = useState(false)
   
   const [formData, setFormData] = useState({
     name: '',
@@ -45,14 +46,15 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
       setSubmitted(false)
       setError('')
       setAgreed(false)
+      setAckNoPayment(false)
       setFormData(prev => ({ ...prev, contactNumber: '', name: '', backupContact: '', storeName: '' }))
     }
   }, [isOpen])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!agreed) {
-      setError('You must agree to the Terms of Service to proceed.')
+    if (!agreed || !ackNoPayment) {
+      setError('You must agree to the Terms of Service and Acknowledge the payment policy.')
       return
     }
     
@@ -105,27 +107,38 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Request Submitted!</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Request Submitted Successfully</h3>
               {refNum && (
                 <div className="mb-4 p-3 bg-zinc-900 border border-zinc-800 rounded-lg">
                   <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Reference Number</p>
                   <p className="text-lg font-mono font-bold text-white">{refNum}</p>
                 </div>
               )}
-              <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
-                Your system request has been submitted successfully. Please prepare your payment of {price} and wait for the provider to contact you.
-              </p>
-              <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg mb-6">
+              <div className="text-sm text-zinc-400 mb-6 leading-relaxed text-left space-y-4">
+                <p>
+                  Your request has been recorded. A StoreTap provider will contact you at the phone number or email you provided.
+                </p>
+                <p className="text-blue-400 font-medium">
+                  No payment is required at this stage. Please wait for the provider to verify your request and confirm that your system is ready for release. Payment instructions will be provided only after verification.
+                </p>
+                <p>
+                  You may use this reference number when contacting support. Your request status will appear under <strong>My Pending Requests</strong>.
+                </p>
+              </div>
+              <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg mb-6 text-left">
                 <p className="text-sm text-blue-400 font-medium">Or message Vincent directly:</p>
                 <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="text-sm text-white font-bold underline mt-1 inline-block hover:text-blue-300">
                   Vincent Layon on Facebook
                 </a>
               </div>
               <button 
-                onClick={onClose}
-                className="w-full py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
+                onClick={() => {
+                  onClose();
+                  window.location.reload();
+                }}
+                className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
               >
-                Close
+                Close & View Requests
               </button>
             </div>
           ) : (
@@ -159,6 +172,40 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                   </p>
                 </div>
               )}
+
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-4 mb-4">
+                <p className="text-sm font-bold text-white mb-3">Processing Steps</p>
+                <div className="space-y-4">
+                  <div className="flex gap-3 text-xs">
+                    <div className="shrink-0 w-5 h-5 rounded-full bg-zinc-800 text-zinc-300 flex items-center justify-center font-bold">1</div>
+                    <div>
+                      <p className="text-zinc-300 font-semibold mb-0.5">Request submitted</p>
+                      <p className="text-zinc-500 leading-tight">Customer sends contact and store details; no payment is made</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 text-xs">
+                    <div className="shrink-0 w-5 h-5 rounded-full bg-zinc-800 text-zinc-300 flex items-center justify-center font-bold">2</div>
+                    <div>
+                      <p className="text-zinc-300 font-semibold mb-0.5">Provider verification</p>
+                      <p className="text-zinc-500 leading-tight">Provider calls/messages the customer and confirms the request</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 text-xs">
+                    <div className="shrink-0 w-5 h-5 rounded-full bg-zinc-800 text-zinc-300 flex items-center justify-center font-bold">3</div>
+                    <div>
+                      <p className="text-zinc-300 font-semibold mb-0.5">System prepared</p>
+                      <p className="text-zinc-500 leading-tight">Provider configures or prepares the license/system and confirms readiness</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 text-xs">
+                    <div className="shrink-0 w-5 h-5 rounded-full bg-zinc-800 text-zinc-300 flex items-center justify-center font-bold">4</div>
+                    <div>
+                      <p className="text-zinc-300 font-semibold mb-0.5">Payment and activation</p>
+                      <p className="text-zinc-500 leading-tight">Customer receives payment instructions, pays through the agreed method, and the license/system is activated or released</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
               <div>
                 <label className="block text-sm font-medium text-zinc-400 mb-1.5">Full Name</label>
@@ -220,9 +267,30 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                 <p className="text-[10px] text-zinc-500 mt-1.5">Must be an active email address we can contact.</p>
               </div>
 
-              <div className="pt-2">
+              <div className="mt-4 p-3 bg-zinc-900/30 border border-zinc-800 rounded-lg text-[10px] text-zinc-500 leading-relaxed">
+                Your contact details will be used to verify and process this request. They may be shared with the assigned StoreTap provider so the provider can contact you about setup and activation. We will not use your information for unrelated marketing without your consent. See the <a href="/privacy" target="_blank" className="text-blue-400 hover:underline">Privacy Policy</a>.
+              </div>
+
+              <div className="pt-2 space-y-4">
                 <label className="flex items-start gap-3 cursor-pointer group">
-                  <div className="relative flex items-start pt-1">
+                  <div className="relative flex items-start pt-1 shrink-0">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only"
+                      checked={ackNoPayment}
+                      onChange={e => setAckNoPayment(e.target.checked)}
+                    />
+                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${ackNoPayment ? 'bg-blue-500 border-blue-500' : 'border-zinc-700 group-hover:border-zinc-500 bg-black'}`}>
+                      {ackNoPayment && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                    </div>
+                  </div>
+                  <span className="text-xs text-zinc-400 leading-relaxed">
+                    I understand that this form submits a request only. No payment is being made now. A provider will contact me to verify my details and confirm when the license or system is ready. I will review the final price, inclusions, renewal terms, and payment instructions before paying.
+                  </span>
+                </label>
+
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <div className="relative flex items-start pt-1 shrink-0">
                     <input 
                       type="checkbox" 
                       className="sr-only"
@@ -234,7 +302,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                     </div>
                   </div>
                   <span className="text-xs text-zinc-400 leading-relaxed">
-                    I accept and agree to the <a href="/terms" target="_blank" className="text-blue-400 hover:underline">Terms of Service</a>. I understand that the free license bundled with this purchase is valid for 1 month upon approval.
+                    I accept the StoreTap <a href="/terms" target="_blank" className="text-blue-400 hover:underline">Terms of Service</a> and Privacy Policy. I understand that the free license bundled with this purchase is valid for 1 month upon approval.
                   </span>
                 </label>
               </div>
@@ -242,7 +310,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
               <div className="pt-4 border-t border-zinc-800/80">
                 <button 
                   type="submit" 
-                  disabled={loading}
+                  disabled={loading || !agreed || !ackNoPayment}
                   className="w-full py-3 bg-white text-black font-bold rounded-lg transition-colors hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
                 >
                   {loading ? (
@@ -250,7 +318,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                       <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
                       Processing...
                     </>
-                  ) : 'Submit Request'}
+                  ) : 'Submit Request — No Payment Yet'}
                 </button>
               </div>
             </form>
