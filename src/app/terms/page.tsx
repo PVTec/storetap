@@ -25,29 +25,38 @@ export default function TermsPage() {
             Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of StoreTap Technologies.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">3. License Use</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">3. Independent Providers and Payments</h2>
           <p>
-            When you purchase a license from StoreTap, you are granted a non-exclusive, non-transferable, revocable license to use the Software on 
+            StoreTap Central operates as a platform that connects you with authorized independent distributors ("Providers"). 
+            <strong> StoreTap does not process payments directly through this website.</strong> All financial transactions, payment settlements, and final pricing agreements for licenses or system installations are conducted strictly between you (the Client) and the assigned Provider off-platform (e.g., via phone call, social media, or other communication channels).
+          </p>
+          <p className="mt-4">
+            Because StoreTap does not collect funds directly, we are not liable or responsible for any payment disputes, refunds, or undelivered promises made by the Provider. However, approved licenses and systems will be officially reflected in your StoreTap dashboard once the Provider confirms the settlement.
+          </p>
+
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">4. License Use</h2>
+          <p>
+            When you acquire a license from a Provider, you are granted a non-exclusive, non-transferable, revocable license to use the Software on 
             a single device in accordance with the specific tier you selected (Basic, Standard, Pro). 
             You may not share, resell, or distribute your license key.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">4. Limitation of Liability</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">5. Limitation of Liability</h2>
           <p>
             In no event shall StoreTap Technologies, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any 
             indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, 
-            or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct or 
-            content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration 
+            or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct, transactions, or 
+            content of any third-party Provider or agent; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration 
             of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">5. Changes</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">6. Changes</h2>
           <p>
             We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide 
             at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">6. Contact Us</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">7. Contact Us</h2>
           <p>
             If you have any questions about these Terms, please contact us at <a href="https://heyvince.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">heyvince.vercel.app</a>.
           </p>
