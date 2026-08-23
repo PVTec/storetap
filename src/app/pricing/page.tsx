@@ -102,18 +102,11 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30 relative overflow-x-hidden">
-      {/* Ambient Background Accents */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[100vw] h-[100vh] pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[100vw] md:w-[50vw] h-[40vh] bg-blue-600/20 rounded-full blur-[100px] md:blur-[120px]"></div>
-        <div className="absolute bottom-[20%] right-[-20%] w-[80vw] md:w-[40vw] h-[50vh] bg-emerald-600/15 rounded-full blur-[100px] md:blur-[120px]"></div>
-        <div className="absolute top-[40%] left-[-20%] w-[70vw] md:w-[30vw] h-[40vh] bg-indigo-600/15 rounded-full blur-[100px] md:blur-[120px]"></div>
-      </div>
+    <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
+      <Navigation />
 
-      <div className="relative z-10 flex flex-col min-h-screen">
-        <Navigation />
-
-        <main className="flex-1 max-w-5xl mx-auto px-6 pt-20 pb-32 text-center w-full">
+      <main className="max-w-5xl mx-auto px-6 pt-20 pb-32 text-center relative z-10">
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[500px] bg-blue-600/30 blur-[100px] md:bg-blue-500/20 -z-10 rounded-full pointer-events-none"></div>
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white mb-4">
           Simple, Transparent Pricing
         </h1>
@@ -286,7 +279,6 @@ export default function PricingPage() {
         </div>
       </main>
       <Footer />
-      </div>
 
       <LicenseRequestModal 
         isOpen={isModalOpen} 
