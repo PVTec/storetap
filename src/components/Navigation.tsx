@@ -29,11 +29,8 @@ export default function Navigation() {
         </div>
         
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
-            Log in
-          </Link>
           <Link href="/login" className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold shadow-sm hover:bg-zinc-200 transition-all text-center">
-            Dashboard
+            Log in
           </Link>
         </div>
 
@@ -76,11 +73,8 @@ export default function Navigation() {
           <Link href="/pricing" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Pricing</Link>
           <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">About</Link>
           <hr className="border-zinc-800/80" />
-          <Link href="/login" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">
-            Log in
-          </Link>
           <Link href="/login" onClick={() => setIsOpen(false)} className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold shadow-sm hover:bg-zinc-200 transition-all text-center">
-            Dashboard
+            Log in
           </Link>
         </div>
       </div>
