@@ -34,9 +34,13 @@ export async function getClientData() {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) return null
   try {
-    return await prisma.userRole.findUnique({
+    const user = await prisma.userRole.findUnique({
       where: { email: session.user.email }
     })
+    if (user && (user.email === 'vincentlayonuser@gmail.com' || user.email === 'admin@vince.dev')) {
+      user.role = 'admin'
+    }
+    return user
   } catch (e) {
     return null
   }
@@ -45,13 +49,20 @@ export async function getClientData() {
 export async function syncUserToDatabase(email: string, name: string | null) {
   try {
     const existing = await prisma.userRole.findUnique({ where: { email } })
+    const isSuperAdmin = email === 'vincentlayonuser@gmail.com' || email === 'admin@vince.dev'
+    
     if (!existing) {
       await prisma.userRole.create({
         data: {
           email,
           name: name || 'Unknown',
-          role: 'client'
+          role: isSuperAdmin ? 'admin' : 'client'
         }
+      })
+    } else if (isSuperAdmin && existing.role !== 'admin') {
+      await prisma.userRole.update({
+        where: { email },
+        data: { role: 'admin' }
       })
     }
     return { success: true }
