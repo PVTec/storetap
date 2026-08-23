@@ -38,23 +38,6 @@ export default function PricingPage() {
 
   const plans = [
     {
-      name: "Free Demo / Trial",
-      price: "₱0",
-      subtext: "While actively testing",
-      duration: "Evaluation License",
-      features: [
-        "Try before purchasing",
-        "Basic web access & DB",
-        "Demo support / guided setup"
-      ],
-      missing: [
-        "No permanent license",
-        "Deleted if inactive for 30 days"
-      ],
-      btn: "Start Free Trial",
-      popular: false
-    },
-    {
       name: "Basic",
       price: "₱150",
       subtext: "",
@@ -130,7 +113,7 @@ export default function PricingPage() {
           Choose the perfect license duration for your business needs. Your app will prompt you when it's time to renew.
         </p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-left max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 text-left max-w-5xl mx-auto">
           {plans.map((p, i) => (
              <div key={i} className={`bg-[#09090b] p-8 rounded-3xl border shadow-lg relative transition-all flex flex-col ${p.popular ? 'border-blue-500/50 ring-1 ring-blue-500/20 shadow-[0_0_30px_rgba(59,130,246,0.15)]' : 'border-zinc-800/80 hover:border-zinc-700'}`}>
                {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Best Value</span>}
@@ -171,18 +154,6 @@ export default function PricingPage() {
                </button>
              </div>
           ))}
-        </div>
-        
-        <div className="mt-16 p-6 bg-blue-950/20 border border-blue-900/30 rounded-2xl max-w-4xl mx-auto text-left flex gap-4 items-start">
-          <div className="text-blue-500 mt-1 shrink-0">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-2 text-lg">Free Demo/Trial</h4>
-            <p className="text-zinc-400 text-sm leading-relaxed">
-              Try StoreTap before you buy. This demo includes basic web access and database storage for evaluation. To keep the service available for everyone, a demo that has no sales or inventory activity for 30 consecutive days may be deactivated and permanently deleted. The demo does not include a permanent license.
-            </p>
-          </div>
         </div>
       </main>
       <Footer />
