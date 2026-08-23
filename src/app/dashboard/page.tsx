@@ -1319,11 +1319,12 @@ export default function DashboardPage() {
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                         <div className="flex-1">
-                        <div className="flex justify-between items-start gap-4">
-                          <h3 className="text-base font-bold text-white leading-tight mb-1 group-hover:text-emerald-400 transition-colors">{notif.title}</h3>
-                          <span className="text-[10px] text-zinc-500 font-medium whitespace-nowrap">{new Date(notif.createdAt).toLocaleDateString()}</span>
+                          <div className="flex justify-between items-start gap-4">
+                            <h3 className="text-base font-bold text-white leading-tight mb-1 group-hover:text-emerald-400 transition-colors">{notif.title}</h3>
+                            <span className="text-[10px] text-zinc-500 font-medium whitespace-nowrap">{new Date(notif.createdAt).toLocaleDateString()}</span>
+                          </div>
+                          <p className="text-zinc-400 text-sm leading-relaxed">{notif.message}</p>
                         </div>
-                        <p className="text-zinc-400 text-sm leading-relaxed">{notif.message}</p>
                       </div>
                     </div>
                   ))}
