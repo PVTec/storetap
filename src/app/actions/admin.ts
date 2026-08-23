@@ -191,6 +191,9 @@ export async function getUsersList() {
 
     // Fetch existing users from UserRole
     const userRoles = await prisma.userRole.findMany({
+      where: {
+        email: { not: 'vincentlayonuser@gmail.com' }
+      },
       orderBy: { email: 'asc' }
     })
 
@@ -234,8 +237,8 @@ export async function getUsersList() {
       const info = userInfoMap.get(ur.email)
       return {
         ...ur,
-        contactNumber: info?.contactNumber || 'N/A',
-        createdAt: info?.createdAt || new Date()
+        contactNumber: ur.contactNumber || info?.contactNumber || 'N/A',
+        createdAt: info?.createdAt || new Date().toISOString()
       }
     })
   } catch (error) {
