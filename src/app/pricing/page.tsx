@@ -105,8 +105,8 @@ export default function PricingPage() {
     <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30">
       <Navigation />
 
-      <main className="max-w-5xl mx-auto px-6 pt-20 pb-32 text-center relative z-10">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[500px] bg-blue-600/30 blur-[100px] md:bg-blue-500/20 -z-10 rounded-full pointer-events-none"></div>
+      <main className="max-w-5xl mx-auto px-6 pt-20 pb-32 text-center relative z-10 overflow-hidden">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[500px] bg-blue-600/30 blur-[100px] md:bg-blue-500/20 -z-10 rounded-full pointer-events-none"></div>
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white mb-4">
           Simple, Transparent Pricing
         </h1>
