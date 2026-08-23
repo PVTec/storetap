@@ -155,6 +155,127 @@ export default function PricingPage() {
              </div>
           ))}
         </div>
+
+        <div className="mt-32">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-4">
+            System Store Packages
+          </h2>
+          <p className="text-zinc-400 mb-16 max-w-xl mx-auto">
+            Purchase StoreTap Systems with bundled free licenses. These are one-time payments for the deployment of your system.
+          </p>
+
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
+            {/* Free System */}
+            <div className="bg-[#09090b] border border-zinc-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(161,161,170,0.05)] transition-all">
+              <span className="absolute top-4 right-4 bg-zinc-800 text-zinc-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Limited</span>
+              <div className="flex justify-between items-start mb-6 mt-2">
+                <div>
+                  <h3 className="text-xl font-bold text-white">Free Demo / Trial</h3>
+                  <p className="text-zinc-500 text-sm mt-1">Basic Web Setup</p>
+                </div>
+                <div className="w-12 h-12 bg-zinc-800/50 text-zinc-400 rounded-xl flex items-center justify-center border border-zinc-700/50 shrink-0">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                </div>
+              </div>
+              <div className="mb-8">
+                <p className="text-xl font-black text-white mb-1">Free while testing</p>
+                <p className="text-sm font-medium text-zinc-500">or Free for 30 days</p>
+              </div>
+              <div className="flex-1">
+                <ul className="space-y-4 mb-8">
+                  <li className="text-sm text-zinc-300 flex items-start gap-3">
+                    <span className="text-zinc-400 bg-zinc-800 p-1 rounded-full shrink-0 mt-0.5"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span>
+                    <span className="leading-tight">Try StoreTap before purchasing a full system (includes web access & DB storage).</span>
+                  </li>
+                  <li className="text-sm text-zinc-300 flex items-start gap-3">
+                    <span className="text-zinc-400 bg-zinc-800 p-1 rounded-full shrink-0 mt-0.5"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span>
+                    <span className="leading-tight">No permanent license included; paid license required for continued activation.</span>
+                  </li>
+                  <li className="text-sm text-zinc-400 flex items-start gap-3 mt-4 text-xs italic">
+                    <span className="text-amber-500 shrink-0 mt-0.5">⚠️</span> 
+                    <span className="leading-tight">The demo may be deactivated or deleted after one month of complete inactivity.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Web System */}
+            <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all">
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-white">Web Version</h3>
+                  <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
+                </div>
+                <div className="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                </div>
+              </div>
+              <div className="mb-8">
+                <p className="text-3xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+              </div>
+              <div className="flex-1">
+                <ul className="space-y-4 mb-8">
+                  <li className="text-sm text-zinc-300 flex items-center gap-3">
+                    <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Hosting (Website)
+                  </li>
+                  <li className="text-sm text-zinc-300 flex items-center gap-3">
+                    <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Database Storage
+                  </li>
+                  <li className="text-sm text-zinc-300 flex items-center gap-3">
+                    <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-emerald-400">Basic Tier License</span> (30 Days)
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* App System */}
+            <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-all">
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-white">App Version</h3>
+                  <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
+                </div>
+                <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                </div>
+              </div>
+              <div className="mb-8">
+                <p className="text-3xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+              </div>
+              <div className="flex-1">
+                <ul className="space-y-4 mb-8">
+                  <li className="text-sm text-zinc-300 flex items-center gap-3">
+                    <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Mobile App
+                  </li>
+                  <li className="text-sm text-zinc-300 flex items-center gap-3 leading-relaxed">
+                    <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full shrink-0"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> 
+                    <span>Free Hosting <span className="text-blue-400 font-medium">(Web Site)</span> & Database Storage</span>
+                  </li>
+                  <li className="text-sm text-zinc-300 flex items-center gap-3">
+                    <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-blue-400">Pro Tier License</span> (30 Days)
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-16 text-center">
+            <button 
+              onClick={() => {
+                if (userLogged) {
+                  router.push('/dashboard')
+                } else {
+                  router.push('/login')
+                }
+              }}
+              className="inline-block px-8 py-4 rounded-xl bg-white text-black font-bold text-lg hover:bg-zinc-200 transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)]"
+            >
+              Get Started with StoreTap
+            </button>
+          </div>
+        </div>
       </main>
       <Footer />
 
