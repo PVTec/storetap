@@ -32,10 +32,10 @@ export default async function LandingPage() {
             StoreTap v2.1.0 is Live
           </div>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.1] text-white">
-            The Ultimate POS <br className="hidden md:block" />& Inventory <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">System</span>
+            A Lightweight Offline <br className="hidden md:block" />& Utang <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">POS System</span>
           </h1>
           <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-            Experience seamless sales, utang tracking, and real-time inventory management for your store.
+            Sell even when the internet is down. Track utang without a notebook. Know your stock at a glance.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
             <Link href="/login" className="w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-black font-bold text-base hover:bg-zinc-200 transition-all text-center">

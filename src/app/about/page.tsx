@@ -28,7 +28,7 @@ export default function AboutPage() {
           </h1>
           <div className="space-y-6 text-zinc-400 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
             <p>
-              StoreTap is a modern, offline-first Point of Sale (POS) and Inventory system built exclusively for the modern business owner. 
+              StoreTap is a lightweight, offline-first Point of Sale (POS) and Inventory system built exclusively for local business owners. 
               Our mission is to provide an uninterrupted sales experience, even when internet connectivity is spotty or completely lost.
             </p>
             

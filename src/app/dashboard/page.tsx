@@ -773,7 +773,7 @@ export default function DashboardPage() {
                   
                   <div className="space-y-4 text-sm text-zinc-300 leading-relaxed">
                     <p>
-                      StoreTap is the ultimate cloud-connected Point of Sale system built specifically for modern businesses. 
+                      StoreTap is a lightweight, cloud-connected Point of Sale system built specifically for local businesses. 
                       Designed with an offline-first architecture, it ensures your store continues to operate flawlessly even when internet connectivity is completely lost.
                     </p>
                     <p>

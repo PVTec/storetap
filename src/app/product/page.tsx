@@ -10,7 +10,7 @@ export default function ProductPage() {
 
       <main className="max-w-4xl mx-auto px-6 pt-20 pb-32 text-center">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white mb-6">
-          The POS Built for <br/> <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Modern Businesses</span>
+          The POS Built for <br/> <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Local Stores</span>
         </h1>
         <p className="text-lg text-zinc-400 mb-16 max-w-2xl mx-auto leading-relaxed">
           StoreTap is designed to operate completely offline but sync seamlessly to the cloud. You never have to worry about internet interruptions affecting your sales again.
