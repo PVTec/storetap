@@ -39,22 +39,19 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Free Demo / Trial",
-      price: "Free",
-      subtext: "while actively testing",
-      duration: "Evaluation Only",
+      price: "₱0",
+      subtext: "While actively testing",
+      duration: "Evaluation License",
       features: [
         "Try before purchasing",
-        "Basic web access",
-        "Database storage",
+        "Basic web access & DB",
         "Demo support / guided setup"
       ],
       missing: [
-        "Permanent license",
-        "Full support",
-        "Offline Mode",
-        "Premium Themes"
+        "No permanent license",
+        "Deleted if inactive for 30 days"
       ],
-      btn: "Start Free Demo",
+      btn: "Start Free Trial",
       popular: false
     },
     {
@@ -175,18 +172,16 @@ export default function PricingPage() {
              </div>
           ))}
         </div>
-
-        <div className="max-w-4xl mx-auto mt-16 p-6 bg-zinc-900/50 border border-zinc-800 rounded-2xl text-left">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20">
-              <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-2">Free Demo / Trial Terms</h4>
-              <p className="text-zinc-400 text-sm leading-relaxed">
-                Try StoreTap before you buy. This demo includes basic web access and database storage for evaluation. To keep the service available for everyone, a demo that has no sales or inventory activity for 30 consecutive days may be deactivated and permanently deleted. The demo does not include a permanent license.
-              </p>
-            </div>
+        
+        <div className="mt-16 p-6 bg-blue-950/20 border border-blue-900/30 rounded-2xl max-w-4xl mx-auto text-left flex gap-4 items-start">
+          <div className="text-blue-500 mt-1 shrink-0">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-2 text-lg">Free Demo/Trial</h4>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Try StoreTap before you buy. This demo includes basic web access and database storage for evaluation. To keep the service available for everyone, a demo that has no sales or inventory activity for 30 consecutive days may be deactivated and permanently deleted. The demo does not include a permanent license.
+            </p>
           </div>
         </div>
       </main>
