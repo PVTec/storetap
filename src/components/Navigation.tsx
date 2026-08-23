@@ -17,7 +17,7 @@ export default function Navigation() {
           <span className="hidden sm:inline-block text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono font-bold ml-1">v2.1.0</span>
         </Link>
         
-        {/* Desktop Nav */}
+        {/* Desktop Nav & Login */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           {pathname !== '/' && (
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -26,10 +26,10 @@ export default function Navigation() {
           <Link href="/features" className="hover:text-white transition-colors">Features</Link>
           <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
           <Link href="/about" className="hover:text-white transition-colors">About</Link>
-        </div>
-        
-        <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+          
+          <div className="w-px h-4 bg-zinc-800"></div>
+          
+          <Link href="/login" className="hover:text-white transition-colors">
             Log in
           </Link>
         </div>
