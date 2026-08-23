@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { syncUserToDatabase } from '@/app/actions/admin'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -32,8 +33,11 @@ export async function GET(request: Request) {
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    const { error, data } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      if (data.user?.email) {
+        await syncUserToDatabase(data.user.email, data.user.user_metadata?.full_name || null)
+      }
       return NextResponse.redirect(`${origin}${next}`)
     }
   }

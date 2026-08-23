@@ -68,4 +68,7 @@ model UserRole {
   email  String @unique
   name   String?
   role   String @default("client") // 'admin', 'provider', 'client'
+  isProviderOnboarded Boolean @default(false)
+  contactNumber       String?
+  phoneVerified       Boolean @default(false)
 }

@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
-import { getPendingRequests, getApprovedLicenseRequests, getApprovedSystemRequests, getUsersList, getNotifications, markNotificationsRead, getPendingRequestsCount, approveSystemRequest, getAdminGeneratedLicenses, getClientRole, deleteGeneratedLicenses, deleteUsers, deleteNotifications, updateUserRole } from '@/app/actions/admin'
+import { getPendingRequests, getApprovedLicenseRequests, getApprovedSystemRequests, getUsersList, getNotifications, markNotificationsRead, getPendingRequestsCount, approveSystemRequest, getAdminGeneratedLicenses, getClientRole, getClientData, deleteGeneratedLicenses, deleteUsers, deleteNotifications, updateUserRole } from '@/app/actions/admin'
 import { getClientPendingRequests, undoRequest, getClientApprovedSystems } from '@/app/actions/client'
+import ProviderOnboarding from '@/components/ProviderOnboarding'
 import RequestActions from '@/app/admin/requests/RequestActions'
 import LicenseRequestModal from '@/components/LicenseRequestModal'
 import SystemRequestModal from '@/components/SystemRequestModal'
@@ -23,6 +24,7 @@ export default function DashboardPage() {
   const [selectedSystem, setSelectedSystem] = useState<'web'|'app'>('web')
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [userRole, setUserRole] = useState<'admin' | 'provider' | 'client'>('client')
+  const [isProviderOnboarded, setIsProviderOnboarded] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   
@@ -73,8 +75,10 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         setUserEmail(user.email || null)
-        const role = await getClientRole() as 'admin' | 'provider' | 'client'
+        const userData = await getClientData()
+        const role = (userData?.role || 'client') as 'admin' | 'provider' | 'client'
         setUserRole(role)
+        setIsProviderOnboarded(userData?.isProviderOnboarded || false)
         
         if (role === 'admin' || role === 'provider') {
           setActiveTab('admin')
@@ -203,6 +207,18 @@ export default function DashboardPage() {
   const handleOpenSystemModal = (type: 'web' | 'app') => {
     setSelectedSystem(type)
     setIsSystemModalOpen(true)
+  }
+
+  if (userRole === 'provider' && !isProviderOnboarded && userEmail) {
+    return (
+      <ProviderOnboarding 
+        email={userEmail} 
+        onComplete={() => {
+          setIsProviderOnboarded(true)
+          checkUser()
+        }} 
+      />
+    )
   }
 
   return (

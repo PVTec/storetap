@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import Image from 'next/image'
 import Link from 'next/link'
+import { syncUserToDatabase } from '@/app/actions/admin'
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false)
@@ -71,6 +72,7 @@ export default function LoginPage() {
         if (data.user && data.user.identities && data.user.identities.length === 0) {
           setError("This email is already registered. Please sign in instead.")
         } else if (data.session) {
+          await syncUserToDatabase(email, name)
           window.location.href = '/dashboard'
         } else {
           setSuccessMsg("Registration successful! Please check your email to verify your account.")
@@ -80,11 +82,14 @@ export default function LoginPage() {
           setConfirmPassword('')
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error, data } = await supabase.auth.signInWithPassword({
           email,
           password
         })
         if (error) throw error
+        if (data.user) {
+          await syncUserToDatabase(email, data.user.user_metadata?.full_name || null)
+        }
         window.location.href = '/dashboard'
       }
     } catch (e: any) {

@@ -29,6 +29,65 @@ export async function getClientRole() {
   return await getUserRole(session.user.email)
 }
 
+export async function getClientData() {
+  const supabase = await createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) return null
+  try {
+    return await prisma.userRole.findUnique({
+      where: { email: session.user.email }
+    })
+  } catch (e) {
+    return null
+  }
+}
+
+export async function syncUserToDatabase(email: string, name: string | null) {
+  try {
+    const existing = await prisma.userRole.findUnique({ where: { email } })
+    if (!existing) {
+      await prisma.userRole.create({
+        data: {
+          email,
+          name: name || 'Unknown',
+          role: 'client'
+        }
+      })
+    }
+    return { success: true }
+  } catch (error) {
+    console.error("Error syncing user:", error)
+    return { success: false }
+  }
+}
+
+export async function sendProviderOTP(phone: string) {
+  // In a real application, you would integrate Twilio or Supabase SMS here.
+  // For this implementation, we simulate an SMS being sent successfully.
+  return { success: true, message: 'OTP sent to ' + phone }
+}
+
+export async function verifyProviderOTP(email: string, phone: string, code: string) {
+  // Mock verification: accepting '123456' as the correct OTP
+  if (code !== '123456') {
+    return { success: false, error: 'Invalid OTP code. Please use 123456 for testing.' }
+  }
+
+  try {
+    await prisma.userRole.update({
+      where: { email },
+      data: {
+        contactNumber: phone,
+        phoneVerified: true,
+        isProviderOnboarded: true
+      }
+    })
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: 'Failed to update user profile.' }
+  }
+}
+
 export async function getPendingRequestsCount() {
   try {
     const supabase = await createClient()
