@@ -147,6 +147,7 @@ export default function PricingPage() {
 
                <button 
                  onClick={() => handleOpenModal(p.name)}
+                 disabled={userRole === 'admin' || userRole === 'provider'}
                  className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all text-center block mt-4 cursor-pointer ${(userRole === 'admin' || userRole === 'provider') ? 'opacity-50 cursor-not-allowed bg-zinc-800 text-zinc-500' : p.popular ? 'bg-white text-black hover:bg-zinc-200' : 'bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800'}`}
                >
                  {userRole === 'admin' || userRole === 'provider' ? 'Not Available' : p.btn}

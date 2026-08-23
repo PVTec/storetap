@@ -499,9 +499,10 @@ export default function DashboardPage() {
                     </div>
                     <button 
                       onClick={() => handleOpenModal('Basic')}
-                      className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors"
+                      disabled={isAdmin || isProvider}
+                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed' : 'bg-zinc-800 hover:bg-zinc-700 text-white'}`}
                     >
-                      Get Basic License
+                      {isAdmin || isProvider ? 'Not Available' : 'Get Basic License'}
                     </button>
                   </div>
 
@@ -519,9 +520,10 @@ export default function DashboardPage() {
                     </div>
                     <button 
                       onClick={() => handleOpenModal('Standard')}
-                      className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors"
+                      disabled={isAdmin || isProvider}
+                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-emerald-500/10' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}`}
                     >
-                      Get Standard License
+                      {isAdmin || isProvider ? 'Not Available' : 'Get Standard License'}
                     </button>
                   </div>
 
@@ -542,9 +544,10 @@ export default function DashboardPage() {
                     </div>
                     <button 
                       onClick={() => handleOpenModal('Pro')}
-                      className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
+                      disabled={isAdmin || isProvider}
+                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-blue-500/10' : 'bg-blue-600 hover:bg-blue-500 text-white'}`}
                     >
-                      Get Pro License
+                      {isAdmin || isProvider ? 'Not Available' : 'Get Pro License'}
                     </button>
                   </div>
                 </div>
@@ -587,9 +590,10 @@ export default function DashboardPage() {
                     </div>
                     <button 
                       onClick={() => handleOpenSystemModal('web')}
-                      className="w-full py-3 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 font-bold rounded-lg transition-colors border border-emerald-500/20"
+                      disabled={isAdmin || isProvider}
+                      className={`w-full py-3 font-bold rounded-lg transition-colors border ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 border-zinc-800/50 cursor-not-allowed' : 'bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 border-emerald-500/20'}`}
                     >
-                      Purchase Web System
+                      {isAdmin || isProvider ? 'Not Available' : 'Purchase Web System'}
                     </button>
                   </div>
 
@@ -624,9 +628,10 @@ export default function DashboardPage() {
                     </div>
                     <button 
                       onClick={() => handleOpenSystemModal('app')}
-                      className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg shadow-blue-500/25"
+                      disabled={isAdmin || isProvider}
+                      className={`w-full py-3 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25'}`}
                     >
-                      Purchase App System
+                      {isAdmin || isProvider ? 'Not Available' : 'Purchase App System'}
                     </button>
                   </div>
                 </div>
