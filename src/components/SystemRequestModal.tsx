@@ -147,6 +147,18 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                   </p>
                 </div>
               )}
+
+              {systemType !== 'free-web' && (
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-2 mb-2">
+                  <p className="text-xs text-blue-400 font-medium">Provider Setup Notice</p>
+                  <p className="text-xs text-zinc-400 leading-relaxed">
+                    This form submits a request for the {title} — {price} one-time setup fee. It is not an immediate payment and the system will not be released yet. A StoreTap provider will contact you to verify your store details, confirm the requested branding and setup, explain what is included, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that the system is ready for release.</strong>
+                  </p>
+                  <p className="text-xs text-zinc-400 leading-relaxed">
+                    {systemType === 'app' ? 'This package includes the app/setup, hosting/database, and a 30-day Pro license. The Pro license is temporary and renewal is separate.' : 'The included Basic license is valid for 30 days according to the offer shown on this page. Continued use after the included period may require license renewal.'} Hosting, database availability, inactivity limits, support, and renewal terms are described below.
+                  </p>
+                </div>
+              )}
               
               <div>
                 <label className="block text-sm font-medium text-zinc-400 mb-1.5">Full Name</label>
@@ -238,7 +250,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
                       <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
                       Processing...
                     </>
-                  ) : 'Proceed Request'}
+                  ) : 'Submit Request'}
                 </button>
               </div>
             </form>

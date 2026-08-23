@@ -516,7 +516,7 @@ export default function DashboardPage() {
                       disabled={isAdmin || isProvider}
                       className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed' : 'bg-zinc-800 hover:bg-zinc-700 text-white'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Get Basic License'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Basic License'}
                     </button>
                   </div>
 
@@ -537,7 +537,7 @@ export default function DashboardPage() {
                       disabled={isAdmin || isProvider}
                       className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-emerald-500/10' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Get Standard License'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Standard License'}
                     </button>
                   </div>
 
@@ -561,7 +561,7 @@ export default function DashboardPage() {
                       disabled={isAdmin || isProvider}
                       className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-blue-500/10' : 'bg-blue-600 hover:bg-blue-500 text-white'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Get Pro License'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Pro License'}
                     </button>
                   </div>
                 </div>
@@ -648,7 +648,7 @@ export default function DashboardPage() {
                       disabled={isAdmin || isProvider}
                       className={`w-full py-3 font-bold rounded-lg transition-colors border ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 border-zinc-800/50 cursor-not-allowed' : 'bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 border-emerald-500/20'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Purchase Web System'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Web System'}
                     </button>
                   </div>
 
@@ -686,7 +686,7 @@ export default function DashboardPage() {
                       disabled={isAdmin || isProvider}
                       className={`w-full py-3 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Purchase App System'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request App System'}
                     </button>
                   </div>
                 </div>

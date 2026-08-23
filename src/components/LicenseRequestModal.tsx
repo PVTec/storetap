@@ -113,6 +113,16 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
         ) : (
           <>
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-2 mb-2">
+                <p className="text-xs text-blue-400 font-medium">Provider Verification Notice</p>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  This form submits a request for the {tier} License — {tier === 'Basic' ? '₱150 for 30 days' : tier === 'Standard' ? '₱500 for 90 days' : '₱1,500 for 150 days'}. It is not an immediate payment and your license will not be activated yet. A StoreTap provider will contact you using the information below to verify your request, confirm your store details, explain the license and activation process, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that your license is ready for activation.</strong>
+                </p>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  After verification and payment confirmation, the license will be issued or activated according to the selected tier. The license validity period begins according to the activation rules shown below. Please make sure your contact details are correct.
+                </p>
+              </div>
+              
               <div>
                 <label className="block text-sm font-medium text-zinc-300 mb-1">Full Name</label>
                 <input 
@@ -169,7 +179,7 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
                 disabled={isSubmitting || !agreed}
                 className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-lg transition-colors mt-6"
               >
-                {isSubmitting ? 'Submitting...' : 'Proceed'}
+                {isSubmitting ? 'Submitting...' : 'Submit Request'}
               </button>
             </form>
           </>

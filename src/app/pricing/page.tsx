@@ -53,7 +53,7 @@ export default function PricingPage() {
         "Premium Themes",
         "Offline Mode"
       ],
-      btn: "Get Basic License",
+      btn: "Request Basic License",
       popular: false
     },
     {
@@ -68,7 +68,7 @@ export default function PricingPage() {
       missing: [
         "Offline Mode"
       ],
-      btn: "Get Standard License",
+      btn: "Request Standard License",
       popular: false
     },
     {
@@ -82,7 +82,7 @@ export default function PricingPage() {
         "VIP Support"
       ],
       missing: [],
-      btn: "Get Pro License",
+      btn: "Request Pro License",
       popular: true
     }
   ]
