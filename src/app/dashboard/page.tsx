@@ -732,7 +732,7 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {activeTab === 'admin' && isAdmin && (
+            {activeTab === 'admin' && (isAdmin || isProvider) && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-2">Pending License Requests</h1>
                 <p className="text-zinc-400 text-sm mb-8">Manage incoming license requests from clients.</p>
@@ -901,7 +901,7 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {activeTab === 'approved-licenses' && isAdmin && (
+            {activeTab === 'approved-licenses' && (isAdmin || isProvider) && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex justify-between items-center mb-8">
                   <div>
