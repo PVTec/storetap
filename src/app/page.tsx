@@ -167,7 +167,7 @@ export default async function LandingPage() {
              </div>
              <h3 className="text-lg font-bold text-white mb-3">Smart POS</h3>
              <p className="text-zinc-400 text-sm leading-relaxed">
-               Lightning-fast checkout with barcode scanning, product cards, and quick change calculators designed for busy stores.
+               Lightning-fast checkout through seamless tapping. No barcodes or QR codes needed—just tap product cards and utilize our quick change calculators designed for busy stores.
              </p>
           </div>
           <div className="bg-[#09090b] p-8 rounded-2xl border border-zinc-800/80 shadow-lg hover:border-zinc-700 transition-colors group">
