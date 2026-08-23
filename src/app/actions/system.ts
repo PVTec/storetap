@@ -2,7 +2,7 @@
 import { createClient } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma'
 
-export async function createSystemRequest(data: { name: string; email: string; contactNumber: string; backupContact: string; storeName?: string; type: 'web' | 'app' }) {
+export async function createSystemRequest(data: { name: string; email: string; contactNumber: string; backupContact: string; storeName?: string; type: 'web' | 'app' | 'free-web' }) {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()

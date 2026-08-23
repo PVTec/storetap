@@ -27,7 +27,7 @@ export async function getClientPendingRequests() {
 
     const combined = [
       ...lReqs.map(r => ({ ...r, requestType: 'license' })),
-      ...sReqs.map(r => ({ ...r, tier: r.type === 'web' ? 'Web System' : 'App System', requestType: 'system' }))
+      ...sReqs.map(r => ({ ...r, tier: r.type === 'web' ? 'Web System' : r.type === 'app' ? 'App System' : 'Free Web System', requestType: 'system' }))
     ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     
     return combined

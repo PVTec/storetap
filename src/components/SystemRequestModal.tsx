@@ -6,7 +6,7 @@ import { createSystemRequest } from '@/app/actions/system'
 interface SystemRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
-  systemType: 'web' | 'app';
+  systemType: 'web' | 'app' | 'free-web';
 }
 
 export default function SystemRequestModal({ isOpen, onClose, systemType }: SystemRequestModalProps) {
@@ -24,8 +24,8 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
     storeName: ''
   })
 
-  const price = systemType === 'web' ? '₱250' : '₱750'
-  const title = systemType === 'web' ? 'Web Version' : 'App Version'
+  const price = systemType === 'free-web' ? '₱0 (Free Limited)' : systemType === 'web' ? '₱250' : '₱750'
+  const title = systemType === 'free-web' ? 'Free Web Version' : systemType === 'web' ? 'Web Version' : 'App Version'
 
   useEffect(() => {
     if (isOpen) {
@@ -133,6 +133,18 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
               {error && (
                 <div className="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm rounded-lg">
                   {error}
+                </div>
+              )}
+
+              {systemType === 'free-web' && (
+                <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 space-y-2">
+                  <p className="text-xs text-amber-400 font-medium">⚠️ Automatic Deactivation Policy</p>
+                  <p className="text-xs text-zinc-400">
+                    This free system is intended for trial and evaluation. If the system remains completely unused (no sales, no inventory changes) for <strong className="text-zinc-300">1 month</strong> after approval, the system and its database will be permanently deactivated and deleted to save server resources.
+                  </p>
+                  <p className="text-xs text-zinc-400">
+                    You also <strong className="text-zinc-300">do not receive</strong> a free Basic License with this tier.
+                  </p>
                 </div>
               )}
               
