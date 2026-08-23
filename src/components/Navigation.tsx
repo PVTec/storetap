@@ -25,6 +25,7 @@ export default function Navigation() {
           <Link href="/product" className="hover:text-white transition-colors">Product</Link>
           <Link href="/features" className="hover:text-white transition-colors">Features</Link>
           <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
+          <Link href="/about" className="hover:text-white transition-colors">About</Link>
         </div>
         
         <div className="hidden md:flex items-center gap-4">
@@ -73,6 +74,7 @@ export default function Navigation() {
           <Link href="/product" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Product</Link>
           <Link href="/features" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Features</Link>
           <Link href="/pricing" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">Pricing</Link>
+          <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">About</Link>
           <hr className="border-zinc-800/80" />
           <Link href="/login" onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">
             Log in

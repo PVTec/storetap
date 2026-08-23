@@ -196,6 +196,41 @@ export default async function LandingPage() {
           </Link>
         </div>
       </section>
+
+      {/* Founder Teaser Section */}
+      <section className="border-t border-zinc-800/80 bg-zinc-950 px-6 py-24 relative overflow-hidden">
+        {/* Subtle accent glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/5 blur-[100px] -z-10 rounded-full" />
+        
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
+          {/* Founder Image */}
+          <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 relative rounded-full overflow-hidden border-2 border-zinc-800 shadow-xl ring-2 ring-indigo-500/20">
+            <Image 
+              src="/founder.png" 
+              alt="Vincent Layon - Founder" 
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          
+          {/* Content */}
+          <div>
+            <h2 className="text-3xl font-bold text-white mb-2">Meet the Founder</h2>
+            <h3 className="text-lg text-indigo-400 font-medium mb-6">Vincent Layon (Vince)</h3>
+            
+            <blockquote className="relative italic text-zinc-400 text-lg md:text-xl leading-relaxed border-l-2 border-indigo-500/50 pl-6 mb-8">
+              <span className="text-4xl text-indigo-500/20 absolute -top-4 -left-4 font-serif">"</span>
+              StoreTap was not built primarily to make money, but to help local stores transition into the digital era... We help them, and in turn, they help us.
+            </blockquote>
+            
+            <Link href="/about" className="px-6 py-3 rounded-full bg-zinc-900 border border-zinc-800 text-white font-medium hover:bg-zinc-800 transition-colors inline-flex items-center gap-2">
+              Read Full Story & View Credentials
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   )
