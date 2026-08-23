@@ -4,14 +4,39 @@ import { createClient } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
+export async function getUserRole(email: string | undefined | null) {
+  if (!email) return 'client'
+  
+  // Hardcoded superadmins
+  if (email === 'vincentlayonuser@gmail.com' || email === 'admin@vince.dev') {
+    return 'admin'
+  }
+  
+  try {
+    const user = await prisma.userRole.findUnique({
+      where: { email }
+    })
+    return user?.role || 'client'
+  } catch (error) {
+    return 'client'
+  }
+}
+
+export async function getClientRole() {
+  const supabase = await createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) return 'client'
+  return await getUserRole(session.user.email)
+}
+
 export async function getPendingRequestsCount() {
   try {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return 0
-    }
+    if (!session) return 0
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') return 0
 
     const lCount = await prisma.licenseRequest.count({ where: { status: 'pending' } })
     const sCount = await prisma.systemRequest.count({ where: { status: 'pending' } })
@@ -26,9 +51,9 @@ export async function getPendingRequests() {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return []
-    }
+    if (!session) return []
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') return []
 
     const lReqs = await prisma.licenseRequest.findMany({ where: { status: 'pending' }, orderBy: { createdAt: 'desc' } })
     const sReqs = await prisma.systemRequest.findMany({ where: { status: 'pending' }, orderBy: { createdAt: 'desc' } })
@@ -50,9 +75,9 @@ export async function getApprovedLicenseRequests() {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return []
-    }
+    if (!session) return []
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') return []
 
     const lReqs = await prisma.licenseRequest.findMany({
       where: { status: 'approved' },
@@ -70,9 +95,9 @@ export async function getApprovedSystemRequests() {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return []
-    }
+    if (!session) return []
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') return []
 
     const sReqs = await prisma.systemRequest.findMany({
       where: { status: 'approved' },
@@ -90,25 +115,100 @@ export async function getUsersList() {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return []
+    if (!session) return []
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin') return []
+
+    // Fetch existing users from UserRole
+    const userRoles = await prisma.userRole.findMany({
+      orderBy: { email: 'asc' }
+    })
+
+    // Sync users from requests that might not be in UserRole yet
+    const distinctEmailsFromRequests = await prisma.licenseRequest.findMany({
+      distinct: ['email'],
+      select: { email: true, name: true, createdAt: true }
+    })
+
+    for (const req of distinctEmailsFromRequests) {
+      if (!userRoles.find(ur => ur.email === req.email)) {
+        const newRole = await prisma.userRole.create({
+          data: {
+            email: req.email,
+            name: req.name,
+            role: 'client'
+          }
+        })
+        userRoles.push(newRole)
+      }
     }
 
-    // Fetch distinct users based on their license requests
-    const users = await prisma.licenseRequest.findMany({
-      distinct: ['email'],
-      select: {
-        userId: true,
-        name: true,
-        email: true,
-        contactNumber: true,
-        createdAt: true
-      },
-      orderBy: { createdAt: 'desc' }
+    // Get latest contact number and earliest createdAt from LicenseRequest
+    const requests = await prisma.licenseRequest.findMany({
+      orderBy: { createdAt: 'asc' },
+      select: { email: true, contactNumber: true, createdAt: true }
     })
-    return users
+
+    const userInfoMap = new Map()
+    requests.forEach(req => {
+      if (!userInfoMap.has(req.email)) {
+        userInfoMap.set(req.email, { createdAt: req.createdAt, contactNumber: req.contactNumber })
+      } else {
+        // Update contact number to the latest one
+        const existing = userInfoMap.get(req.email)
+        existing.contactNumber = req.contactNumber
+      }
+    })
+
+    return userRoles.map(ur => {
+      const info = userInfoMap.get(ur.email)
+      return {
+        ...ur,
+        contactNumber: info?.contactNumber || 'N/A',
+        createdAt: info?.createdAt || new Date()
+      }
+    })
   } catch (error) {
     return []
+  }
+}
+
+export async function deleteUsers(emails: string[]) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) return { success: false }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin') return { success: false }
+
+    await prisma.userRole.deleteMany({
+      where: { email: { in: emails } }
+    })
+    revalidatePath('/dashboard')
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: 'Failed to delete users' }
+  }
+}
+
+export async function updateUserRole(email: string, newRole: string) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) return { success: false }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin') return { success: false }
+
+    await prisma.userRole.update({
+      where: { email },
+      data: { role: newRole }
+    })
+    revalidatePath('/dashboard')
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: 'Failed to update role' }
   }
 }
 
@@ -156,9 +256,10 @@ export async function approveLicenseRequest(requestId: string) {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    // Check if the user is the admin
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return { success: false, error: 'Unauthorized. Only the admin can approve requests.' }
+    if (!session) return { success: false, error: 'Unauthorized.' }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') {
+      return { success: false, error: 'Unauthorized. Only admins or providers can approve requests.' }
     }
 
     const request = await prisma.licenseRequest.findUnique({
@@ -219,9 +320,10 @@ export async function rejectLicenseRequest(requestId: string) {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    // Check if the user is the admin
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return { success: false, error: 'Unauthorized. Only the admin can reject requests.' }
+    if (!session) return { success: false, error: 'Unauthorized.' }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') {
+      return { success: false, error: 'Unauthorized. Only admins or providers can reject requests.' }
     }
 
     // Update the request status instead of deleting it, or delete it and notify
@@ -259,8 +361,10 @@ export async function approveSystemRequest(requestId: string, attachmentLink?: s
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return { success: false, error: 'Unauthorized. Only the admin can approve requests.' }
+    if (!session) return { success: false, error: 'Unauthorized.' }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') {
+      return { success: false, error: 'Unauthorized. Only admins or providers can approve requests.' }
     }
 
     const request = await prisma.systemRequest.findUnique({
@@ -316,8 +420,10 @@ export async function rejectSystemRequest(requestId: string) {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return { success: false, error: 'Unauthorized. Only the admin can reject requests.' }
+    if (!session) return { success: false, error: 'Unauthorized.' }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin' && role !== 'provider') {
+      return { success: false, error: 'Unauthorized. Only admins or providers can reject requests.' }
     }
 
     const request = await prisma.systemRequest.findUnique({
@@ -354,7 +460,9 @@ export async function generateCustomLicense(tier: string, durationDays: number) 
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
+    if (!session) return { success: false, error: 'Unauthorized' }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin') {
       return { success: false, error: 'Unauthorized' }
     }
 
@@ -383,9 +491,9 @@ export async function getAdminGeneratedLicenses() {
     const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
 
-    if (!session || (session.user.email !== 'vincentlayonuser@gmail.com' && session.user.email !== 'admin@vince.dev')) {
-      return []
-    }
+    if (!session) return []
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin') return []
 
     const licenses = await prisma.license.findMany({
       where: { userId: null },
@@ -396,5 +504,42 @@ export async function getAdminGeneratedLicenses() {
   } catch (error) {
     console.error("Error fetching generated licenses:", error)
     return []
+  }
+}
+
+export async function deleteGeneratedLicenses(ids: string[]) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) return { success: false }
+    const role = await getUserRole(session.user.email)
+    if (role !== 'admin') return { success: false }
+
+    await prisma.license.deleteMany({
+      where: { id: { in: ids }, userId: null } // Only delete generated licenses
+    })
+    revalidatePath('/dashboard')
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: 'Failed to delete licenses' }
+  }
+}
+
+export async function deleteNotifications(ids: string[]) {
+  try {
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) return { success: false }
+    const targetUserId = session.user.email === 'vincentlayonuser@gmail.com' || session.user.email === 'admin@vince.dev' ? 'admin' : session.user.id
+
+    await prisma.notification.deleteMany({
+      where: { id: { in: ids }, userId: targetUserId }
+    })
+    revalidatePath('/dashboard')
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: 'Failed to delete notifications' }
   }
 }

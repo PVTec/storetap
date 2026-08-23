@@ -10,6 +10,8 @@ export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [successMsg, setSuccessMsg] = useState<string | null>(null)
   
   const getSupabase = () => createBrowserClient(
@@ -48,10 +50,19 @@ export default function LoginPage() {
       const supabase = getSupabase()
 
       if (mode === 'signup') {
+        if (password !== confirmPassword) {
+          setError("Passwords do not match.")
+          setLoading(false)
+          return
+        }
+
         const { error, data } = await supabase.auth.signUp({
           email,
           password,
           options: {
+            data: {
+              full_name: name,
+            },
             emailRedirectTo: `${window.location.origin}/auth/callback`
           }
         })
@@ -59,10 +70,14 @@ export default function LoginPage() {
         
         if (data.user && data.user.identities && data.user.identities.length === 0) {
           setError("This email is already registered. Please sign in instead.")
+        } else if (data.session) {
+          window.location.href = '/dashboard'
         } else {
           setSuccessMsg("Registration successful! Please check your email to verify your account.")
           setEmail('')
           setPassword('')
+          setName('')
+          setConfirmPassword('')
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({
@@ -129,6 +144,19 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleEmailAuth} className="space-y-4">
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-zinc-300 mb-1.5">Full Name</label>
+                <input 
+                  type="text" 
+                  required
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="John Doe" 
+                  className="w-full bg-zinc-900 border border-zinc-800 focus:border-blue-500 rounded-lg px-4 py-2.5 text-white outline-none transition-colors" 
+                />
+              </div>
+            )}
             <div>
               <label className="block text-sm font-medium text-zinc-300 mb-1.5">Email address</label>
               <input 
@@ -152,6 +180,20 @@ export default function LoginPage() {
                 className="w-full bg-zinc-900 border border-zinc-800 focus:border-blue-500 rounded-lg px-4 py-2.5 text-white outline-none transition-colors" 
               />
             </div>
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium text-zinc-300 mb-1.5">Confirm Password</label>
+                <input 
+                  type="password" 
+                  required
+                  minLength={6}
+                  value={confirmPassword}
+                  onChange={e => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••" 
+                  className="w-full bg-zinc-900 border border-zinc-800 focus:border-blue-500 rounded-lg px-4 py-2.5 text-white outline-none transition-colors" 
+                />
+              </div>
+            )}
             <button 
               type="submit"
               disabled={loading}
