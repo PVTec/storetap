@@ -19,42 +19,64 @@ export default function AboutPage() {
       
       <main className="flex-1 max-w-5xl mx-auto px-6 pt-24 pb-32">
         {/* Mission Section */}
-        <div className="text-center mb-24">
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white mb-6">About StoreTap</h1>
-          <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-            StoreTap was not built primarily to make money, but to help local stores transition into the digital era. 
-            It started with a mission to help my mother's business become more efficient and reliable. By providing 
-            cloud-synced, offline-first tools at an affordable price, we aim to recover basic expenses while genuinely 
-            uplifting local business owners. We help them, and in turn, they help us.
-          </p>
+        <div className="text-center mb-32 relative">
+          {/* Subtle background glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-blue-500/10 blur-[100px] -z-10 rounded-full" />
+          
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tighter text-white mb-8">
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">StoreTap</span>
+          </h1>
+          <div className="space-y-6 text-zinc-400 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
+            <p>
+              StoreTap is a modern, offline-first Point of Sale (POS) and Inventory system built exclusively for the modern business owner. 
+              Our mission is to provide an uninterrupted sales experience, even when internet connectivity is spotty or completely lost.
+            </p>
+            <p>
+              StoreTap was not built primarily to make money, but to help local stores transition into the digital era. 
+              It started with a mission to help my mother's business become more efficient and reliable. By providing 
+              cloud-synced, offline-first tools at an affordable price, we aim to recover basic expenses while genuinely 
+              uplifting local business owners. We help them, and in turn, they help us.
+            </p>
+          </div>
         </div>
 
         {/* Founder Section */}
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
-          <div className="relative aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
-            <Image 
-              src="/founder.png" 
-              alt="Vincent Layon - Founder" 
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold text-white mb-2">Meet the Founder</h2>
-            <h3 className="text-xl text-blue-400 mb-6">Vincent Layon (Vince)</h3>
-            <div className="space-y-4 text-zinc-400 leading-relaxed">
-              <p>
-                I am a passionate developer with expertise in building a wide range of systems, from Platform-as-a-Service (PaaS) 
-                and inventory systems to enterprise-grade examination, payroll, and ID management systems.
-              </p>
-              <p>
-                My technical background spans mobile application development, intricate game development with custom logic, 
-                real-time economic and probability engines, and professional web applications. 
-              </p>
-              <p>
-                A core part of my expertise is building <strong>AI-driven systems</strong>, including custom AI for decision support, 
-                digital pets, and AI companions. My work and performance have been recognized by industry leaders like <strong>Globe Telecom</strong> and <strong>PLDT</strong>.
-              </p>
+        <div className="max-w-4xl mx-auto mb-32 bg-[#09090b] border border-zinc-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          {/* Accent glow matching the picture */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 blur-[100px] -z-10 rounded-full" />
+          
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            {/* Founder Image - Adjusted Size */}
+            <div className="w-48 h-48 md:w-64 md:h-64 shrink-0 relative rounded-full overflow-hidden border-4 border-zinc-800 shadow-xl ring-2 ring-indigo-500/20">
+              <Image 
+                src="/founder.png" 
+                alt="Vincent Layon - Founder" 
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            
+            {/* Founder Bio */}
+            <div>
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Meet the Founder</h2>
+                <h3 className="text-lg text-indigo-400 font-medium">Vincent Layon (Vince)</h3>
+              </div>
+              
+              <div className="space-y-4 text-zinc-400 leading-relaxed">
+                <p>
+                  I am a passionate developer with expertise in building a wide range of systems, from Platform-as-a-Service (PaaS) 
+                  and inventory platforms to enterprise-grade examination, payroll, and ID management systems.
+                </p>
+                <p>
+                  My technical background spans mobile application development, intricate game development with custom logic, 
+                  real-time economic and probability engines, and professional web applications. 
+                </p>
+                <p>
+                  A core part of my expertise is building <strong className="text-zinc-200">AI-driven systems</strong>, including custom AI for decision support, 
+                  digital pets, and AI companions. My work and performance have been recognized by industry leaders like <strong className="text-zinc-200">Globe Telecom</strong> and <strong className="text-zinc-200">PLDT</strong>.
+                </p>
+              </div>
             </div>
           </div>
         </div>
