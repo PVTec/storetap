@@ -24,6 +24,7 @@ export default function DashboardPage() {
   const [selectedSystem, setSelectedSystem] = useState<'web'|'app'>('web')
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [userRole, setUserRole] = useState<'admin' | 'provider' | 'client'>('client')
+  const [isInitializing, setIsInitializing] = useState(true)
   const [isProviderOnboarded, setIsProviderOnboarded] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -95,6 +96,8 @@ export default function DashboardPage() {
       }
     } catch (e) {
       console.error("Auth error", e)
+    } finally {
+      setIsInitializing(false)
     }
   }
 
@@ -207,6 +210,17 @@ export default function DashboardPage() {
   const handleOpenSystemModal = (type: 'web' | 'app') => {
     setSelectedSystem(type)
     setIsSystemModalOpen(true)
+  }
+
+  if (isInitializing) {
+    return (
+      <div className="min-h-screen bg-[#000000] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-zinc-800 border-t-blue-500 rounded-full animate-spin"></div>
+          <p className="text-zinc-500 text-sm font-medium animate-pulse">Loading dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   if (userRole === 'provider' && !isProviderOnboarded && userEmail) {
