@@ -58,7 +58,7 @@ export default function LoginPage() {
         }
 
         const { error, data } = await supabase.auth.signUp({
-          email,
+          email: email.trim(),
           password,
           options: {
             data: {
@@ -72,7 +72,7 @@ export default function LoginPage() {
         if (data.user && data.user.identities && data.user.identities.length === 0) {
           setError("This email is already registered. Please sign in instead.")
         } else if (data.session) {
-          await syncUserToDatabase(email, name)
+          await syncUserToDatabase(email.trim(), name)
           window.location.href = '/dashboard'
         } else {
           setSuccessMsg("Registration successful! Please check your email to verify your account.")
@@ -83,12 +83,12 @@ export default function LoginPage() {
         }
       } else {
         const { error, data } = await supabase.auth.signInWithPassword({
-          email,
+          email: email.trim(),
           password
         })
         if (error) throw error
         if (data.user) {
-          await syncUserToDatabase(email, data.user.user_metadata?.full_name || null)
+          await syncUserToDatabase(email.trim(), data.user.user_metadata?.full_name || null)
         }
         window.location.href = '/dashboard'
       }
