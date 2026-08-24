@@ -1,5 +1,5 @@
 {
-  "latest_version": "v2.2.0.0.0",
-  "download_url": "http://localhost/storetap-central/public/updates/update.zip",
-  "changelog": "This is a test OTA Update!\n\n- Added new progress bar system\n- Fixed double syncing bugs\n- UI Improvements"
+  "latest_version": "v2.1.0.12.0",
+  "download_url": "https://storetap-central.vercel.app/updates/update.zip",
+  "changelog": "StoreTap v2.1.0.12.0 Major Update!\n\n🔧 BUG FIXES & IMPROVEMENTS:\n- Fixed critical data duplication bug during Offline -> Online sync.\n- Implemented race condition lock to prevent double-charging inventory.\n- Fixed offline stock display delays.\n\n✨ NEW FEATURES:\n- Built a brand new System Settings page with real-time clock adjustment.\n- Implemented Over-The-Air (OTA) update mechanism. You can now update StoreTap seamlessly!\n- Moved central Licensing checks to a global layout to ensure smooth operation across all pages.\n- Re-architected offlineStorage.js to be globally accessible and more reliable."
 }
