@@ -32,7 +32,7 @@ export default async function LandingPage() {
             StoreTap v2.1.0 is Live
           </div>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.1] text-white">
-            A Lightweight Offline <br className="hidden md:block" />& Utang <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">POS System</span>
+            A Lightweight POS <br className="hidden md:block" />& Utang System <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">with Offline Capabilities</span>
           </h1>
           <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
             Sell even when the internet is down. Track utang without a notebook. Know your stock at a glance.
@@ -188,7 +188,7 @@ export default async function LandingPage() {
             </div>
             <h3 className="text-lg font-bold text-white mb-3">Inventory Sync</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              Work completely offline. The moment your internet is back, all your inventory adjustments and sales sync to the cloud.
+              Keep working even when the internet drops. The moment your connection is back, all your inventory adjustments and sales sync to the cloud.
             </p>
           </div>
         </div>

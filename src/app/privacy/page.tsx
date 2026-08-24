@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           <ul className="list-disc pl-6 space-y-2 mt-2">
             <li><strong>Personal Information:</strong> Such as your email address, name, contact numbers, and store name when you request a system or license.</li>
             <li><strong>Device Information:</strong> Information about your internet connection, the equipment you use to access our app, and usage details.</li>
-            <li><strong>Store Data:</strong> While the app operates primarily offline, synced data (like sales and inventory) is stored securely on our servers to enable cloud backup.</li>
+            <li><strong>Store Data:</strong> While the app features offline capabilities, synced data (like sales and inventory) is stored securely on our servers to enable cloud backup.</li>
           </ul>
 
           <h2 className="text-xl font-bold text-white mt-8 mb-4">3. How We Use Your Information</h2>

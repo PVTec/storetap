@@ -552,7 +552,7 @@ export default function DashboardPage() {
                     <div className="flex-1">
                       <ul className="space-y-2 mb-6">
                         <li className="text-sm text-zinc-400 flex items-center gap-2">✓ All Standard Features</li>
-                        <li className="text-sm text-blue-400 flex items-center gap-2">✓ Full Offline Mode</li>
+                        <li className="text-sm text-blue-400 flex items-center gap-2">✓ Advanced Offline Capability</li>
                         <li className="text-sm text-zinc-400 flex items-center gap-2">✓ VIP Support</li>
                       </ul>
                     </div>
@@ -778,7 +778,7 @@ export default function DashboardPage() {
                   <div className="space-y-4 text-sm text-zinc-300 leading-relaxed">
                     <p>
                       StoreTap is a lightweight, cloud-connected Point of Sale system built specifically for local businesses. 
-                      Designed with an offline-first architecture, it ensures your store continues to operate flawlessly even when internet connectivity is completely lost.
+                      Designed with robust offline capabilities, it ensures your store continues to operate flawlessly even when internet connectivity is completely lost.
                     </p>
                     <p>
                       By purchasing a license from this dashboard, you unlock the ability to activate your StoreTap application on your devices. Each license key can only be bound to a single device for maximum security.

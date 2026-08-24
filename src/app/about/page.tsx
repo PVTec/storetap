@@ -28,7 +28,7 @@ export default function AboutPage() {
           </h1>
           <div className="space-y-6 text-zinc-400 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
             <p>
-              StoreTap is a lightweight, offline-first Point of Sale (POS) and Inventory system built exclusively for local business owners. 
+              StoreTap is a lightweight, cloud-based Point of Sale (POS) and Inventory system with robust offline capabilities built exclusively for local business owners. 
               Our mission is to provide an uninterrupted sales experience, even when internet connectivity is spotty or completely lost.
             </p>
             
@@ -36,7 +36,7 @@ export default function AboutPage() {
               <span className="text-3xl text-indigo-500/30 absolute -top-2 -left-3 font-serif">"</span>
               StoreTap was not built primarily to make money, but to help local stores transition into the digital era. 
               It started with a mission to help my mother's business become more efficient and reliable. By providing 
-              cloud-synced, offline-first tools at an affordable price, we aim to recover basic expenses while genuinely 
+              cloud-synced tools with seamless offline support at an affordable price, we aim to recover basic expenses while genuinely 
               uplifting local business owners. We help them, and in turn, they help us.
               <footer className="mt-4 text-base font-semibold text-indigo-400 not-italic">
                 — Vincent Layon, Founder

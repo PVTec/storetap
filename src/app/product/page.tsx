@@ -13,7 +13,7 @@ export default function ProductPage() {
           The POS Built for <br/> <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Local Stores</span>
         </h1>
         <p className="text-lg text-zinc-400 mb-16 max-w-2xl mx-auto leading-relaxed">
-          StoreTap is designed to operate completely offline but sync seamlessly to the cloud. You never have to worry about internet interruptions affecting your sales again.
+          StoreTap is designed to provide seamless offline capabilities, ensuring you never have to worry about internet interruptions affecting your sales again.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 text-left">
@@ -33,7 +33,7 @@ export default function ProductPage() {
              <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-6 relative z-10">
                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
              </div>
-             <h3 className="text-lg font-semibold text-white mb-3 relative z-10">Offline-First Architecture</h3>
+             <h3 className="text-lg font-semibold text-white mb-3 relative z-10">Seamless Offline Capabilities</h3>
              <p className="text-zinc-400 text-sm leading-relaxed relative z-10">
                Continue operating perfectly even when your internet drops. Data syncs automatically the moment you reconnect.
              </p>
