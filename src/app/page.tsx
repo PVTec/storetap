@@ -48,6 +48,9 @@ export default async function LandingPage() {
           <p className="text-sm text-zinc-500 font-medium">
             <span className="text-emerald-500 font-bold">✓</span> Use instantly via browser, or get our dedicated app (included in Premium).
           </p>
+          <p className="text-xs text-zinc-400 mt-2 max-w-lg">
+            No payment is required to request a demo or system. A provider will verify your details, prepare your system, and send payment instructions only when it is ready.
+          </p>
 
           <div className="flex items-center gap-10 pt-10">
             <div className="flex flex-col">
