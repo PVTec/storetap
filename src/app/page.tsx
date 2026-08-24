@@ -48,9 +48,14 @@ export default async function LandingPage() {
           <p className="text-sm text-zinc-500 font-medium">
             <span className="text-emerald-500 font-bold">✓</span> Use instantly via browser, or get our dedicated app (included in Premium).
           </p>
-          <p className="text-xs text-zinc-400 mt-2 max-w-lg">
-            No payment is required to request a demo or system. A provider will verify your details, prepare your system, and send payment instructions only when it is ready.
-          </p>
+          <div className="mt-4 p-3 bg-zinc-900/80 border border-zinc-800 rounded-lg max-w-lg flex items-start gap-3 backdrop-blur-sm">
+            <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <p className="text-xs text-zinc-300 leading-relaxed">
+              <strong className="text-zinc-200">100% Risk-Free:</strong> No payment is required to request a demo or system. A provider will verify your details, prepare your system, and send payment instructions only when it is ready.
+            </p>
+          </div>
 
           <div className="flex items-center gap-10 pt-10">
             <div className="flex flex-col">
