@@ -161,6 +161,95 @@ export default async function LandingPage() {
         </div>
       </main>
 
+      {/* Built for Local Stores */}
+      <section className="max-w-6xl mx-auto px-6 py-24 border-t border-zinc-900/50">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-4">
+            Made for the Way Local Stores Operate
+          </h2>
+          <p className="text-zinc-400 text-lg max-w-3xl mx-auto leading-relaxed">
+            StoreTap is designed for sari-sari stores, cafés, food stalls, small groceries, and neighborhood retailers that need a simple and affordable POS—not a complicated enterprise system.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6 text-left">
+          <div className="bg-[#09090b] p-8 rounded-2xl border border-zinc-800/80 shadow-lg hover:border-zinc-700 transition-colors">
+            <h3 className="text-lg font-bold text-white mb-3">Unstable Internet?</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Continue recording sales even when your connection drops.
+            </p>
+          </div>
+          <div className="bg-[#09090b] p-8 rounded-2xl border border-zinc-800/80 shadow-lg hover:border-zinc-700 transition-colors">
+            <h3 className="text-lg font-bold text-white mb-3">Still Using a Notebook for Utang?</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Record customer balances, partial payments, due dates, and payment history.
+            </p>
+          </div>
+          <div className="bg-[#09090b] p-8 rounded-2xl border border-zinc-800/80 shadow-lg hover:border-zinc-700 transition-colors">
+            <h3 className="text-lg font-bold text-white mb-3">Want to Know Your Stock?</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              See what sold, what remains, and which products need attention.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* How StoreTap Works */}
+      <section className="max-w-3xl mx-auto px-6 py-24 border-t border-zinc-900/50">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-4">
+            How StoreTap Works
+          </h2>
+        </div>
+        
+        <div className="space-y-4">
+          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
+            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">1</div>
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">Choose a demo or system</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed">Try the Free Demo/Trial, request a Web System, or request an App System.</p>
+            </div>
+          </div>
+          
+          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
+            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">2</div>
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">Submit your details</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed">Tell us your name, contact number, store name, and preferred setup.</p>
+            </div>
+          </div>
+
+          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
+            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">3</div>
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">Provider verification</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed">A StoreTap provider will call or message you to confirm your request.</p>
+            </div>
+          </div>
+
+          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
+            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">4</div>
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">System preparation</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed">The provider prepares the system or license and explains what is included.</p>
+            </div>
+          </div>
+
+          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
+            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">5</div>
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">Payment and activation</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed">You receive payment instructions only after the system is ready. Your license or system is then activated or released.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-6 text-center max-w-2xl mx-auto shadow-lg shadow-yellow-500/5">
+          <p className="text-yellow-400 font-medium">
+            <span className="font-bold">Notice:</span> Submitting a request is not an immediate purchase. No payment is made at this stage.
+          </p>
+        </div>
+      </section>
+
       {/* Core Features Overview */}
       <section className="max-w-6xl mx-auto px-6 py-24 text-center">
         <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-16">
