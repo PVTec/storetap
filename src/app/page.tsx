@@ -201,51 +201,62 @@ export default async function LandingPage() {
           </h2>
         </div>
         
-        <div className="space-y-4">
-          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
-            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">1</div>
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">Choose a demo or system</h3>
+        <div className="relative max-w-xl mx-auto before:absolute before:inset-0 before:ml-[1.35rem] before:h-full before:w-px before:bg-gradient-to-b before:from-zinc-900 before:via-zinc-800 before:to-zinc-900 space-y-12">
+          
+          <div className="relative flex items-start gap-6 group">
+            <div className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-[#09090b] border border-zinc-800 text-zinc-400 font-medium z-10 shadow-sm group-hover:border-zinc-600 group-hover:text-white transition-colors">
+              1
+            </div>
+            <div className="pt-2.5">
+              <h3 className="text-lg font-medium text-white mb-1.5">Choose a demo or system</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">Try the Free Demo/Trial, request a Web System, or request an App System.</p>
             </div>
           </div>
-          
-          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
-            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">2</div>
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">Submit your details</h3>
+
+          <div className="relative flex items-start gap-6 group">
+            <div className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-[#09090b] border border-zinc-800 text-zinc-400 font-medium z-10 shadow-sm group-hover:border-zinc-600 group-hover:text-white transition-colors">
+              2
+            </div>
+            <div className="pt-2.5">
+              <h3 className="text-lg font-medium text-white mb-1.5">Submit your details</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">Tell us your name, contact number, store name, and preferred setup.</p>
             </div>
           </div>
 
-          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
-            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">3</div>
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">Provider verification</h3>
+          <div className="relative flex items-start gap-6 group">
+            <div className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-[#09090b] border border-zinc-800 text-zinc-400 font-medium z-10 shadow-sm group-hover:border-zinc-600 group-hover:text-white transition-colors">
+              3
+            </div>
+            <div className="pt-2.5">
+              <h3 className="text-lg font-medium text-white mb-1.5">Provider verification</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">A StoreTap provider will call or message you to confirm your request.</p>
             </div>
           </div>
 
-          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
-            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">4</div>
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">System preparation</h3>
+          <div className="relative flex items-start gap-6 group">
+            <div className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-[#09090b] border border-zinc-800 text-zinc-400 font-medium z-10 shadow-sm group-hover:border-zinc-600 group-hover:text-white transition-colors">
+              4
+            </div>
+            <div className="pt-2.5">
+              <h3 className="text-lg font-medium text-white mb-1.5">System preparation</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">The provider prepares the system or license and explains what is included.</p>
             </div>
           </div>
 
-          <div className="bg-[#09090b] p-6 rounded-2xl border border-zinc-800/80 shadow-lg flex flex-col sm:flex-row gap-6 items-start sm:items-center hover:border-zinc-700 transition-colors">
-            <div className="w-12 h-12 shrink-0 bg-zinc-800 rounded-full flex items-center justify-center text-xl font-bold text-white">5</div>
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">Payment and activation</h3>
+          <div className="relative flex items-start gap-6 group">
+            <div className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-[#09090b] border border-zinc-800 text-zinc-400 font-medium z-10 shadow-sm group-hover:border-zinc-600 group-hover:text-white transition-colors">
+              5
+            </div>
+            <div className="pt-2.5">
+              <h3 className="text-lg font-medium text-white mb-1.5">Payment and activation</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">You receive payment instructions only after the system is ready. Your license or system is then activated or released.</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-6 text-center max-w-2xl mx-auto shadow-lg shadow-yellow-500/5">
-          <p className="text-yellow-400 font-medium">
-            <span className="font-bold">Notice:</span> Submitting a request is not an immediate purchase. No payment is made at this stage.
+        <div className="mt-16 border border-zinc-800/80 rounded-xl p-6 text-center max-w-2xl mx-auto shadow-sm bg-[#09090b]/50">
+          <p className="text-zinc-400 text-sm font-medium">
+            <span className="font-bold text-white">Notice:</span> Submitting a request is not an immediate purchase. No payment is made at this stage.
           </p>
         </div>
       </section>
