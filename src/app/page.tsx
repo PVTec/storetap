@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import StoreTapDemo from '@/components/demo/StoreTapDemo'
 import prisma from '@/lib/prisma'
 
 export default async function LandingPage() {
@@ -258,6 +259,23 @@ export default async function LandingPage() {
           <p className="text-zinc-400 text-sm font-medium">
             <span className="font-bold text-white">Notice:</span> Submitting a request is not an immediate purchase. No payment is made at this stage.
           </p>
+        </div>
+      </section>
+
+      {/* Interactive Product Demo */}
+      <section className="bg-[#040405] border-y border-zinc-800/50 relative overflow-hidden">
+        {/* Glow Effects */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+          <div className="text-center mb-4">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-4">
+              Experience the Magic
+            </h2>
+            <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+              Our system is designed to be lightning fast and perfectly resilient against internet outages. Try it yourself below!
+            </p>
+          </div>
+          <StoreTapDemo />
         </div>
       </section>
 
