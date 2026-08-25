@@ -1,5 +1,5 @@
 {
-  "latest_version": "v2.1.0.12.5",
+  "latest_version": "v2.1.0.12.6",
   "download_url": "https://storetap-central.vercel.app/updates/update.zip",
-  "changelog": "StoreTap v2.1.0.12.5 UI & UX Update!\n\n✨ ENHANCEMENTS:\n- Dashboard & Offline Dashboard Revamp: Improved layout with search, filter, and sort tools.\n- Refined Floating Cart Button: Now pill-shaped on desktop, draggable circle on mobile.\n- Theme-synced the cart button to automatically match your active theme colors.\n- Unified the UI experience perfectly between online and offline modes."
+  "changelog": "StoreTap v2.1.0.12.6 UI & Feature Update!\n\n✨ ENHANCEMENTS:\n- Utang Tracking: Added instant search, status filtering, and sorting to the Utang Records page.\n- Sales Management: Added a powerful search/filter tool on the admin Sales page to easily track sales by specific cashiers and staff.\n- Responsive UI: Fine-tuned the license countdown to be unobtrusive on desktop and readable on mobile.\n- Navigation Menu: Refactored the desktop sidebar to group admin and settings links into a clean 'More' dropdown to prevent crowding."
 }
