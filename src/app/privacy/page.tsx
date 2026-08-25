@@ -10,50 +10,77 @@ export default function PrivacyPage() {
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-8">Privacy Policy</h1>
         
         <div className="space-y-6 text-zinc-400 text-sm md:text-base leading-relaxed">
-          <p>Last updated: {new Date().toLocaleDateString()}</p>
+          <p>Effective Date: {new Date().toLocaleDateString()}</p>
           
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">1. Introduction</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">1. Introduction and Scope</h2>
           <p>
-            At StoreTap, we respect your privacy and are committed to protecting it through our compliance with this policy. 
-            This policy describes the types of information we may collect from you or that you may provide when you visit the website 
-            and our practices for collecting, using, maintaining, protecting, and disclosing that information.
+            StoreTap Technologies ("StoreTap", "we", "our", or "us") is deeply committed to protecting your privacy and ensuring the security of your personal and business data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website (StoreTap Central), use our Point of Sale applications, or engage with our services (collectively, the "Service").
+          </p>
+          <p>
+            This policy is designed to comply with applicable data protection laws, including the Data Privacy Act of 2012 (Republic Act No. 10173) of the Philippines. By accessing or using the Service, you signify your consent to the data practices described in this Privacy Policy.
           </p>
 
           <h2 className="text-xl font-bold text-white mt-8 mb-4">2. Information We Collect</h2>
-          <p>
-            We collect several types of information from and about users of our Website and App, including:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 mt-2">
-            <li><strong>Personal Information:</strong> Such as your email address, name, contact numbers, and store name when you request a system or license.</li>
-            <li><strong>Device Information:</strong> Information about your internet connection, the equipment you use to access our app, and usage details.</li>
-            <li><strong>Store Data:</strong> While the app features offline capabilities, synced data (like sales and inventory) is stored securely on our servers to enable cloud backup.</li>
+          <p>We collect information that identifies, relates to, or could reasonably be linked to you ("Personal Data"), as well as anonymized or aggregated data. We collect this data through the following methods:</p>
+          
+          <h3 className="text-lg font-semibold text-white mt-4 mb-2">A. Information You Provide to Us Directly</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Account and Profile Data:</strong> When you register or authenticate using your Google Account, we receive basic profile information (such as your name and email address) necessary to establish and secure your account.</li>
+            <li><strong>Request Details:</strong> When requesting a demo, system, or license, you provide contact information (e.g., phone number, email) and business details (e.g., store name, location) to facilitate deployment.</li>
+            <li><strong>Business Operations Data:</strong> While using the POS system, you input data regarding your inventory, sales transactions, and customer debt ("utang") records.</li>
+          </ul>
+
+          <h3 className="text-lg font-semibold text-white mt-4 mb-2">B. Information Collected Automatically</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Device and Usage Data:</strong> We automatically collect information about how you access and use the Service, including IP addresses, browser types, device identifiers, operating systems, and interaction metrics.</li>
+            <li><strong>Synchronization Data:</strong> Our system features offline capabilities. When your device regains internet connectivity, local operational data is automatically synchronized with our secure cloud servers to ensure data persistence and backup.</li>
           </ul>
 
           <h2 className="text-xl font-bold text-white mt-8 mb-4">3. How We Use Your Information</h2>
-          <p>
-            We use information that we collect about you or that you provide to us, including any personal information:
-          </p>
+          <p>We process your Personal Data and Business Operations Data for the following legitimate purposes:</p>
           <ul className="list-disc pl-6 space-y-2 mt-2">
-            <li>To present our app and its contents to you.</li>
-            <li>To provide you with information, products, or services that you request from us.</li>
-            <li>To carry out our obligations, facilitate connections with our authorized Providers, and enforce our rights arising from any agreements entered into between you and us.</li>
-            <li>To notify you about changes to our app or any products or services we offer or provide though it.</li>
+            <li><strong>Service Delivery:</strong> To operate, maintain, and provide the core functionalities of the POS system, including cloud backups and multi-device synchronization.</li>
+            <li><strong>Deployment and Support:</strong> To connect you with authorized independent Providers who will facilitate your system setup, hardware delivery, and licensing.</li>
+            <li><strong>Security and Authentication:</strong> To verify your identity via Google OAuth, protect against unauthorized access, and monitor for fraudulent activity.</li>
+            <li><strong>Improvement and Analytics:</strong> To analyze usage patterns, diagnose technical issues, and improve the user experience and overall performance of the Service.</li>
+            <li><strong>Communication:</strong> To send administrative notices, system updates, security alerts, and responses to your inquiries.</li>
           </ul>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">4. Sharing Your Information</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">4. How We Share and Disclose Information</h2>
+          <p>StoreTap does not sell, rent, or trade your Personal Data. We may share your information only in the following specific circumstances:</p>
+          <ul className="list-disc pl-6 space-y-2 mt-2">
+            <li><strong>Authorized Independent Providers:</strong> We share your submitted contact and request details with our vetted network of Providers solely for the purpose of executing your request for a system or license. These Providers are strictly prohibited from using your data for any other purpose.</li>
+            <li><strong>Service Providers:</strong> We may employ third-party cloud hosting and infrastructure services (e.g., Supabase, Vercel) to operate the Service. These sub-processors are bound by strict confidentiality and data protection agreements.</li>
+            <li><strong>Legal Compliance and Protection:</strong> We may disclose your information if required to do so by law, court order, or governmental request, or when we believe in good faith that disclosure is necessary to protect our rights, prevent fraud, or ensure the safety of our users.</li>
+          </ul>
+
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">5. Data Security and Retention</h2>
           <p>
-            We do not sell your personal information. However, to fulfill your requests for licenses or systems, we share your submitted contact details (name, email, phone number) with our authorized independent Providers. These Providers will use this information solely to contact you, confirm your request, and arrange the off-platform setup and payment settlement.
+            We implement robust, industry-standard technical and organizational security measures (such as encryption in transit and at rest) to protect your data against unauthorized access, alteration, disclosure, or destruction. We utilize Google Authentication to prevent password-related vulnerabilities.
+          </p>
+          <p className="mt-4">
+            We retain your Personal Data and Business Operations Data only for as long as your account is active or as necessary to fulfill the purposes outlined in this policy, comply with our legal obligations, resolve disputes, and enforce our agreements.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">5. Data Security</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">6. Your Data Privacy Rights</h2>
+          <p>Depending on your jurisdiction, and in accordance with the Data Privacy Act of 2012, you possess certain rights regarding your Personal Data, including:</p>
+          <ul className="list-disc pl-6 space-y-2 mt-2">
+            <li>The right to be informed about how your data is processed.</li>
+            <li>The right to access the Personal Data we hold about you.</li>
+            <li>The right to rectify inaccurate or incomplete data.</li>
+            <li>The right to request the erasure or blocking of your data under specific conditions.</li>
+            <li>The right to data portability.</li>
+          </ul>
+          <p className="mt-4">To exercise any of these rights, please contact us using the information provided below.</p>
+
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">7. Changes to This Privacy Policy</h2>
           <p>
-            We have implemented measures designed to secure your personal information from accidental loss and from unauthorized access, use, alteration, and disclosure. 
-            All information you provide to us is stored on our secure servers behind firewalls.
+            We may update this Privacy Policy periodically to reflect changes in our practices or regulatory requirements. We will notify you of any material changes by posting the updated policy on this page and updating the "Effective Date." We encourage you to review this policy regularly.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">6. Contact Information</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">8. Contact Us</h2>
           <p>
-            To ask questions or comment about this privacy policy and our privacy practices, contact us via <a href="https://heyvince.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">heyvince.vercel.app</a>.
+            If you have any questions, concerns, or requests related to this Privacy Policy or our data practices, please contact our Data Protection Officer at <a href="https://heyvince.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">heyvince.vercel.app</a>.
           </p>
         </div>
       </main>
