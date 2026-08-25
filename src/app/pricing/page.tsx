@@ -162,7 +162,7 @@ export default function PricingPage() {
             System Store Packages
           </h2>
           <p className="text-zinc-400 mb-16 max-w-xl mx-auto">
-            Purchase StoreTap Systems with bundled free licenses. These are one-time payments for the deployment of your system.
+            Request System Setup with bundled free licenses. These are one-time payments for the deployment of your system.
           </p>
 
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">

@@ -79,7 +79,7 @@ export default function LoginPage() {
             <div className="bg-[#09090b] border border-zinc-800/80 rounded-xl p-4 text-center shadow-lg">
               <div className="flex items-center justify-center gap-2 mb-1.5 text-emerald-400">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                <span className="font-semibold text-sm">Bank-Level Security</span>
+                <span className="font-semibold text-sm">Secure Google Sign-In.</span>
               </div>
               <p className="text-xs text-zinc-400 leading-relaxed">
                 We exclusively use Google for authentication to ensure your store's data stays protected. Fast, secure, and passwordless.
@@ -130,7 +130,7 @@ export default function LoginPage() {
           
           <h2 className="text-2xl font-bold text-white mb-3 tracking-tight">Join the Future of Local Retail</h2>
           <p className="text-zinc-400 text-sm leading-relaxed max-w-sm mx-auto">
-            Hundreds of sari-sari stores, cafés, and local shops trust StoreTap to run their business smoothly—even offline.
+            18+ licensed sari-sari stores, cafés, and local shops trust StoreTap to run their business smoothly—even offline.
           </p>
         </div>
       </div>

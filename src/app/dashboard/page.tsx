@@ -571,7 +571,7 @@ export default function DashboardPage() {
             {activeTab === 'system-store' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-2">System Store</h1>
-                <p className="text-zinc-400 text-sm mb-8">Purchase StoreTap Systems with bundled free licenses.</p>
+                <p className="text-zinc-400 text-sm mb-8">Request System Setup with bundled free licenses.</p>
                 
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-5xl">
                   {/* Free System */}
