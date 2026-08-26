@@ -131,7 +131,7 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
                       <p className="text-xs text-blue-400 font-bold tracking-wide uppercase">Provider Verification</p>
                     </div>
                     <p className="text-xs text-zinc-400 leading-relaxed">
-                      This form submits a request for the {tier} License — {tier === 'Basic' ? '₱150 for 30 days' : tier === 'Standard' ? '₱500 for 90 days' : '₱1,500 for 150 days'}. It is not an immediate payment. A StoreTap provider will contact you using the information below to verify your request, confirm your store details, explain the activation process, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that your license is ready for activation.</strong>
+                      This form submits a request for the {tier} License — {tier === 'Basic' ? '₱149 for 30 days' : tier === 'Standard' ? '₱499 for 90 days' : '₱1,499 for 150 days'}. It is not an immediate payment. A StoreTap provider will contact you using the information below to verify your request, confirm your store details, explain the activation process, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that your license is ready for activation.</strong>
                     </p>
                     <p className="text-xs text-zinc-400 leading-relaxed">
                       After verification and payment confirmation, the license will be issued or activated according to the selected tier. The license validity period begins according to the activation rules shown below.

@@ -25,7 +25,7 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
     storeName: ''
   })
 
-  const price = systemType === 'free-web' ? '₱0 (Free Limited)' : systemType === 'web' ? '₱250' : '₱750'
+  const price = systemType === 'free-web' ? '₱0 (Free Limited)' : systemType === 'web' ? '₱249' : '₱749'
   const title = systemType === 'free-web' ? 'Free Web Version' : systemType === 'web' ? 'Web Version' : 'App Version'
 
   useEffect(() => {

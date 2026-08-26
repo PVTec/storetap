@@ -39,7 +39,9 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Basic",
-      price: "₱150",
+      price: "₱149",
+      originalPrice: "₱749",
+      discount: "80% OFF",
       subtext: "",
       duration: "1 Month License",
       features: [
@@ -58,7 +60,9 @@ export default function PricingPage() {
     },
     {
       name: "Standard",
-      price: "₱500",
+      price: "₱499",
+      originalPrice: "₱2499",
+      discount: "80% OFF",
       duration: "3 Month License",
       features: [
         "All Free Features",
@@ -73,7 +77,9 @@ export default function PricingPage() {
     },
     {
       name: "Pro",
-      price: "₱1500",
+      price: "₱1499",
+      originalPrice: "₱7499",
+      discount: "80% OFF",
       duration: "5 Month License",
       features: [
         "All Standard Features",
@@ -120,7 +126,11 @@ export default function PricingPage() {
                {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Best Value</span>}
                
                <h3 className="text-base font-semibold text-white mb-2">{p.name}</h3>
-               <div className="mb-6 flex flex-col items-start justify-center min-h-[4rem]">
+               <div className="mb-6 flex flex-col items-start justify-center min-h-[4.5rem]">
+                 <div className="flex items-center gap-2 mb-1">
+                   <span className="text-sm text-zinc-500 line-through font-medium">{p.originalPrice}</span>
+                   <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{p.discount}</span>
+                 </div>
                  <span className="text-4xl font-bold text-white">{p.price}</span>
                  {p.subtext && <span className="text-sm font-medium text-zinc-500 mt-1">{p.subtext}</span>}
                </div>
@@ -213,7 +223,11 @@ export default function PricingPage() {
                 </div>
               </div>
               <div className="mb-8">
-                <p className="text-3xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-sm text-zinc-500 line-through font-medium">₱1249</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80.06% OFF</span>
+                </div>
+                <p className="text-3xl font-black text-white mb-2">₱249 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
               </div>
               <div className="flex-1">
                 <ul className="space-y-4 mb-8">
@@ -243,7 +257,11 @@ export default function PricingPage() {
                 </div>
               </div>
               <div className="mb-8">
-                <p className="text-3xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-sm text-zinc-500 line-through font-medium">₱3749</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">80% OFF</span>
+                </div>
+                <p className="text-3xl font-black text-white mb-2">₱749 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
               </div>
               <div className="flex-1">
                 <ul className="space-y-4 mb-8">

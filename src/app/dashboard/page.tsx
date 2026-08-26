@@ -501,7 +501,11 @@ export default function DashboardPage() {
                   <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-6 flex flex-col">
                     <h3 className="text-lg font-bold text-white mb-2">Basic</h3>
                     <div className="flex flex-col mb-6">
-                      <p className="text-3xl font-black text-white mb-1">₱150</p>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm text-zinc-500 line-through font-medium">₱749</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80% OFF</span>
+                      </div>
+                      <p className="text-3xl font-black text-white mb-1">₱149</p>
                       <p className="text-sm font-medium text-zinc-500">&nbsp;</p>
                     </div>
                     <p className="text-sm text-zinc-500 mb-6">Valid for 30 Days (1 Month)</p>
@@ -523,7 +527,11 @@ export default function DashboardPage() {
                   {/* Standard */}
                   <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)]">
                     <h3 className="text-lg font-bold text-white mb-2">Standard</h3>
-                    <p className="text-3xl font-black text-white mb-2">₱500</p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm text-zinc-500 line-through font-medium">₱2499</span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80% OFF</span>
+                    </div>
+                    <p className="text-3xl font-black text-white mb-2">₱499</p>
                     <p className="text-sm text-zinc-500 mb-6">Valid for 90 Days (3 Months)</p>
                     <div className="flex-1">
                       <ul className="space-y-2 mb-6">
@@ -547,7 +555,11 @@ export default function DashboardPage() {
                     <span className="absolute top-4 right-4 bg-blue-500/10 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Best Value</span>
                     
                     <h3 className="text-lg font-bold text-white mb-2">Pro</h3>
-                    <p className="text-3xl font-black text-white mb-2">₱1500</p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm text-zinc-500 line-through font-medium">₱7499</span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80% OFF</span>
+                    </div>
+                    <p className="text-3xl font-black text-white mb-2">₱1499</p>
                     <p className="text-sm text-zinc-500 mb-6">Valid for 150 Days (5 Months)</p>
                     <div className="flex-1">
                       <ul className="space-y-2 mb-6">
@@ -628,7 +640,11 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="mb-8">
-                      <p className="text-3xl font-black text-white mb-2">₱250 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm text-zinc-500 line-through font-medium">₱1249</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80.06% OFF</span>
+                      </div>
+                      <p className="text-3xl font-black text-white mb-2">₱249 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
                       <ul className="space-y-4 mb-8">
@@ -665,7 +681,11 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="mb-8">
-                      <p className="text-3xl font-black text-white mb-2">₱750 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm text-zinc-500 line-through font-medium">₱3749</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">80% OFF</span>
+                      </div>
+                      <p className="text-3xl font-black text-white mb-2">₱749 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
                       <ul className="space-y-4 mb-8">
