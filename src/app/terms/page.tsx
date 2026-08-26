@@ -89,7 +89,7 @@ export default function TermsPage() {
 
           <h2 className="text-xl font-bold text-white mt-8 mb-4">12. Contact Information</h2>
           <p>
-            If you have any questions or concerns regarding these Terms of Service, please contact our legal and support team at <a href="https://heyvince.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">heyvince.vercel.app</a>.
+            If you have any questions or concerns regarding these Terms of Service, please contact our support team on <a href="https://www.facebook.com/profile.php?id=61593914545999" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">our Facebook Page</a>.
           </p>
         </div>
       </main>
