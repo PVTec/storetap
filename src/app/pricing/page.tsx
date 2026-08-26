@@ -224,8 +224,8 @@ export default function PricingPage() {
               </div>
               <div className="mb-8">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-sm text-zinc-500 line-through font-medium">₱1249</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80.06% OFF</span>
+                  <span className="text-sm text-zinc-500 line-through font-medium">₱1245</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80% OFF</span>
                 </div>
                 <p className="text-3xl font-black text-white mb-2">₱249 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
               </div>
