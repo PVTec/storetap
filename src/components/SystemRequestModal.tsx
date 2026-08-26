@@ -162,18 +162,28 @@ export default function SystemRequestModal({ isOpen, onClose, systemType }: Syst
               )}
 
               {systemType !== 'free-web' && (
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-2 mb-2">
-                  <p className="text-xs text-blue-400 font-medium">Provider Setup Notice</p>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    This form submits a request for the {title} — {price} one-time setup fee. It is not an immediate payment and the system will not be released yet. A StoreTap provider will contact you to verify your store details, confirm the requested branding and setup, explain what is included, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that the system is ready for release.</strong>
-                  </p>
-                  <div className="text-xs text-zinc-400 leading-relaxed mt-2 p-3 bg-zinc-900/50 rounded border border-zinc-800">
-                    <p><strong className="text-zinc-300">About StoreTap & Providers:</strong> StoreTap is a software technology project and POS service created and operated by Vince. StoreTap Providers are authorized StoreTap representatives or members who assist with system setup, licensing, deployment, and customer support. They are not independent sellers of a separate product.</p>
-                    <p className="mt-2">The StoreTap web system, mobile/native application, licensing system, and database infrastructure are developed, maintained, and administered by StoreTap. Customer business data is stored and processed for the purpose of providing the service, subject to the StoreTap Privacy Policy. StoreTap is responsible for system maintenance, updates, technical support, and database administration according to the customer’s service agreement.</p>
+                <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl overflow-hidden mb-4">
+                  <div className="p-4 space-y-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-4 h-4 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                      <p className="text-xs text-blue-400 font-bold tracking-wide uppercase">Provider Setup Notice</p>
+                    </div>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      This form submits a request for the {title} — {price} one-time setup fee. It is not an immediate payment. A StoreTap provider will contact you to verify your store details, confirm the requested branding and setup, explain what is included, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that the system is ready for release.</strong>
+                    </p>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      {systemType === 'app' ? 'This package includes the app/setup, hosting/database, and a 30-day Pro license. The Pro license is temporary and renewal is separate.' : 'The included Basic license is valid for 30 days according to the offer shown on this page. Continued use after the included period may require license renewal.'} Hosting, database availability, inactivity limits, support, and renewal terms are described below.
+                    </p>
                   </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    {systemType === 'app' ? 'This package includes the app/setup, hosting/database, and a 30-day Pro license. The Pro license is temporary and renewal is separate.' : 'The included Basic license is valid for 30 days according to the offer shown on this page. Continued use after the included period may require license renewal.'} Hosting, database availability, inactivity limits, support, and renewal terms are described below.
-                  </p>
+                  <div className="bg-blue-500/10 p-4 border-t border-blue-500/10">
+                    <p className="text-xs font-semibold text-blue-300 mb-1.5 flex items-center gap-2">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                      About StoreTap Providers
+                    </p>
+                    <p className="text-[11px] text-blue-200/70 leading-relaxed">
+                      StoreTap Providers are authorized representatives who assist with system setup and deployment. They act on behalf of StoreTap and are not independent sellers. All core infrastructure, maintenance, and data privacy remain fully managed by StoreTap.
+                    </p>
+                  </div>
                 </div>
               )}
 

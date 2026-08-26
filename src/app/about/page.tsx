@@ -87,17 +87,40 @@ export default function AboutPage() {
         </div>
 
         {/* Providers Section */}
-        <div className="max-w-4xl mx-auto mb-32 bg-zinc-900/50 border border-zinc-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          <div className="mb-6">
-            <h2 className="text-3xl font-bold text-white mb-4">About StoreTap Providers</h2>
-          </div>
-          <div className="space-y-4 text-zinc-400 leading-relaxed text-lg">
-            <p>
-              StoreTap is a software technology project and POS service created and operated by Vince. <strong className="text-zinc-200">StoreTap Providers</strong> are authorized StoreTap representatives or members who assist with system setup, licensing, deployment, and customer support. They are not independent sellers of a separate product.
-            </p>
-            <p>
-              The StoreTap web system, mobile/native application, licensing system, and database infrastructure are developed, maintained, and administered by StoreTap. Customer business data is stored and processed for the purpose of providing the service, subject to the StoreTap Privacy Policy. StoreTap is responsible for system maintenance, updates, technical support, and database administration according to the customer's service agreement.
-            </p>
+        <div className="max-w-5xl mx-auto mb-32 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-[2.5rem] blur-xl -z-10" />
+          <div className="bg-[#09090b] border border-zinc-800/80 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none">
+              <svg className="w-48 h-48 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 flex items-center gap-4">
+              <span className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/20">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              </span>
+              Our Authorized Providers
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-10 text-zinc-400 leading-relaxed text-sm md:text-base relative z-10">
+              <div className="space-y-3">
+                <h3 className="text-white font-semibold text-lg flex items-center gap-2">
+                  Role & Responsibilities
+                </h3>
+                <p>
+                  StoreTap Providers are authorized representatives or members who assist clients with system setup, licensing, deployment, and localized customer support. They act on behalf of StoreTap and are not independent sellers of a separate product.
+                </p>
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-white font-semibold text-lg flex items-center gap-2">
+                  System Infrastructure
+                </h3>
+                <p>
+                  The StoreTap platform, including the web system, mobile application, database infrastructure, and licensing management, is entirely developed and administered by StoreTap. We remain fully responsible for system maintenance, technical updates, and data privacy.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
