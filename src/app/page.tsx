@@ -255,10 +255,14 @@ export default async function LandingPage() {
           </div>
         </div>
 
-        <div className="mt-16 border border-zinc-800/80 rounded-xl p-6 text-center max-w-2xl mx-auto shadow-sm bg-[#09090b]/50">
-          <p className="text-zinc-400 text-sm font-medium">
+        <div className="mt-16 border border-zinc-800/80 rounded-xl p-6 text-center max-w-3xl mx-auto shadow-sm bg-[#09090b]/50">
+          <p className="text-zinc-300 text-sm font-medium mb-4">
             <span className="font-bold text-white">Notice:</span> Submitting a request is not an immediate purchase. No payment is made at this stage.
           </p>
+          <div className="text-xs text-zinc-400 leading-relaxed text-left p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+            <p><strong className="text-zinc-300">About StoreTap & Providers:</strong> StoreTap is a software technology project and POS service created and operated by Vince. StoreTap Providers are authorized StoreTap representatives or members who assist with system setup, licensing, deployment, and customer support. They are not independent sellers of a separate product.</p>
+            <p className="mt-2">The StoreTap web system, mobile/native application, licensing system, and database infrastructure are developed, maintained, and administered by StoreTap. Customer business data is stored and processed for the purpose of providing the service, subject to the StoreTap Privacy Policy. StoreTap is responsible for system maintenance, updates, technical support, and database administration according to the customer’s service agreement.</p>
+          </div>
         </div>
       </section>
 

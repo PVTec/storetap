@@ -783,6 +783,15 @@ export default function DashboardPage() {
                     <p>
                       By purchasing a license from this dashboard, you unlock the ability to activate your StoreTap application on your devices. Each license key can only be bound to a single device for maximum security.
                     </p>
+                    <div className="mt-6 pt-6 border-t border-zinc-800">
+                      <h3 className="text-lg font-bold text-white mb-3">About StoreTap Providers</h3>
+                      <p className="mb-4">
+                        StoreTap is a software technology project and POS service created and operated by Vince. <strong className="text-zinc-200">StoreTap Providers</strong> are authorized StoreTap representatives or members who assist with system setup, licensing, deployment, and customer support. They are not independent sellers of a separate product.
+                      </p>
+                      <p>
+                        The StoreTap web system, mobile/native application, licensing system, and database infrastructure are developed, maintained, and administered by StoreTap. Customer business data is stored and processed for the purpose of providing the service, subject to the StoreTap Privacy Policy. StoreTap is responsible for system maintenance, updates, technical support, and database administration according to the customer's service agreement.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-zinc-800 text-xs text-zinc-500">

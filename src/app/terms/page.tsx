@@ -24,7 +24,16 @@ export default function TermsPage() {
 
           <h2 className="text-xl font-bold text-white mt-8 mb-4">3. Authorized Providers and Payment Processing</h2>
           <p>
-            StoreTap Central acts as a platform to connect prospective users with authorized independent distributors and service providers ("Providers"). Please note the following critical terms regarding transactions:
+            <strong>Who operates StoreTap?</strong> StoreTap is a technology project and POS service created and operated by Vincent Layon. The StoreTap platform, licensing process, web system, mobile application, and database administration are managed by the StoreTap operator. Future StoreTap members may assist with deployment and customer support only as authorized representatives of StoreTap.
+          </p>
+          <p className="mt-4">
+            <strong>Who is responsible for the system?</strong> StoreTap is responsible for platform maintenance, updates, licensing administration, and technical support under the applicable service agreement. Customer data is used to operate the store system and is handled according to the Privacy Policy. Customers should receive clear information about hosting, backups, data export, retention, and account termination before deployment.
+          </p>
+          <p className="mt-4">
+            <strong>Are providers third parties?</strong> StoreTap representatives may assist customers, but they do not represent a separate competing system. Their authority, scope of work, pricing authority, and support responsibilities should be documented by StoreTap.
+          </p>
+          <p className="mt-4">
+            Please note the following critical terms regarding transactions:
           </p>
           <ul className="list-disc pl-6 space-y-2 mt-2">
             <li><strong>No Direct Payments on Platform:</strong> StoreTap does not process payments, collect funds, or ask for credit card information directly through our website for the acquisition of system licenses or physical hardware.</li>

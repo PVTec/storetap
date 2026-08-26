@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           <p>We process your Personal Data and Business Operations Data for the following legitimate purposes:</p>
           <ul className="list-disc pl-6 space-y-2 mt-2">
             <li><strong>Service Delivery:</strong> To operate, maintain, and provide the core functionalities of the POS system, including cloud backups and multi-device synchronization.</li>
-            <li><strong>Deployment and Support:</strong> To connect you with authorized independent Providers who will facilitate your system setup, hardware delivery, and licensing.</li>
+            <li><strong>Deployment and Support:</strong> To connect you with authorized Providers who will facilitate your system setup, hardware delivery, and licensing.</li>
             <li><strong>Security and Authentication:</strong> To verify your identity via Google OAuth, protect against unauthorized access, and monitor for fraudulent activity.</li>
             <li><strong>Improvement and Analytics:</strong> To analyze usage patterns, diagnose technical issues, and improve the user experience and overall performance of the Service.</li>
             <li><strong>Communication:</strong> To send administrative notices, system updates, security alerts, and responses to your inquiries.</li>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-bold text-white mt-8 mb-4">4. How We Share and Disclose Information</h2>
           <p>StoreTap does not sell, rent, or trade your Personal Data. We may share your information only in the following specific circumstances:</p>
           <ul className="list-disc pl-6 space-y-2 mt-2">
-            <li><strong>Authorized Independent Providers:</strong> We share your submitted contact and request details with our vetted network of Providers solely for the purpose of executing your request for a system or license. These Providers are strictly prohibited from using your data for any other purpose.</li>
+            <li><strong>Authorized Providers:</strong> We share your submitted contact and request details with authorized StoreTap representatives or members (Providers) solely for the purpose of executing your request for a system or license. These Providers assist with setup, deployment, and support on behalf of StoreTap and are not independent sellers of a separate product.</li>
             <li><strong>Service Providers:</strong> We may employ third-party cloud hosting and infrastructure services (e.g., Supabase, Vercel) to operate the Service. These sub-processors are bound by strict confidentiality and data protection agreements.</li>
             <li><strong>Legal Compliance and Protection:</strong> We may disclose your information if required to do so by law, court order, or governmental request, or when we believe in good faith that disclosure is necessary to protect our rights, prevent fraud, or ensure the safety of our users.</li>
           </ul>

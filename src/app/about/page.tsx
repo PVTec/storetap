@@ -86,6 +86,21 @@ export default function AboutPage() {
           </div>
         </div>
 
+        {/* Providers Section */}
+        <div className="max-w-4xl mx-auto mb-32 bg-zinc-900/50 border border-zinc-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold text-white mb-4">About StoreTap Providers</h2>
+          </div>
+          <div className="space-y-4 text-zinc-400 leading-relaxed text-lg">
+            <p>
+              StoreTap is a software technology project and POS service created and operated by Vince. <strong className="text-zinc-200">StoreTap Providers</strong> are authorized StoreTap representatives or members who assist with system setup, licensing, deployment, and customer support. They are not independent sellers of a separate product.
+            </p>
+            <p>
+              The StoreTap web system, mobile/native application, licensing system, and database infrastructure are developed, maintained, and administered by StoreTap. Customer business data is stored and processed for the purpose of providing the service, subject to the StoreTap Privacy Policy. StoreTap is responsible for system maintenance, updates, technical support, and database administration according to the customer's service agreement.
+            </p>
+          </div>
+        </div>
+
         {/* Certificates Section */}
         <div>
           <h2 className="text-3xl font-bold text-white mb-10 text-center">Awards & Certifications</h2>

@@ -128,6 +128,10 @@ export default function LicenseRequestModal({ isOpen, onClose, tier }: LicenseRe
                 <p className="text-xs text-zinc-400 leading-relaxed">
                   This form submits a request for the {tier} License — {tier === 'Basic' ? '₱150 for 30 days' : tier === 'Standard' ? '₱500 for 90 days' : '₱1,500 for 150 days'}. It is not an immediate payment and your license will not be activated yet. A StoreTap provider will contact you using the information below to verify your request, confirm your store details, explain the license and activation process, and prepare the system. <strong className="text-zinc-300 font-semibold">Do not send payment until the provider confirms that your license is ready for activation.</strong>
                 </p>
+                <div className="text-xs text-zinc-400 leading-relaxed mt-2 p-3 bg-zinc-900/50 rounded border border-zinc-800">
+                  <p><strong className="text-zinc-300">About StoreTap & Providers:</strong> StoreTap is a software technology project and POS service created and operated by Vince. StoreTap Providers are authorized StoreTap representatives or members who assist with system setup, licensing, deployment, and customer support. They are not independent sellers of a separate product.</p>
+                  <p className="mt-2">The StoreTap web system, mobile/native application, licensing system, and database infrastructure are developed, maintained, and administered by StoreTap. Customer business data is stored and processed for the purpose of providing the service, subject to the StoreTap Privacy Policy. StoreTap is responsible for system maintenance, updates, technical support, and database administration according to the customer’s service agreement.</p>
+                </div>
                 <p className="text-xs text-zinc-400 leading-relaxed">
                   After verification and payment confirmation, the license will be issued or activated according to the selected tier. The license validity period begins according to the activation rules shown below. Please make sure your contact details are correct.
                 </p>
