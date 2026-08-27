@@ -12,7 +12,7 @@ export default function Navigation() {
     <>
       <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto border-b border-zinc-800/60 bg-black/50 backdrop-blur-md sticky top-0 z-50">
         <Link href="/" className="flex items-center gap-3">
-          <Image src="/icon.svg" alt="StoreTap Logo" width={32} height={32} className="text-blue-500" />
+          <Image src="/logo-icon.png" alt="StoreTap Logo" width={32} height={32} />
           <span className="text-xl font-bold tracking-tight text-white">StoreTap</span>
           <span className="hidden sm:inline-block text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono font-bold ml-1">v2.1.0</span>
         </Link>
