@@ -216,7 +216,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-zinc-800 border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-zinc-800 border-t-teal-500 rounded-full animate-spin"></div>
           <p className="text-zinc-500 text-sm font-medium animate-pulse">Loading dashboard...</p>
         </div>
       </div>
@@ -247,7 +247,7 @@ export default function DashboardPage() {
       <aside className={`fixed md:sticky top-0 inset-y-0 left-0 h-screen w-64 bg-[#0c0c0e] border-r border-zinc-800/80 flex flex-col z-50 transition-transform duration-200 ease-in-out md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-zinc-800/80">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/icon.svg" alt="StoreTap Logo" width={28} height={28} />
+            <Image src="/logo-icon.png" alt="StoreTap Logo" width={28} height={28} />
             <span className="text-lg font-bold tracking-tight text-white">StoreTap</span>
           </Link>
         </div>
@@ -342,7 +342,7 @@ export default function DashboardPage() {
               Notifications
             </div>
             {unreadCount > 0 && (
-              <span className="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full">{unreadCount}</span>
+              <span className="bg-teal-500 text-white text-[10px] px-2 py-0.5 rounded-full">{unreadCount}</span>
             )}
           </button>
 
@@ -356,7 +356,7 @@ export default function DashboardPage() {
         </div>
         <div className="p-4 border-t border-zinc-800/80">
           <div className="flex items-center gap-3 mb-4 px-2">
-            <div className="w-8 h-8 rounded-full bg-blue-500/20 text-teal-400 flex items-center justify-center font-bold text-xs uppercase">
+            <div className="w-8 h-8 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold text-xs uppercase">
               {userEmail ? userEmail.charAt(0) : 'U'}
             </div>
             <div className="overflow-hidden">
@@ -379,7 +379,7 @@ export default function DashboardPage() {
                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
              </button>
              <div className="flex items-center gap-2">
-               <Image src="/icon.svg" alt="StoreTap Logo" width={24} height={24} />
+               <Image src="/logo-icon.png" alt="StoreTap Logo" width={24} height={24} />
                <span className="font-bold text-white">StoreTap</span>
              </div>
            </div>
@@ -394,7 +394,7 @@ export default function DashboardPage() {
                 <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <div className="text-sm">
                   <p className="font-bold mb-1">You have a pending license request!</p>
-                  <p className="text-teal-400/80">Please prepare your payment and wait for the provider to contact you, or message <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="underline font-medium hover:text-blue-300">Vincent Layon</a> on Facebook.</p>
+                  <p className="text-teal-400/80">Please prepare your payment and wait for the provider to contact you, or message <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="underline font-medium hover:text-teal-300">Vincent Layon</a> on Facebook.</p>
                 </div>
               </div>
             )}
@@ -470,7 +470,7 @@ export default function DashboardPage() {
                                   <span className={`w-1.5 h-1.5 rounded-full ${
                                     l.status === 'active' ? 'bg-emerald-400' :
                                     l.status === 'unused' ? 'bg-amber-400' :
-                                    l.status === 'pending' ? 'bg-blue-400' :
+                                    l.status === 'pending' ? 'bg-teal-400' :
                                     l.status === 'expired' ? 'bg-rose-400' : 'bg-zinc-400'
                                   }`}></span>
                                   <span className="capitalize">{l.status}</span>
@@ -669,14 +669,14 @@ export default function DashboardPage() {
                   </div>
 
                   {/* App System */}
-                  <div className="bg-[#0c0c0e] border border-teal-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] hover:border-blue-500/70 transition-all">
+                  <div className="bg-[#0c0c0e] border border-teal-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(20,184,166,0.15)] hover:shadow-[0_0_40px_rgba(20,184,166,0.25)] hover:border-teal-500/70 transition-all">
                     <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h3 className="text-xl font-bold text-white">Web Plus App</h3>
                         <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.12.6</p>
                       </div>
-                      <div className="w-12 h-12 bg-teal-500/10 text-teal-400 rounded-xl flex items-center justify-center border border-teal-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                      <div className="w-12 h-12 bg-teal-500/10 text-teal-400 rounded-xl flex items-center justify-center border border-teal-500/20 shadow-[0_0_15px_rgba(20,184,166,0.2)]">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                       </div>
                     </div>
@@ -704,7 +704,7 @@ export default function DashboardPage() {
                     <button 
                       onClick={() => handleOpenSystemModal('app')}
                       disabled={isAdmin || isProvider}
-                      className={`w-full py-3 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 cursor-not-allowed' : 'bg-teal-500 hover:bg-teal-400 text-white shadow-lg shadow-blue-500/25'}`}
+                      className={`w-full py-3 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 cursor-not-allowed' : 'bg-teal-500 hover:bg-teal-400 text-white shadow-lg shadow-teal-500/25'}`}
                     >
                       {isAdmin || isProvider ? 'Not Available' : 'Request App System'}
                     </button>
@@ -791,7 +791,7 @@ export default function DashboardPage() {
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-6">About StoreTap</h1>
                 <div className="bg-[#0c0c0e] border border-zinc-800 rounded-2xl p-8 max-w-2xl">
-                  <Image src="/icon.svg" alt="Logo" width={64} height={64} className="mb-6" />
+                  <Image src="/logo-icon.png" alt="Logo" width={64} height={64} className="mb-6" />
                   <h2 className="text-xl font-bold text-white mb-2">StoreTap POS System</h2>
                   <p className="text-zinc-400 mb-6">Version 2.1.0</p>
                   
