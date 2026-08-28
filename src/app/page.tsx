@@ -340,7 +340,7 @@ export default async function LandingPage() {
             </div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-              Advanced POS infrastructure for modern retail businesses.
+              Upgrading local stores for the digital era.
             </h2>
             
             <p className="text-zinc-400 text-lg leading-relaxed mb-8">
