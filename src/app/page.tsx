@@ -42,14 +42,10 @@ export default async function LandingPage() {
             Sell even when the internet is down. Track utang without a notebook. Know your stock at a glance. Built for local businesses that want to grow without limits.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 sm:mb-16 w-full max-w-md mx-auto sm:max-w-none">
-            <Link href="/login" className="w-full sm:w-auto px-10 py-4 rounded bg-teal-500 text-white font-bold text-lg hover:bg-teal-400 transition-all text-center shadow-[0_0_40px_rgba(20,184,166,0.2)]">
-              Start for Free
-            </Link>
-            <Link href="/product" className="w-full sm:w-auto px-10 py-4 rounded bg-zinc-900 border border-zinc-800 text-white font-bold text-lg hover:bg-zinc-800 transition-all text-center">
-              View Product Tour
-            </Link>
-          </div>
+          <Link href="/login" className="w-full sm:w-auto px-12 py-4 rounded bg-teal-500 text-white font-bold text-lg hover:bg-teal-400 transition-all text-center shadow-[0_0_40px_rgba(20,184,166,0.2)] mb-12 sm:mb-16">
+            Start for Free
+          </Link>
+
           <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Available On</p>
              <div className="grid grid-cols-2 gap-4 w-full">
