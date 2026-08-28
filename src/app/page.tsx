@@ -314,38 +314,41 @@ export default async function LandingPage() {
       </section>
 
       {/* Meet the Founder */}
-      <section className="bg-slate-50 border-t border-slate-200 px-6 py-24">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
+      <section className="bg-[#0a0a0a] border-t border-zinc-900 px-6 py-24 md:py-32">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
           
-          <div className="w-full md:w-5/12 flex justify-center md:justify-end">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white p-2">
-              <div className="relative w-full h-full rounded-xl overflow-hidden bg-slate-100">
-                <Image 
-                  src="/founder.png" 
-                  alt="Vincent Layon" 
-                  fill
-                  className="object-cover object-top"
-                />
+          <div className="w-full md:w-2/5 flex justify-center">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-zinc-800">
+              <Image 
+                src="/founder.png" 
+                alt="Vincent Layon" 
+                fill
+                className="object-cover object-top"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-6 right-6">
+                <p className="text-white font-bold text-xl mb-1">Vincent Layon</p>
+                <p className="text-teal-400 font-medium text-sm">Creator of StoreTap</p>
               </div>
             </div>
           </div>
           
-          <div className="w-full md:w-7/12 text-center md:text-left">
-            <h2 className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-2">Meet the Founder</h2>
-            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight">Vincent Layon</h3>
+          <div className="w-full md:w-3/5 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-teal-500/10 border border-teal-500/20 text-teal-400 font-bold text-[10px] uppercase tracking-widest rounded-full mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+              The Vision
+            </div>
             
-            <div className="w-12 h-1 bg-teal-500 rounded-full mb-6 mx-auto md:mx-0"></div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
+              Empowering local stores to go digital.
+            </h2>
             
-            <p className="text-slate-700 text-lg md:text-xl leading-relaxed mb-6 font-medium italic">
+            <p className="text-zinc-400 text-lg leading-relaxed mb-8">
               "StoreTap was not built primarily to make money, but to help local stores transition into the digital era. We help them, and in turn, they help us."
             </p>
             
-            <p className="text-slate-500 mb-8 leading-relaxed">
-              As the creator of StoreTap, Vince focuses on delivering a lightweight, offline-capable POS system that genuinely solves the everyday problems of local sari-sari stores, convenience stores, and eateries.
-            </p>
-            
-            <Link href="/about" className="inline-flex items-center justify-center px-8 py-3.5 rounded bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors shadow-sm">
-              Read Full Story
+            <Link href="/about" className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-500 transition-all shadow-[0_0_30px_rgba(20,184,166,0.2)] hover:shadow-[0_0_40px_rgba(20,184,166,0.4)]">
+              Read the Full Story
             </Link>
           </div>
           
