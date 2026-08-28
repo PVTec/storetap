@@ -34,7 +34,7 @@ export default async function LandingPage() {
           </h2>
           
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8">
-            Start <span className="text-[#F25C05]">Today</span>.<br/>
+            Start <span className="text-teal-500">Today</span>.<br/>
             Grow Without Limits.
           </h1>
           
@@ -42,11 +42,11 @@ export default async function LandingPage() {
             Sell even when the internet is down. Track utang without a notebook. Know your stock at a glance. Built for local businesses that want to grow without limits.
           </p>
           
-          <Link href="/login" className="w-full sm:w-auto px-12 py-4 rounded bg-[#F25C05] text-white font-bold text-lg hover:bg-[#d95204] transition-all text-center shadow-[0_0_40px_rgba(242,92,5,0.2)] mb-12 sm:mb-16">
+          <Link href="/login" className="w-full sm:w-auto px-12 py-4 rounded bg-teal-500 text-white font-bold text-lg hover:bg-teal-400 transition-all text-center shadow-[0_0_40px_rgba(20,184,166,0.2)] mb-12 sm:mb-16">
             Start for Free
           </Link>
 
-          <div className="flex flex-col items-center gap-6 mb-16 w-full max-w-md mx-auto">
+          <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Available On</p>
              <div className="grid grid-cols-2 gap-4 w-full">
                <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 font-medium text-sm hover:bg-zinc-800 transition-colors cursor-pointer">
@@ -54,7 +54,7 @@ export default async function LandingPage() {
                   Web
                </div>
                <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 font-medium text-sm hover:bg-zinc-800 transition-colors cursor-pointer">
-                  <svg className="w-5 h-5 text-teal-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414C17.523 15.3414 16.208 17.6534 14.536 19.3494C12.864 21.0454 11.233 21.3664 11.233 21.3664C11.233 21.3664 9.602 21.0454 7.93 19.3494C6.258 17.6534 4.943 15.3414 4.943 15.3414L2.091 10.4284L4.943 5.51541L7.93 5.51541L11.233 10.4284L14.536 5.51541L17.523 5.51541L20.375 10.4284L17.523 15.3414Z"/></svg>
+                  <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414C17.523 15.3414 16.208 17.6534 14.536 19.3494C12.864 21.0454 11.233 21.3664 11.233 21.3664C11.233 21.3664 9.602 21.0454 7.93 19.3494C6.258 17.6534 4.943 15.3414 4.943 15.3414L2.091 10.4284L4.943 5.51541L7.93 5.51541L11.233 10.4284L14.536 5.51541L17.523 5.51541L20.375 10.4284L17.523 15.3414Z"/></svg>
                   Android
                </div>
              </div>
@@ -62,22 +62,22 @@ export default async function LandingPage() {
           
         </div>
         
-        {/* Device Mockup (Bleeding into next section) */}
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10 -mb-6 md:-mb-12">
-          <div className="absolute inset-0 bg-[#F25C05]/10 blur-[120px] rounded-full"></div>
+        {/* Device Mockup (Sits comfortably within hero, distinct from stats) */}
+        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 mt-16 md:mt-24 mb-16 md:mb-24 relative z-10">
+          <div className="absolute inset-0 bg-teal-500/10 blur-[120px] rounded-full"></div>
           
-          <div className="relative bg-[#1a1a1a] p-2 md:p-3 rounded-t-[1.5rem] md:rounded-t-[2.5rem] border-t-4 border-x-4 border-[#F25C05] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] aspect-[4/3] md:aspect-video w-full flex flex-col overflow-hidden">
+          <div className="relative bg-[#1a1a1a] p-2 md:p-3 rounded-t-[1.5rem] md:rounded-t-[2.5rem] rounded-b-xl border-4 border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)] aspect-[4/3] md:aspect-video w-full flex flex-col overflow-hidden">
              
              {/* App Header */}
              <div className="h-10 md:h-14 bg-zinc-900 flex items-center justify-between px-4 md:px-6 border-b border-zinc-800/80 rounded-t-xl shrink-0">
                 <div className="flex items-center gap-2 md:gap-3">
-                   <div className="w-5 h-5 md:w-6 md:h-6 bg-[#F25C05] rounded-md flex items-center justify-center">
+                   <div className="w-5 h-5 md:w-6 md:h-6 bg-teal-500 rounded-md flex items-center justify-center">
                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                    </div>
                    <span className="font-bold text-white text-sm md:text-lg tracking-tight">StoreTap</span>
                 </div>
                 <div className="flex items-center gap-3 md:gap-4">
-                   <span className="text-[10px] md:text-xs font-bold px-2 py-1 md:py-1.5 bg-[#F25C05]/10 text-[#F25C05] rounded-full border border-[#F25C05]/20 uppercase tracking-widest hidden sm:block">Online Sync Active</span>
+                   <span className="text-[10px] md:text-xs font-bold px-2 py-1 md:py-1.5 bg-teal-500/10 text-teal-400 rounded-full border border-teal-500/20 uppercase tracking-widest hidden sm:block">Online Sync Active</span>
                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs text-white">V</div>
                 </div>
              </div>
@@ -87,7 +87,7 @@ export default async function LandingPage() {
                {/* Left column - Products */}
                <div className="flex-[2] flex flex-col">
                   <div className="flex gap-2 mb-3 md:mb-4 overflow-x-auto pb-1 hide-scrollbar">
-                    <div className="px-3 md:px-4 py-1 md:py-1.5 bg-[#F25C05] rounded-md text-white text-[10px] md:text-xs font-bold shrink-0">All items</div>
+                    <div className="px-3 md:px-4 py-1 md:py-1.5 bg-teal-500 rounded-md text-white text-[10px] md:text-xs font-bold shrink-0">All items</div>
                     <div className="px-3 md:px-4 py-1 md:py-1.5 bg-zinc-900 text-zinc-400 rounded-md text-[10px] md:text-xs font-medium border border-zinc-800 shrink-0">Drinks</div>
                     <div className="px-3 md:px-4 py-1 md:py-1.5 bg-zinc-900 text-zinc-400 rounded-md text-[10px] md:text-xs font-medium border border-zinc-800 shrink-0">Snacks</div>
                     <div className="px-3 md:px-4 py-1 md:py-1.5 bg-zinc-900 text-zinc-400 rounded-md text-[10px] md:text-xs font-medium border border-zinc-800 shrink-0 hidden md:block">Meals</div>
@@ -95,7 +95,7 @@ export default async function LandingPage() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 overflow-y-auto">
                      {[1,2,3,4,5,6].map(i => (
                        <div key={i} className="bg-zinc-900 rounded-lg md:rounded-xl p-2 md:p-3 border border-zinc-800 flex flex-col h-20 md:h-28 relative cursor-pointer hover:bg-zinc-800 transition-colors group">
-                          {i === 1 && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 md:w-5 md:h-5 bg-[#F25C05] rounded-full text-white text-[9px] md:text-[10px] flex items-center justify-center font-bold z-10 shadow-lg">2</span>}
+                          {i === 1 && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 md:w-5 md:h-5 bg-teal-500 rounded-full text-white text-[9px] md:text-[10px] flex items-center justify-center font-bold z-10 shadow-lg">2</span>}
                           <div className="flex-1 flex items-center justify-center text-2xl md:text-3xl opacity-60 group-hover:opacity-100 transition-opacity group-hover:scale-110 duration-300">
                              {i%3===0 ? '🍜' : i%2===0 ? '🥤' : '🍔'}
                           </div>
@@ -127,7 +127,7 @@ export default async function LandingPage() {
                        <span className="text-xs md:text-sm font-medium text-zinc-400">Total</span>
                        <span className="text-xl md:text-2xl font-black text-white">₱240</span>
                      </div>
-                     <div className="w-full py-2.5 md:py-3 bg-[#F25C05] hover:bg-[#d95204] transition-colors rounded-md md:rounded-lg text-white font-bold text-center text-xs md:text-sm cursor-pointer shadow-lg">
+                     <div className="w-full py-2.5 md:py-3 bg-teal-500 hover:bg-teal-400 transition-colors rounded-md md:rounded-lg text-white font-bold text-center text-xs md:text-sm cursor-pointer shadow-lg">
                        Charge ₱240
                      </div>
                   </div>
@@ -136,15 +136,22 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+      
+      {/* Wave transition from dark hero to teal stats */}
+      <div className="w-full bg-[#0f0f0f] -mt-1 relative z-0">
+         <svg className="w-full h-auto text-teal-600 drop-shadow-sm" viewBox="0 0 1440 120" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,42.7C1120,32,1280,32,1360,32L1440,32L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" />
+         </svg>
+      </div>
 
       {/* Stats Banner */}
-      <section className="bg-[#F25C05] pt-24 pb-16 px-6 relative overflow-hidden mt-0">
+      <section className="bg-teal-600 pt-8 pb-16 px-6 relative overflow-hidden mt-0">
          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
             <div className="lg:max-w-xl text-center lg:text-left">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
                 Time to retire the notebook.
               </h2>
-              <p className="text-orange-100 text-lg leading-relaxed font-medium">
+              <p className="text-teal-50 text-lg leading-relaxed font-medium">
                 We're helping local stores transition from manual notebooks to a fully digital utang and POS system. Join the businesses managing their sales and credit better, even without internet.
               </p>
             </div>
@@ -152,19 +159,19 @@ export default async function LandingPage() {
             <div className="grid grid-cols-2 gap-x-8 gap-y-8 lg:gap-12 w-full lg:w-auto">
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">{activeSystems}+</h3>
-                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Active Systems</span>
+                  <span className="text-teal-100 text-xs font-bold uppercase tracking-widest">Active Systems</span>
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">{licenseCount}+</h3>
-                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Stores Upgraded</span>
+                  <span className="text-teal-100 text-xs font-bold uppercase tracking-widest">Stores Upgraded</span>
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">{activeUsers}+</h3>
-                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Daily Users</span>
+                  <span className="text-teal-100 text-xs font-bold uppercase tracking-widest">Daily Users</span>
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">99.9%</h3>
-                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Uptime</span>
+                  <span className="text-teal-100 text-xs font-bold uppercase tracking-widest">Uptime</span>
                </div>
             </div>
          </div>

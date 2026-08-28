@@ -42,7 +42,7 @@ export default function Navigation() {
             <Link href="/login" className="text-zinc-300 hover:text-white transition-colors">
               Log In
             </Link>
-            <Link href="/login" className="px-5 py-2 rounded bg-[#F25C05] text-white hover:bg-[#d95204] transition-colors font-medium">
+            <Link href="/login" className="px-5 py-2 rounded bg-teal-600 text-white hover:bg-teal-500 transition-colors font-medium">
               Start for Free
             </Link>
           </div>
@@ -95,7 +95,7 @@ export default function Navigation() {
           <Link href="/login" onClick={() => setIsOpen(false)} className="w-full py-2.5 text-center text-zinc-300 text-sm font-medium hover:text-white rounded transition-colors border border-zinc-800">
             Log In
           </Link>
-          <Link href="/login" onClick={() => setIsOpen(false)} className="w-full py-2.5 text-center bg-[#F25C05] text-white text-sm font-medium rounded hover:bg-[#d95204] transition-colors">
+          <Link href="/login" onClick={() => setIsOpen(false)} className="w-full py-2.5 text-center bg-teal-600 text-white text-sm font-medium rounded hover:bg-teal-500 transition-colors">
             Start for Free
           </Link>
         </div>
