@@ -34,8 +34,8 @@ export default async function LandingPage() {
           </h2>
           
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8">
-            Start <span className="text-teal-500">Today</span>.<br/>
-            Simplify Your Sales & Utang.
+            Sell <span className="text-teal-500">Smarter</span>.<br/>
+            Scale Without Limits.
           </h1>
           
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed font-medium mb-8 sm:mb-10">
@@ -314,48 +314,43 @@ export default async function LandingPage() {
       </section>
 
       {/* Meet the Founder */}
-      <section className="bg-white px-6 py-24 relative overflow-hidden border-t border-slate-200">
-        <div className="max-w-5xl mx-auto relative z-10">
-          
-          <div className="bg-slate-900 rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/20 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/3"></div>
+      <section className="bg-slate-50 px-6 py-24 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white rounded-[2rem] p-8 md:p-16 shadow-xl border border-slate-100 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full blur-[80px] z-0" />
             
-            <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16 relative z-10">
-              <div className="w-48 h-48 md:w-64 md:h-64 shrink-0 relative rounded-full overflow-hidden border-[6px] border-white/10 shadow-[0_0_40px_rgba(20,184,166,0.3)]">
-                <Image 
-                  src="/founder.png" 
-                  alt="Vincent Layon - Founder" 
-                  fill
-                  className="object-cover object-top hover:scale-105 transition-transform duration-700"
-                />
+            <div className="w-48 h-48 md:w-64 md:h-64 shrink-0 relative rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-3 hover:rotate-0 transition-transform duration-500 z-10">
+              <Image 
+                src="/founder.png" 
+                alt="Vincent Layon - Founder" 
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            
+            <div className="text-center md:text-left z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 text-teal-600 font-bold text-xs uppercase tracking-widest rounded-full mb-6">
+                <span className="w-2 h-2 rounded-full bg-teal-500"></span>
+                Meet the Founder
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">Vincent Layon (Vince)</h3>
+              <p className="text-slate-500 font-medium mb-8">Creator of StoreTap</p>
+              
+              <div className="relative">
+                <svg className="absolute -top-6 -left-6 md:-left-8 w-12 h-12 text-teal-100 z-0" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                </svg>
+                <blockquote className="text-slate-700 text-lg md:text-xl leading-relaxed font-medium mb-8 relative z-10 italic">
+                  "StoreTap was not built primarily to make money, but to help local stores transition into the digital era... We help them, and in turn, they help us."
+                </blockquote>
               </div>
               
-              <div className="text-center md:text-left flex-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-bold uppercase tracking-widest mb-6">
-                  Meet the Founder
-                </div>
-                
-                <blockquote className="text-white text-xl md:text-2xl leading-relaxed font-medium mb-8 relative">
-                  <span className="absolute -top-4 -left-4 md:-left-8 text-teal-500/40 text-6xl font-serif">"</span>
-                  <span className="relative z-10">StoreTap was not built primarily to make money, but to help local stores transition into the digital era... We help them, and in turn, they help us.</span>
-                </blockquote>
-                
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div>
-                    <h3 className="text-xl font-bold text-white">Vincent Layon (Vince)</h3>
-                    <p className="text-zinc-400 font-medium">Founder, StoreTap</p>
-                  </div>
-                  
-                  <Link href="/about" className="px-6 py-3 rounded-xl bg-teal-500 text-white font-bold hover:bg-teal-400 transition-colors inline-flex items-center gap-2 shadow-lg">
-                    Read Full Story
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                  </Link>
-                </div>
-              </div>
+              <Link href="/about" className="px-8 py-4 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors inline-flex items-center gap-3 shadow-lg">
+                Read the Full Story
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </Link>
             </div>
           </div>
-          
         </div>
       </section>
 
