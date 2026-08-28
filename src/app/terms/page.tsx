@@ -22,7 +22,12 @@ export default function TermsPage() {
             StoreTap provides a cloud-based and offline-capable Point of Sale and inventory management software solution designed for local retail environments. The Service includes software features for sales tracking, debt ("utang") management, inventory synchronization, and reporting.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">3. Authorized Providers and Payment Processing</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">3. Project Status and Early Access Acknowledgment</h2>
+          <p>
+            You acknowledge and agree that StoreTap is currently in an early developmental stage (a software technology "project") and is continually being updated and refined. While we are actively accepting and serving clients, the Service may undergo significant changes, feature updates, or occasionally experience bugs or downtime as we scale. By using the Service during this early stage, you accept that it is provided on an "as-is" basis and you agree to participate with the understanding that the platform is actively evolving.
+          </p>
+
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">4. Authorized Providers and Payment Processing</h2>
           <p>
             <strong>Who operates StoreTap?</strong> StoreTap is a technology project and POS service created and operated by Vincent Layon. The StoreTap platform, licensing process, web system, mobile application, and database administration are managed by the StoreTap operator. Future StoreTap members may assist with deployment and customer support only as authorized representatives of StoreTap.
           </p>
@@ -41,7 +46,7 @@ export default function TermsPage() {
             <li><strong>Release of Liability:</strong> StoreTap Technologies acts solely as the software developer. We are not liable or responsible for payment disputes, refunds, hardware warranties, or any unfulfilled promises made by independent Providers. Your commercial agreement is directly with the Provider.</li>
           </ul>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">4. Software Licensing and Use Restrictions</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">5. Software Licensing and Use Restrictions</h2>
           <p>
             Upon activation of your account by a Provider, StoreTap grants you a revocable, non-exclusive, non-transferable, limited license to use the Service solely for your internal business operations. You agree not to:
           </p>
@@ -52,42 +57,42 @@ export default function TermsPage() {
             <li>Attempt to bypass or exploit any security measures or license restrictions integrated into the Service.</li>
           </ul>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">5. Account Registration and Security</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">6. Account Registration and Security</h2>
           <p>
             To use the Service, you must register for an account using a valid Google Account. You are responsible for maintaining the confidentiality of your authentication credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized access to your account. StoreTap will not be liable for any loss or damage arising from your failure to protect your account.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">6. Data Ownership and Responsibilities</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">7. Data Ownership and Responsibilities</h2>
           <p>
             You retain all rights and ownership to the data you input into the Service, including inventory records, sales data, and customer debt information ("User Data"). By using the Service, you grant StoreTap a worldwide, non-exclusive license to host, copy, transmit, and display User Data as necessary to provide the Service to you. You are solely responsible for the accuracy and legality of your User Data.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">7. Intellectual Property Rights</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">8. Intellectual Property Rights</h2>
           <p>
             All intellectual property rights in the Service, including but not limited to software code, design, logos, trademarks, and documentation, are the exclusive property of StoreTap Technologies. Nothing in these Terms constitutes a transfer of any intellectual property rights to you.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">8. Disclaimer of Warranties</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">9. Disclaimer of Warranties</h2>
           <p>
             THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS. STORETAP EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, ERROR-FREE, OR FREE FROM VIRUSES OR OTHER HARMFUL COMPONENTS.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">9. Limitation of Liability</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">10. Limitation of Liability</h2>
           <p>
             TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL STORETAP TECHNOLOGIES, ITS AFFILIATES, DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OR INABILITY TO USE THE SERVICE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">10. Governing Law and Dispute Resolution</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">11. Governing Law and Dispute Resolution</h2>
           <p>
             These Terms shall be governed by and construed in accordance with the laws of the Republic of the Philippines, without regard to its conflict of law provisions. Any dispute arising from or relating to the subject matter of these Terms shall be subject to the exclusive jurisdiction of the courts located in the Philippines.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">11. Modifications to Terms</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">12. Modifications to Terms</h2>
           <p>
             We reserve the right to modify or replace these Terms at any time at our sole discretion. We will provide reasonable notice of any material changes by posting the updated Terms on this page. Your continued use of the Service following the posting of any changes constitutes your acceptance of those changes.
           </p>
 
-          <h2 className="text-xl font-bold text-white mt-8 mb-4">12. Contact Information</h2>
+          <h2 className="text-xl font-bold text-white mt-8 mb-4">13. Contact Information</h2>
           <p>
             If you have any questions or concerns regarding these Terms of Service, please contact our support team on <a href="https://www.facebook.com/profile.php?id=61593914545999" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">our Facebook Page</a>.
           </p>
