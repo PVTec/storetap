@@ -214,7 +214,7 @@ export default function DashboardPage() {
 
   if (isInitializing) {
     return (
-      <div className="min-h-screen bg-[#000000] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 border-4 border-zinc-800 border-t-blue-500 rounded-full animate-spin"></div>
           <p className="text-zinc-500 text-sm font-medium animate-pulse">Loading dashboard...</p>
@@ -236,7 +236,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-blue-500/30 flex">
+    <div className="min-h-screen bg-[#0a0a0a] text-zinc-300 font-sans selection:bg-teal-500/30 flex">
       
       {/* Sidebar Mobile Overlay */}
       {isSidebarOpen && (
@@ -244,7 +244,7 @@ export default function DashboardPage() {
       )}
       
       {/* Sidebar */}
-      <aside className={`fixed md:sticky top-0 inset-y-0 left-0 h-screen w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col z-50 transition-transform duration-200 ease-in-out md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed md:sticky top-0 inset-y-0 left-0 h-screen w-64 bg-[#0c0c0e] border-r border-zinc-800/80 flex flex-col z-50 transition-transform duration-200 ease-in-out md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-zinc-800/80">
           <Link href="/" className="flex items-center gap-3">
             <Image src="/icon.svg" alt="StoreTap Logo" width={28} height={28} />
@@ -356,7 +356,7 @@ export default function DashboardPage() {
         </div>
         <div className="p-4 border-t border-zinc-800/80">
           <div className="flex items-center gap-3 mb-4 px-2">
-            <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs uppercase">
+            <div className="w-8 h-8 rounded-full bg-blue-500/20 text-teal-400 flex items-center justify-center font-bold text-xs uppercase">
               {userEmail ? userEmail.charAt(0) : 'U'}
             </div>
             <div className="overflow-hidden">
@@ -373,7 +373,7 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Mobile Header */}
-        <header className="h-16 md:hidden flex items-center justify-between px-6 border-b border-zinc-800/80 bg-[#09090b]">
+        <header className="h-16 md:hidden flex items-center justify-between px-6 border-b border-zinc-800/80 bg-[#0c0c0e]">
            <div className="flex items-center gap-3">
              <button onClick={() => setIsSidebarOpen(true)} className="text-zinc-400 p-1">
                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -390,11 +390,11 @@ export default function DashboardPage() {
           <div className="max-w-5xl mx-auto">
             
             {hasClientPending && (
-              <div className="mb-6 bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 flex items-start gap-3 text-blue-400 animate-in fade-in slide-in-from-top-4">
+              <div className="mb-6 bg-teal-500/10 border border-teal-500/20 rounded-lg p-4 flex items-start gap-3 text-teal-400 animate-in fade-in slide-in-from-top-4">
                 <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <div className="text-sm">
                   <p className="font-bold mb-1">You have a pending license request!</p>
-                  <p className="text-blue-400/80">Please prepare your payment and wait for the provider to contact you, or message <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="underline font-medium hover:text-blue-300">Vincent Layon</a> on Facebook.</p>
+                  <p className="text-teal-400/80">Please prepare your payment and wait for the provider to contact you, or message <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="underline font-medium hover:text-blue-300">Vincent Layon</a> on Facebook.</p>
                 </div>
               </div>
             )}
@@ -404,7 +404,7 @@ export default function DashboardPage() {
                 <h1 className="text-2xl font-bold text-white mb-2">My Licenses</h1>
                 <p className="text-zinc-400 text-sm mb-8">View and manage your active StoreTap POS licenses.</p>
                 
-                <div className="bg-[#09090b] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
+                <div className="bg-[#0c0c0e] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse min-w-[600px]">
                       <thead>
@@ -450,7 +450,7 @@ export default function DashboardPage() {
                               </td>
                               <td className="py-4 px-6">
                                 <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
-                                  l.tier === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                  l.tier === 'pro' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' :
                                   l.tier === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
                                   'bg-zinc-800 text-zinc-400'
                                 }`}>
@@ -464,7 +464,7 @@ export default function DashboardPage() {
                                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
                                   l.status === 'active' ? 'text-emerald-400' :
                                   l.status === 'unused' ? 'text-amber-400' :
-                                  l.status === 'pending' ? 'text-blue-400' :
+                                  l.status === 'pending' ? 'text-teal-400' :
                                   l.status === 'expired' ? 'text-rose-400' : 'text-zinc-400'
                                 }`}>
                                   <span className={`w-1.5 h-1.5 rounded-full ${
@@ -498,8 +498,8 @@ export default function DashboardPage() {
                 
                 <div className="grid md:grid-cols-3 gap-6">
                   {/* Basic */}
-                  <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-6 flex flex-col">
-                    <h3 className="text-lg font-bold text-white mb-2">Basic</h3>
+                  <div className="bg-[#0c0c0e] border border-zinc-800 rounded-2xl p-6 flex flex-col">
+                    <h3 className="text-lg font-bold text-white mb-2">Starter</h3>
                     <div className="flex flex-col mb-6">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-sm text-zinc-500 line-through font-medium">₱749</span>
@@ -520,13 +520,13 @@ export default function DashboardPage() {
                       disabled={isAdmin || isProvider}
                       className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed' : 'bg-zinc-800 hover:bg-zinc-700 text-white'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Request Basic License'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Starter License'}
                     </button>
                   </div>
 
                   {/* Standard */}
-                  <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)]">
-                    <h3 className="text-lg font-bold text-white mb-2">Standard</h3>
+                  <div className="bg-[#0c0c0e] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)]">
+                    <h3 className="text-lg font-bold text-white mb-2">Growth</h3>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-sm text-zinc-500 line-through font-medium">₱2499</span>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80% OFF</span>
@@ -543,18 +543,18 @@ export default function DashboardPage() {
                     <button 
                       onClick={() => handleOpenModal('Standard')}
                       disabled={isAdmin || isProvider}
-                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-emerald-500/10' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}`}
+                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-emerald-500/10' : 'bg-white hover:bg-zinc-200 text-black'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Request Standard License'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Growth License'}
                     </button>
                   </div>
 
                   {/* Pro */}
-                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.1)]">
-                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
-                    <span className="absolute top-4 right-4 bg-blue-500/10 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Best Value</span>
+                  <div className="bg-[#0c0c0e] border border-teal-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(20,184,166,0.1)]">
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
+                    <span className="absolute top-4 right-4 bg-teal-500/10 text-teal-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Best Value</span>
                     
-                    <h3 className="text-lg font-bold text-white mb-2">Pro</h3>
+                    <h3 className="text-lg font-bold text-white mb-2">Business Pro</h3>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-sm text-zinc-500 line-through font-medium">₱7499</span>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">80% OFF</span>
@@ -564,16 +564,16 @@ export default function DashboardPage() {
                     <div className="flex-1">
                       <ul className="space-y-2 mb-6">
                         <li className="text-sm text-zinc-400 flex items-center gap-2">✓ All Standard Features</li>
-                        <li className="text-sm text-blue-400 flex items-center gap-2">✓ Advanced Offline Capability</li>
+                        <li className="text-sm text-teal-400 flex items-center gap-2">✓ Advanced Offline Capability</li>
                         <li className="text-sm text-zinc-400 flex items-center gap-2">✓ VIP Support</li>
                       </ul>
                     </div>
                     <button 
                       onClick={() => handleOpenModal('Pro')}
                       disabled={isAdmin || isProvider}
-                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-blue-500/10' : 'bg-blue-600 hover:bg-blue-500 text-white'}`}
+                      className={`w-full py-2 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/50 text-zinc-500 cursor-not-allowed border border-teal-500/10' : 'bg-teal-500 hover:bg-teal-400 text-white'}`}
                     >
-                      {isAdmin || isProvider ? 'Not Available' : 'Request Pro License'}
+                      {isAdmin || isProvider ? 'Not Available' : 'Request Business Pro License'}
                     </button>
                   </div>
                 </div>
@@ -587,7 +587,7 @@ export default function DashboardPage() {
                 
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-5xl">
                   {/* Free System */}
-                  <div className="bg-[#09090b] border border-zinc-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(161,161,170,0.05)] hover:shadow-[0_0_30px_rgba(161,161,170,0.1)] hover:border-zinc-500/50 transition-all">
+                  <div className="bg-[#0c0c0e] border border-zinc-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(161,161,170,0.05)] hover:shadow-[0_0_30px_rgba(161,161,170,0.1)] hover:border-zinc-500/50 transition-all">
                     <span className="absolute top-4 right-4 bg-zinc-800 text-zinc-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Limited</span>
                     <div className="flex justify-between items-start mb-6 mt-2">
                       <div>
@@ -628,12 +628,12 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Web System */}
-                  <div className="bg-[#09090b] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)] hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:border-emerald-500/50 transition-all">
+                  <div className="bg-[#0c0c0e] border border-emerald-500/30 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)] hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:border-emerald-500/50 transition-all">
                     <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h3 className="text-xl font-bold text-white">Web Version</h3>
-                        <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
+                        <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.12.6</p>
                       </div>
                       <div className="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/20">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
@@ -655,7 +655,7 @@ export default function DashboardPage() {
                           <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Database Storage
                         </li>
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-emerald-400">Basic Tier License</span> (30 Days)
+                          <span className="text-emerald-400 bg-emerald-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-emerald-400">Starter Tier License</span> (30 Days)
                         </li>
                       </ul>
                     </div>
@@ -669,42 +669,42 @@ export default function DashboardPage() {
                   </div>
 
                   {/* App System */}
-                  <div className="bg-[#09090b] border border-blue-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] hover:border-blue-500/70 transition-all">
-                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
+                  <div className="bg-[#0c0c0e] border border-teal-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] hover:border-blue-500/70 transition-all">
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
                     <div className="flex justify-between items-start mb-6">
                       <div>
-                        <h3 className="text-xl font-bold text-white">App Version</h3>
-                        <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.9.5</p>
+                        <h3 className="text-xl font-bold text-white">Web Plus App</h3>
+                        <p className="text-zinc-500 text-sm mt-1">Patch v2.1.0.12.6</p>
                       </div>
-                      <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                      <div className="w-12 h-12 bg-teal-500/10 text-teal-400 rounded-xl flex items-center justify-center border border-teal-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                       </div>
                     </div>
                     <div className="mb-8">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-sm text-zinc-500 line-through font-medium">₱3749</span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">80% OFF</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-teal-500/10 text-teal-400 border border-teal-500/20">80% OFF</span>
                       </div>
                       <p className="text-3xl font-black text-white mb-2">₱749 <span className="text-sm font-medium text-zinc-500">one-time</span></p>
                     </div>
                     <div className="flex-1">
                       <ul className="space-y-4 mb-8">
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Mobile App
+                          <span className="text-teal-400 bg-teal-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free Mobile App
                         </li>
                         <li className="text-sm text-zinc-300 flex items-center gap-3 leading-relaxed">
-                          <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full shrink-0"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> 
-                          <span>Free Hosting <span className="text-blue-400 font-medium">(Web Site)</span> & Database Storage</span>
+                          <span className="text-teal-400 bg-teal-500/10 p-1 rounded-full shrink-0"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> 
+                          <span>Free Hosting <span className="text-teal-400 font-medium">(Web Site)</span> & Database Storage</span>
                         </li>
                         <li className="text-sm text-zinc-300 flex items-center gap-3">
-                          <span className="text-blue-400 bg-blue-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-blue-400">Pro Tier License</span> (30 Days)
+                          <span className="text-teal-400 bg-teal-500/10 p-1 rounded-full"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></span> Free <span className="font-bold ml-1 text-teal-400">Business Pro Tier License</span> (30 Days)
                         </li>
                       </ul>
                     </div>
                     <button 
                       onClick={() => handleOpenSystemModal('app')}
                       disabled={isAdmin || isProvider}
-                      className={`w-full py-3 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25'}`}
+                      className={`w-full py-3 font-bold rounded-lg transition-colors ${isAdmin || isProvider ? 'bg-zinc-800/30 text-zinc-600 cursor-not-allowed' : 'bg-teal-500 hover:bg-teal-400 text-white shadow-lg shadow-blue-500/25'}`}
                     >
                       {isAdmin || isProvider ? 'Not Available' : 'Request App System'}
                     </button>
@@ -718,7 +718,7 @@ export default function DashboardPage() {
                 <h1 className="text-2xl font-bold text-white mb-2">My Pending Requests</h1>
                 <p className="text-zinc-400 text-sm mb-8">View and manage your pending license and system requests.</p>
 
-                <div className="bg-[#09090b] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
+                <div className="bg-[#0c0c0e] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse min-w-[600px]">
                       <thead>
@@ -746,7 +746,7 @@ export default function DashboardPage() {
                               </td>
                               <td className="py-4 px-6">
                                 <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
-                                  req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                  req.tier.toLowerCase() === 'pro' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' :
                                   req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
                                   'bg-zinc-800 text-zinc-400 border border-zinc-700'
                                 }`}>
@@ -790,7 +790,7 @@ export default function DashboardPage() {
             {activeTab === 'about' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-6">About StoreTap</h1>
-                <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-8 max-w-2xl">
+                <div className="bg-[#0c0c0e] border border-zinc-800 rounded-2xl p-8 max-w-2xl">
                   <Image src="/icon.svg" alt="Logo" width={64} height={64} className="mb-6" />
                   <h2 className="text-xl font-bold text-white mb-2">StoreTap POS System</h2>
                   <p className="text-zinc-400 mb-6">Version 2.1.0</p>
@@ -827,7 +827,7 @@ export default function DashboardPage() {
                 <p className="text-zinc-400 text-sm mb-8">Manage incoming license requests from clients.</p>
                 
                 {/* Desktop Table View */}
-                <div className="hidden md:block bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                <div className="hidden md:block bg-[#0c0c0e] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
                   <table className="w-full text-left text-sm">
                     <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
                       <tr>
@@ -858,7 +858,7 @@ export default function DashboardPage() {
                           <td className="px-6 py-4 text-zinc-300 font-medium">{req.contactNumber}</td>
                           <td className="px-6 py-4">
                             <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
-                              req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                              req.tier.toLowerCase() === 'pro' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' :
                               req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
                               'bg-zinc-800 text-zinc-400 border border-zinc-700'
                             }`}>
@@ -912,20 +912,20 @@ export default function DashboardPage() {
                 {/* Mobile Card View */}
                 <div className="md:hidden space-y-4">
                   {loadingAdmin ? (
-                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">Loading requests...</div>
+                    <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">Loading requests...</div>
                   ) : adminRequests.length === 0 ? (
-                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
+                    <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
                       No requests found.
                     </div>
                   ) : adminRequests.map(req => (
-                    <div key={req.id} className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-5 shadow-lg relative overflow-hidden">
+                    <div key={req.id} className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 p-5 shadow-lg relative overflow-hidden">
                       <div className="flex justify-between items-start mb-4">
                         <div>
                           <h3 className="text-lg font-bold text-white leading-tight">{req.name}</h3>
                           <p className="text-zinc-500 text-sm mt-0.5">{req.email}</p>
                         </div>
                         <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${
-                          req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                          req.tier.toLowerCase() === 'pro' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' :
                           req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
                           'bg-zinc-800 text-zinc-400 border border-zinc-700'
                         }`}>
@@ -999,7 +999,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm min-w-[600px]">
                       <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
@@ -1024,7 +1024,7 @@ export default function DashboardPage() {
                             </td>
                             <td className="px-6 py-4">
                               <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
-                                req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                req.tier.toLowerCase() === 'pro' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' :
                                 req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
                                 'bg-zinc-800 text-zinc-400 border border-zinc-700'
                               }`}>
@@ -1077,7 +1077,7 @@ export default function DashboardPage() {
                     )}
                     <button 
                       onClick={() => setIsGenerateLicenseModalOpen(true)}
-                      className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
+                      className="bg-teal-500 hover:bg-teal-400 text-white font-bold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
                     >
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                       Generate License
@@ -1085,7 +1085,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm min-w-[600px]">
                       <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
@@ -1156,7 +1156,7 @@ export default function DashboardPage() {
                 <h1 className="text-2xl font-bold text-white mb-2">Approved Systems</h1>
                 <p className="text-zinc-400 text-sm mb-8">View all approved system requests.</p>
                 
-                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm min-w-[600px]">
                       <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
@@ -1182,7 +1182,7 @@ export default function DashboardPage() {
                             </td>
                             <td className="px-6 py-4">
                               <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide ${
-                                req.tier.toLowerCase() === 'pro' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                req.tier.toLowerCase() === 'pro' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' :
                                 req.tier.toLowerCase() === 'standard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
                                 'bg-zinc-800 text-zinc-400 border border-zinc-700'
                               }`}>
@@ -1237,7 +1237,7 @@ export default function DashboardPage() {
                   )}
                 </div>
                 
-                <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
+                <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 shadow-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm min-w-[600px]">
                       <thead className="bg-zinc-900/50 border-b border-zinc-800/80 text-xs uppercase tracking-wider font-semibold text-zinc-500">
@@ -1318,11 +1318,11 @@ export default function DashboardPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {clientSystems.length === 0 ? (
-                    <div className="col-span-full bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
+                    <div className="col-span-full bg-[#0c0c0e] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
                       You have no approved systems yet.
                     </div>
                   ) : clientSystems.map((sys: any) => (
-                    <div key={sys.id} className="bg-[#09090b] rounded-2xl border border-emerald-500/30 p-6 shadow-lg shadow-emerald-900/10 relative overflow-hidden flex flex-col">
+                    <div key={sys.id} className="bg-[#0c0c0e] rounded-2xl border border-emerald-500/30 p-6 shadow-lg shadow-emerald-900/10 relative overflow-hidden flex flex-col">
                       <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-bl-full -z-10 blur-xl"></div>
                       
                       <div className="flex justify-between items-start mb-4">
@@ -1340,7 +1340,7 @@ export default function DashboardPage() {
                         </div>
                         <div>
                           <p className="text-xs text-zinc-500 uppercase">Provider Contact</p>
-                          <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="text-sm font-medium text-blue-400 hover:underline">Vincent Layon (Facebook)</a>
+                          <a href="https://www.facebook.com/VincentLayonuser" target="_blank" className="text-sm font-medium text-teal-400 hover:underline">Vincent Layon (Facebook)</a>
                         </div>
                         <div>
                           <p className="text-xs text-zinc-500 uppercase">Date Approved</p>
@@ -1353,7 +1353,7 @@ export default function DashboardPage() {
                           href={sys.attachmentLink} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+                          className="w-full bg-white hover:bg-zinc-200 text-black font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
                         >
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                           Access Files / Link
@@ -1405,9 +1405,9 @@ export default function DashboardPage() {
 
                 <div className="space-y-4">
                   {loadingNotifications ? (
-                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">Loading notifications...</div>
+                    <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">Loading notifications...</div>
                   ) : notifications.length === 0 ? (
-                    <div className="bg-[#09090b] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
+                    <div className="bg-[#0c0c0e] rounded-xl border border-zinc-800/80 p-8 text-center text-zinc-500 font-medium">
                       You have no notifications.
                     </div>
                   ) : notifications.map(notif => (
@@ -1433,7 +1433,7 @@ export default function DashboardPage() {
                         className="flex-1 flex gap-4 items-start cursor-pointer"
                         onClick={() => handleNotificationClick(notif)}
                       >
-                        <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-teal-500/10 text-teal-400 flex items-center justify-center shrink-0">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                         <div className="flex-1">
