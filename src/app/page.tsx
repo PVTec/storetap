@@ -318,7 +318,7 @@ export default async function LandingPage() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
           
           <div className="w-full md:w-2/5 flex justify-center">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-zinc-800">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-zinc-800">
               <Image 
                 src="/founder.png" 
                 alt="Vincent Layon" 
