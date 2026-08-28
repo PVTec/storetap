@@ -314,35 +314,38 @@ export default async function LandingPage() {
       </section>
 
       {/* Meet the Founder */}
-      <section className="bg-white px-6 py-24 md:py-32 border-t border-slate-200 relative overflow-hidden">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent"></div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+      <section className="bg-slate-50 border-t border-slate-200 px-6 py-24">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
           
-          <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-8 rounded-full overflow-hidden border border-slate-200 shadow-sm relative ring-4 ring-slate-50">
-            <Image 
-              src="/founder.png" 
-              alt="Vincent Layon" 
-              fill
-              className="object-cover object-top"
-            />
+          <div className="w-full md:w-5/12 flex justify-center md:justify-end">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white p-2">
+              <div className="relative w-full h-full rounded-xl overflow-hidden bg-slate-100">
+                <Image 
+                  src="/founder.png" 
+                  alt="Vincent Layon" 
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+            </div>
           </div>
           
-          <svg className="w-8 h-8 md:w-10 md:h-10 text-teal-100 mx-auto mb-6" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
-             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-          </svg>
-          
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight md:leading-tight mb-10 text-balance">
-            "StoreTap was not built primarily to make money, but to help local stores transition into the digital era. We help them, and in turn, they help us."
-          </h2>
-          
-          <div className="flex flex-col items-center justify-center">
-            <p className="font-bold text-slate-900 text-lg">Vincent Layon</p>
-            <p className="text-teal-600 font-medium text-sm md:text-base">Founder & Creator of StoreTap</p>
-          </div>
-          
-          <div className="mt-12">
-            <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-50 border border-slate-200 text-slate-900 font-semibold hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm text-sm">
-              Read the Full Story <span aria-hidden="true">&rarr;</span>
+          <div className="w-full md:w-7/12 text-center md:text-left">
+            <h2 className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-2">Meet the Founder</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight">Vincent Layon</h3>
+            
+            <div className="w-12 h-1 bg-teal-500 rounded-full mb-6 mx-auto md:mx-0"></div>
+            
+            <p className="text-slate-700 text-lg md:text-xl leading-relaxed mb-6 font-medium italic">
+              "StoreTap was not built primarily to make money, but to help local stores transition into the digital era. We help them, and in turn, they help us."
+            </p>
+            
+            <p className="text-slate-500 mb-8 leading-relaxed">
+              As the creator of StoreTap, Vince focuses on delivering a lightweight, offline-capable POS system that genuinely solves the everyday problems of local sari-sari stores, convenience stores, and eateries.
+            </p>
+            
+            <Link href="/about" className="inline-flex items-center justify-center px-8 py-3.5 rounded bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors shadow-sm">
+              Read Full Story
             </Link>
           </div>
           
