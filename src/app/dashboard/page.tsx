@@ -247,7 +247,7 @@ export default function DashboardPage() {
       <aside className={`fixed md:sticky top-0 inset-y-0 left-0 h-screen w-64 bg-[#09090b] border-r border-zinc-800/80 flex flex-col z-50 transition-transform duration-200 ease-in-out md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center px-6 border-b border-zinc-800/80">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo-icon.png" alt="StoreTap Logo" width={28} height={28} />
+            <Image src="/icon.svg" alt="StoreTap Logo" width={28} height={28} />
             <span className="text-lg font-bold tracking-tight text-white">StoreTap</span>
           </Link>
         </div>
@@ -379,7 +379,7 @@ export default function DashboardPage() {
                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
              </button>
              <div className="flex items-center gap-2">
-               <Image src="/logo-icon.png" alt="StoreTap Logo" width={24} height={24} />
+               <Image src="/icon.svg" alt="StoreTap Logo" width={24} height={24} />
                <span className="font-bold text-white">StoreTap</span>
              </div>
            </div>
@@ -791,7 +791,7 @@ export default function DashboardPage() {
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h1 className="text-2xl font-bold text-white mb-6">About StoreTap</h1>
                 <div className="bg-[#09090b] border border-zinc-800 rounded-2xl p-8 max-w-2xl">
-                  <Image src="/logo-icon.png" alt="Logo" width={64} height={64} className="mb-6" />
+                  <Image src="/icon.svg" alt="Logo" width={64} height={64} className="mb-6" />
                   <h2 className="text-xl font-bold text-white mb-2">StoreTap POS System</h2>
                   <p className="text-zinc-400 mb-6">Version 2.1.0</p>
                   

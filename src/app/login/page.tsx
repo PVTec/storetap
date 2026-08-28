@@ -46,7 +46,7 @@ export default function LoginPage() {
 
         <div className="w-full max-w-sm relative z-10">
           <div className="mb-10 text-center lg:text-left">
-            <Image src="/logo-icon.png" alt="StoreTap Logo" width={48} height={48} className="mx-auto lg:mx-0 mb-6" />
+            <Image src="/icon.svg" alt="StoreTap Logo" width={48} height={48} className="mx-auto lg:mx-0 mb-6" />
             <h1 className="text-3xl font-semibold tracking-tight text-white mb-2">
               Welcome to StoreTap
             </h1>
