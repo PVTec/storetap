@@ -328,7 +328,7 @@ export default async function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-6 left-6 right-6">
                 <p className="text-white font-bold text-xl mb-1">Vincent Layon</p>
-                <p className="text-teal-400 font-medium text-sm">Creator of StoreTap</p>
+                <p className="text-teal-400 font-medium text-sm">Founder of StoreTap</p>
               </div>
             </div>
           </div>
@@ -340,7 +340,7 @@ export default async function LandingPage() {
             </div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-              Empowering local stores to go digital.
+              Advanced POS infrastructure for modern retail businesses.
             </h2>
             
             <p className="text-zinc-400 text-lg leading-relaxed mb-8">
