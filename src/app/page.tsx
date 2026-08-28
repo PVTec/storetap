@@ -26,119 +26,125 @@ export default async function LandingPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-[#0f0f0f] pt-32 pb-24 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 relative z-10">
-          <div className="flex-1 space-y-8 text-center lg:text-left">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-white">
-              StoreTap <br />
-              <span className="text-teal-400 font-extrabold tracking-tighter">A Lightweight POS</span> <br />
-              & Utang System
-            </h1>
-            <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
-              Sell even when the internet is down. Track utang without a notebook. Know your stock at a glance. Built for local businesses that want to grow without limits.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 justify-center lg:justify-start">
-              <Link href="/login" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-teal-500 text-white font-bold text-lg hover:bg-teal-400 transition-all text-center shadow-[0_0_20px_rgba(20,184,166,0.3)]">
-                Start for Free
-              </Link>
-              <Link href="/pricing" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-transparent border-2 border-zinc-700 text-white font-bold text-lg hover:bg-zinc-800 transition-all text-center">
-                View Pricing
-              </Link>
-            </div>
-            
-            <div className="pt-8 flex flex-col items-center lg:items-start gap-4">
-               <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Available On</p>
-               <div className="flex gap-4">
-                 <div className="flex items-center gap-2 px-4 py-2 rounded bg-zinc-900 border border-zinc-800">
-                    <span className="text-zinc-300 font-medium text-sm">Web Browser</span>
-                 </div>
-                 <div className="flex items-center gap-2 px-4 py-2 rounded bg-zinc-900 border border-zinc-800">
-                    <span className="text-zinc-300 font-medium text-sm">Android App</span>
-                 </div>
+      <section className="bg-[#0f0f0f] pt-32 lg:pt-40 pb-0 relative overflow-hidden flex flex-col items-center text-center">
+        <div className="max-w-4xl mx-auto px-6 relative z-10 w-full flex flex-col items-center">
+          
+          <h2 className="text-[10px] sm:text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4 sm:mb-6">
+            A LIGHTWEIGHT POS & UTANG SYSTEM
+          </h2>
+          
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8">
+            Start <span className="text-[#F25C05]">Today</span>.<br/>
+            Grow Without Limits.
+          </h1>
+          
+          <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed font-medium mb-8 sm:mb-10">
+            Sell even when the internet is down. Track utang without a notebook. Know your stock at a glance. Built for local businesses that want to grow without limits.
+          </p>
+          
+          <Link href="/login" className="w-full sm:w-auto px-12 py-4 rounded bg-[#F25C05] text-white font-bold text-lg hover:bg-[#d95204] transition-all text-center shadow-[0_0_40px_rgba(242,92,5,0.2)] mb-12 sm:mb-16">
+            Start for Free
+          </Link>
+
+          <div className="flex flex-col items-center gap-6 mb-16 w-full max-w-md mx-auto">
+             <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Available On</p>
+             <div className="grid grid-cols-2 gap-4 w-full">
+               <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 font-medium text-sm hover:bg-zinc-800 transition-colors cursor-pointer">
+                  <svg className="w-5 h-5 text-zinc-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                  Web
                </div>
-            </div>
+               <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 font-medium text-sm hover:bg-zinc-800 transition-colors cursor-pointer">
+                  <svg className="w-5 h-5 text-teal-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414C17.523 15.3414 16.208 17.6534 14.536 19.3494C12.864 21.0454 11.233 21.3664 11.233 21.3664C11.233 21.3664 9.602 21.0454 7.93 19.3494C6.258 17.6534 4.943 15.3414 4.943 15.3414L2.091 10.4284L4.943 5.51541L7.93 5.51541L11.233 10.4284L14.536 5.51541L17.523 5.51541L20.375 10.4284L17.523 15.3414Z"/></svg>
+                  Android
+               </div>
+             </div>
           </div>
           
-          <div className="flex-1 w-full max-w-2xl lg:max-w-none relative">
-            <div className="absolute inset-0 bg-teal-500/20 blur-[100px] rounded-full"></div>
-            {/* Tablet Mockup */}
-            <div className="relative bg-zinc-950 p-3 rounded-[2rem] border-[6px] border-zinc-800 shadow-2xl aspect-[4/3] w-full flex flex-col overflow-hidden">
-               {/* App Header */}
-               <div className="h-14 bg-zinc-900 flex items-center justify-between px-6 border-b border-zinc-800/80 rounded-t-xl shrink-0">
-                  <div className="flex items-center gap-2">
-                     <div className="w-6 h-6 bg-teal-500 rounded-md"></div>
-                     <span className="font-bold text-white text-lg">StoreTap</span>
+        </div>
+        
+        {/* Device Mockup (Bleeding into next section) */}
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 relative z-10 -mb-6 md:-mb-12">
+          <div className="absolute inset-0 bg-[#F25C05]/10 blur-[120px] rounded-full"></div>
+          
+          <div className="relative bg-[#1a1a1a] p-2 md:p-3 rounded-t-[1.5rem] md:rounded-t-[2.5rem] border-t-4 border-x-4 border-[#F25C05] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] aspect-[4/3] md:aspect-video w-full flex flex-col overflow-hidden">
+             
+             {/* App Header */}
+             <div className="h-10 md:h-14 bg-zinc-900 flex items-center justify-between px-4 md:px-6 border-b border-zinc-800/80 rounded-t-xl shrink-0">
+                <div className="flex items-center gap-2 md:gap-3">
+                   <div className="w-5 h-5 md:w-6 md:h-6 bg-[#F25C05] rounded-md flex items-center justify-center">
+                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                   </div>
+                   <span className="font-bold text-white text-sm md:text-lg tracking-tight">StoreTap</span>
+                </div>
+                <div className="flex items-center gap-3 md:gap-4">
+                   <span className="text-[10px] md:text-xs font-bold px-2 py-1 md:py-1.5 bg-[#F25C05]/10 text-[#F25C05] rounded-full border border-[#F25C05]/20 uppercase tracking-widest hidden sm:block">Online Sync Active</span>
+                   <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs text-white">V</div>
+                </div>
+             </div>
+             
+             {/* App Body */}
+             <div className="flex-1 bg-[#0a0a0a] flex flex-col sm:flex-row p-2 md:p-4 gap-2 md:gap-4 rounded-b-xl overflow-hidden">
+               {/* Left column - Products */}
+               <div className="flex-[2] flex flex-col">
+                  <div className="flex gap-2 mb-3 md:mb-4 overflow-x-auto pb-1 hide-scrollbar">
+                    <div className="px-3 md:px-4 py-1 md:py-1.5 bg-[#F25C05] rounded-md text-white text-[10px] md:text-xs font-bold shrink-0">All items</div>
+                    <div className="px-3 md:px-4 py-1 md:py-1.5 bg-zinc-900 text-zinc-400 rounded-md text-[10px] md:text-xs font-medium border border-zinc-800 shrink-0">Drinks</div>
+                    <div className="px-3 md:px-4 py-1 md:py-1.5 bg-zinc-900 text-zinc-400 rounded-md text-[10px] md:text-xs font-medium border border-zinc-800 shrink-0">Snacks</div>
+                    <div className="px-3 md:px-4 py-1 md:py-1.5 bg-zinc-900 text-zinc-400 rounded-md text-[10px] md:text-xs font-medium border border-zinc-800 shrink-0 hidden md:block">Meals</div>
                   </div>
-                  <div className="flex items-center gap-4">
-                     <span className="text-xs font-semibold px-2 py-1 bg-teal-500/10 text-teal-400 rounded-full border border-teal-500/20">Online Sync Active</span>
-                     <div className="w-8 h-8 rounded-full bg-zinc-800"></div>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 overflow-y-auto">
+                     {[1,2,3,4,5,6].map(i => (
+                       <div key={i} className="bg-zinc-900 rounded-lg md:rounded-xl p-2 md:p-3 border border-zinc-800 flex flex-col h-20 md:h-28 relative cursor-pointer hover:bg-zinc-800 transition-colors group">
+                          {i === 1 && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 md:w-5 md:h-5 bg-[#F25C05] rounded-full text-white text-[9px] md:text-[10px] flex items-center justify-center font-bold z-10 shadow-lg">2</span>}
+                          <div className="flex-1 flex items-center justify-center text-2xl md:text-3xl opacity-60 group-hover:opacity-100 transition-opacity group-hover:scale-110 duration-300">
+                             {i%3===0 ? '🍜' : i%2===0 ? '🥤' : '🍔'}
+                          </div>
+                          <div className="mt-auto flex justify-between items-end">
+                            <p className="text-[9px] md:text-[10px] font-medium text-zinc-400 truncate max-w-[60%]">Item {i}</p>
+                            <p className="text-xs md:text-sm font-bold text-white">₱120</p>
+                          </div>
+                       </div>
+                     ))}
                   </div>
                </div>
-               
-               {/* App Body */}
-               <div className="flex-1 bg-black flex p-4 gap-4 rounded-b-xl overflow-hidden">
-                 {/* Left column - Products */}
-                 <div className="flex-[2] flex flex-col">
-                    <div className="flex gap-2 mb-4 overflow-hidden">
-                      <div className="px-4 py-1.5 bg-zinc-800 rounded-full text-white text-xs font-bold">All items</div>
-                      <div className="px-4 py-1.5 bg-zinc-900 text-zinc-400 rounded-full text-xs font-medium border border-zinc-800">Drinks</div>
-                      <div className="px-4 py-1.5 bg-zinc-900 text-zinc-400 rounded-full text-xs font-medium border border-zinc-800">Snacks</div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-3">
-                       {[1,2,3,4,5,6].map(i => (
-                         <div key={i} className="bg-zinc-900 rounded-xl p-3 border border-zinc-800 flex flex-col h-28 relative">
-                            {i === 1 && <span className="absolute -top-2 -right-2 w-5 h-5 bg-teal-500 rounded-full text-white text-[10px] flex items-center justify-center font-bold">2</span>}
-                            <div className="flex-1 flex items-center justify-center text-3xl opacity-50">
-                               {i%3===0 ? '🍜' : i%2===0 ? '🥤' : '🍔'}
-                            </div>
-                            <div className="mt-auto">
-                              <p className="text-[10px] font-medium text-zinc-400 truncate">Product Name</p>
-                              <p className="text-sm font-bold text-white">₱120</p>
-                            </div>
-                         </div>
-                       ))}
-                    </div>
-                 </div>
-                 {/* Right column - Cart */}
-                 <div className="flex-1 bg-zinc-900 rounded-xl border border-zinc-800 flex flex-col">
-                    <div className="p-3 border-b border-zinc-800 flex justify-between items-center">
-                       <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Current Order</span>
-                       <span className="text-xs text-zinc-500">Walk-in</span>
-                    </div>
-                    <div className="flex-1 p-3 space-y-3">
-                       <div className="flex justify-between items-center">
-                         <div>
-                            <p className="text-sm font-bold text-white">Product Name</p>
-                            <p className="text-xs text-zinc-500">₱120 x 2</p>
-                         </div>
-                         <p className="font-bold text-white">₱240</p>
+               {/* Right column - Cart */}
+               <div className="flex-1 bg-zinc-900/50 rounded-lg md:rounded-xl border border-zinc-800 flex flex-col overflow-hidden max-w-[280px] w-full mx-auto sm:max-w-none">
+                  <div className="p-2 md:p-3 bg-zinc-900 border-b border-zinc-800 flex justify-between items-center">
+                     <span className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-wider">Current Order</span>
+                     <span className="text-[9px] md:text-xs font-medium bg-zinc-800 px-2 py-1 rounded text-zinc-300">Walk-in</span>
+                  </div>
+                  <div className="flex-1 p-2 md:p-3 space-y-2 md:space-y-3 overflow-y-auto">
+                     <div className="flex justify-between items-center bg-zinc-950 p-2 rounded border border-zinc-800/50">
+                       <div>
+                          <p className="text-xs md:text-sm font-bold text-white">Burger</p>
+                          <p className="text-[9px] md:text-xs text-zinc-500">₱120 x 2</p>
                        </div>
-                    </div>
-                    <div className="p-3 bg-zinc-950 rounded-b-xl border-t border-zinc-800">
-                       <div className="flex justify-between items-center mb-3">
-                         <span className="text-sm font-medium text-zinc-400">Total</span>
-                         <span className="text-2xl font-black text-white">₱240</span>
-                       </div>
-                       <div className="w-full py-3 bg-teal-500 rounded-lg text-white font-bold text-center text-sm">
-                         Charge ₱240
-                       </div>
-                    </div>
-                 </div>
+                       <p className="font-bold text-white text-xs md:text-sm">₱240</p>
+                     </div>
+                  </div>
+                  <div className="p-2 md:p-3 bg-zinc-900 rounded-b-lg md:rounded-b-xl border-t border-zinc-800">
+                     <div className="flex justify-between items-center mb-2 md:mb-3">
+                       <span className="text-xs md:text-sm font-medium text-zinc-400">Total</span>
+                       <span className="text-xl md:text-2xl font-black text-white">₱240</span>
+                     </div>
+                     <div className="w-full py-2.5 md:py-3 bg-[#F25C05] hover:bg-[#d95204] transition-colors rounded-md md:rounded-lg text-white font-bold text-center text-xs md:text-sm cursor-pointer shadow-lg">
+                       Charge ₱240
+                     </div>
+                  </div>
                </div>
-            </div>
+             </div>
           </div>
         </div>
       </section>
 
       {/* Stats Banner */}
-      <section className="bg-teal-600 py-16 px-6 relative overflow-hidden">
+      <section className="bg-[#F25C05] pt-24 pb-16 px-6 relative overflow-hidden mt-0">
          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
             <div className="lg:max-w-xl text-center lg:text-left">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
                 Time to retire the notebook.
               </h2>
-              <p className="text-teal-50 text-lg leading-relaxed font-medium">
+              <p className="text-orange-100 text-lg leading-relaxed font-medium">
                 We're helping local stores transition from manual notebooks to a fully digital utang and POS system. Join the businesses managing their sales and credit better, even without internet.
               </p>
             </div>
@@ -146,19 +152,19 @@ export default async function LandingPage() {
             <div className="grid grid-cols-2 gap-x-8 gap-y-8 lg:gap-12 w-full lg:w-auto">
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">{activeSystems}+</h3>
-                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Active Systems</span>
+                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Active Systems</span>
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">{licenseCount}+</h3>
-                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Stores Upgraded</span>
+                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Stores Upgraded</span>
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">{activeUsers}+</h3>
-                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Daily Users</span>
+                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Daily Users</span>
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">99.9%</h3>
-                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Uptime</span>
+                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Uptime</span>
                </div>
             </div>
          </div>
