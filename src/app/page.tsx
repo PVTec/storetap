@@ -314,43 +314,38 @@ export default async function LandingPage() {
       </section>
 
       {/* Meet the Founder */}
-      <section className="bg-slate-50 px-6 py-24 relative overflow-hidden">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-[2rem] p-8 md:p-16 shadow-xl border border-slate-100 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full blur-[80px] z-0" />
-            
-            <div className="w-48 h-48 md:w-64 md:h-64 shrink-0 relative rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-3 hover:rotate-0 transition-transform duration-500 z-10">
-              <Image 
-                src="/founder.png" 
-                alt="Vincent Layon - Founder" 
-                fill
-                className="object-cover object-top"
-              />
-            </div>
-            
-            <div className="text-center md:text-left z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 text-teal-600 font-bold text-xs uppercase tracking-widest rounded-full mb-6">
-                <span className="w-2 h-2 rounded-full bg-teal-500"></span>
-                Meet the Founder
-              </div>
-              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">Vincent Layon (Vince)</h3>
-              <p className="text-slate-500 font-medium mb-8">Creator of StoreTap</p>
-              
-              <div className="relative">
-                <svg className="absolute -top-6 -left-6 md:-left-8 w-12 h-12 text-teal-100 z-0" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
-                  <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                </svg>
-                <blockquote className="text-slate-700 text-lg md:text-xl leading-relaxed font-medium mb-8 relative z-10 italic">
-                  "StoreTap was not built primarily to make money, but to help local stores transition into the digital era... We help them, and in turn, they help us."
-                </blockquote>
-              </div>
-              
-              <Link href="/about" className="px-8 py-4 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors inline-flex items-center gap-3 shadow-lg">
-                Read the Full Story
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
-            </div>
+      <section className="bg-white px-6 py-24 md:py-32 border-t border-slate-200 relative overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          
+          <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-8 rounded-full overflow-hidden border border-slate-200 shadow-sm relative ring-4 ring-slate-50">
+            <Image 
+              src="/founder.png" 
+              alt="Vincent Layon" 
+              fill
+              className="object-cover object-top"
+            />
           </div>
+          
+          <svg className="w-8 h-8 md:w-10 md:h-10 text-teal-100 mx-auto mb-6" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+          </svg>
+          
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight md:leading-tight mb-10 text-balance">
+            "StoreTap was not built primarily to make money, but to help local stores transition into the digital era. We help them, and in turn, they help us."
+          </h2>
+          
+          <div className="flex flex-col items-center justify-center">
+            <p className="font-bold text-slate-900 text-lg">Vincent Layon</p>
+            <p className="text-teal-600 font-medium text-sm md:text-base">Founder & Creator of StoreTap</p>
+          </div>
+          
+          <div className="mt-12">
+            <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-50 border border-slate-200 text-slate-900 font-semibold hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm text-sm">
+              Read the Full Story <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+          
         </div>
       </section>
 
