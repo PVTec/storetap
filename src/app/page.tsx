@@ -171,7 +171,7 @@ export default async function LandingPage() {
                </div>
                <div className="flex flex-col items-center lg:items-start">
                   <h3 className="text-3xl font-black text-white mb-1">99.9%</h3>
-                  <span className="text-teal-100 text-xs font-bold uppercase tracking-widest">Uptime</span>
+                  <span className="text-teal-100 text-xs font-bold uppercase tracking-widest">Cloud-synced</span>
                </div>
             </div>
          </div>
