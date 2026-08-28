@@ -198,7 +198,7 @@ export default async function LandingPage() {
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2 text-sm text-slate-700 font-medium">
-                    <span className="text-teal-500 mt-0.5">✓</span> Barcode scanning support
+                    <span className="text-teal-500 mt-0.5">✓</span> One-tap & fast cart checkout
                   </li>
                   <li className="flex items-start gap-2 text-sm text-slate-700 font-medium">
                     <span className="text-teal-500 mt-0.5">✓</span> Keep track of customer utang
