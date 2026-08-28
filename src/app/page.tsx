@@ -132,23 +132,34 @@ export default async function LandingPage() {
       </section>
 
       {/* Stats Banner */}
-      <section className="bg-teal-600 py-12 px-6">
-         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">{activeSystems}+</h2>
-              <p className="text-teal-100 font-bold text-sm tracking-widest uppercase">Active Systems</p>
+      <section className="bg-teal-600 py-16 px-6 relative overflow-hidden">
+         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
+            <div className="lg:max-w-xl text-center lg:text-left">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                Time to retire the notebook.
+              </h2>
+              <p className="text-teal-50 text-lg leading-relaxed font-medium">
+                We're helping local stores transition from manual notebooks to a fully digital utang and POS system. Join the businesses managing their sales and credit better, even without internet.
+              </p>
             </div>
-            <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">{licenseCount}+</h2>
-              <p className="text-teal-100 font-bold text-sm tracking-widest uppercase">Licensed Stores</p>
-            </div>
-            <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">{activeUsers}+</h2>
-              <p className="text-teal-100 font-bold text-sm tracking-widest uppercase">Active Users</p>
-            </div>
-            <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">99.9%</h2>
-              <p className="text-teal-100 font-bold text-sm tracking-widest uppercase">Uptime</p>
+            
+            <div className="grid grid-cols-2 gap-x-8 gap-y-8 lg:gap-12 w-full lg:w-auto">
+               <div className="flex flex-col items-center lg:items-start">
+                  <h3 className="text-3xl font-black text-white mb-1">{activeSystems}+</h3>
+                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Active Systems</span>
+               </div>
+               <div className="flex flex-col items-center lg:items-start">
+                  <h3 className="text-3xl font-black text-white mb-1">{licenseCount}+</h3>
+                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Stores Upgraded</span>
+               </div>
+               <div className="flex flex-col items-center lg:items-start">
+                  <h3 className="text-3xl font-black text-white mb-1">{activeUsers}+</h3>
+                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Daily Users</span>
+               </div>
+               <div className="flex flex-col items-center lg:items-start">
+                  <h3 className="text-3xl font-black text-white mb-1">99.9%</h3>
+                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest">Uptime</span>
+               </div>
             </div>
          </div>
       </section>
